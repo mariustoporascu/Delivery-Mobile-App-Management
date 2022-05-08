@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FoodDeliveryApp.Views.MapsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:FoodDeliveryApp.ViewModels"
+    xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    Title="Harta"
+    x:DataType="local:MapsViewModel"
+    Shell.PresentationMode="Animated">
+
+    <StackLayout BackgroundColor="{AppThemeBinding Light=LightGray, Dark=Gray}">
+        <Label
+            FontSize="Large"
+            HorizontalOptions="CenterAndExpand"
+            Text="Live Status"
+            TextColor="Black" />
+        <maps:Map
+            x:Name="AppMap"
+            HasScrollEnabled="True"
+            HasZoomEnabled="True"
+            IsVisible="True"
+            MapClicked="PickupButton_Clicked"
+            MapType="Street" />
+        <StackLayout BackgroundColor="{AppThemeBinding Light=LightGray, Dark=Gray}">
+
+            <Button
+                x:Name="TrackPath"
+                Padding="10"
+                xct:CornerRadiusEffect.CornerRadius="10"
+                Background="Cyan"
+                BackgroundColor="Cyan"
+                BorderColor="Cyan"
+                Clicked="TrackPath_Clicked"
+                FontAttributes="Bold"
+                HorizontalOptions="CenterAndExpand"
+                Text="Track Path"
+                TextColor="Black"
+                VerticalOptions="CenterAndExpand" />
+            <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    Text="Distanta Ramasa :"
+                    TextColor="Black" />
+                <Label
+                    x:Name="DistToGo"
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    TextColor="Black" />
+            </StackLayout>
+            <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    Text="Timp Ramas :"
+                    TextColor="Black" />
+                <Label
+                    x:Name="TimeToGo"
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    TextColor="Black" />
+            </StackLayout>
+        </StackLayout>
+    </StackLayout>
+</ContentPage>

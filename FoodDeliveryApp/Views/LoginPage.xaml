@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FoodDeliveryApp.Views.LoginPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:FoodDeliveryApp.ViewModels"
+    xmlns:model="clr-namespace:FoodDeliveryApp.Models.ShopModels"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    x:DataType="local:LoginViewModel"
+    Shell.PresentationMode="ModalAnimated">
+    <StackLayout BackgroundColor="{AppThemeBinding Light=LightGray, Dark=Gray}" VerticalOptions="FillAndExpand">
+        <StackLayout VerticalOptions="CenterAndExpand">
+
+            <Entry
+                Margin="20"
+                xct:CornerRadiusEffect.CornerRadius="20"
+                Background="LemonChiffon"
+                BackgroundColor="LemonChiffon"
+                ClearButtonVisibility="WhileEditing"
+                FontSize="Large"
+                HorizontalOptions="FillAndExpand"
+                HorizontalTextAlignment="Center"
+                Placeholder="Email"
+                PlaceholderColor="Black"
+                Text="{Binding UserName}"
+                TextColor="Black"
+                VerticalOptions="EndAndExpand" />
+            <Entry
+                Margin="20"
+                xct:CornerRadiusEffect.CornerRadius="20"
+                Background="LemonChiffon"
+                BackgroundColor="LemonChiffon"
+                ClearButtonVisibility="WhileEditing"
+                FontSize="Large"
+                HorizontalOptions="FillAndExpand"
+                HorizontalTextAlignment="Center"
+                IsPassword="True"
+                Placeholder="Parola"
+                PlaceholderColor="Black"
+                Text="{Binding Password}"
+                TextColor="Black"
+                VerticalOptions="EndAndExpand" />
+            <StackLayout Margin="20" Orientation="Horizontal">
+                <Button
+                    Padding="10"
+                    xct:CornerRadiusEffect.CornerRadius="20"
+                    Background="Orange"
+                    BackgroundColor="Orange"
+                    BorderColor="Orange"
+                    Clicked="RedirSignUp"
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    HorizontalOptions="CenterAndExpand"
+                    Text="Creaza Cont"
+                    TextColor="Black" />
+                <Button
+                    Padding="10"
+                    xct:CornerRadiusEffect.CornerRadius="20"
+                    Background="Cyan"
+                    BackgroundColor="Cyan"
+                    BorderColor="Cyan"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:LoginViewModel}}, Path=Login}"
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    HorizontalOptions="CenterAndExpand"
+                    Text="Autentificare"
+                    TextColor="Black" />
+
+            </StackLayout>
+        </StackLayout>
+        <StackLayout VerticalOptions="EndAndExpand">
+
+            <Button
+                Margin="10"
+                Padding="10"
+                xct:CornerRadiusEffect.CornerRadius="20"
+                Background="Red"
+                BackgroundColor="Red"
+                BorderColor="Red"
+                Clicked="OnDismissButtonClicked"
+                HorizontalOptions="CenterAndExpand"
+                Text="Anuleaza"
+                TextColor="Black" />
+
+        </StackLayout>
+
+    </StackLayout>
+</ContentPage>
