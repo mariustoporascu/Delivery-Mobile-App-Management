@@ -10,7 +10,15 @@
     Shell.PresentationMode="ModalAnimated">
     <StackLayout BackgroundColor="{AppThemeBinding Light=LightGray, Dark=Gray}" VerticalOptions="FillAndExpand">
         <StackLayout VerticalOptions="CenterAndExpand">
-
+            <Label
+                Margin="10"
+                FontAttributes="Bold"
+                FontSize="Large"
+                HorizontalOptions="CenterAndExpand"
+                Text="Introdu credentialele de admin/sofer"
+                TextColor="Black"
+                TextDecorations="Underline"
+                VerticalOptions="CenterAndExpand" />
             <Entry
                 Margin="20"
                 xct:CornerRadiusEffect.CornerRadius="20"
@@ -41,7 +49,7 @@
                 TextColor="Black"
                 VerticalOptions="EndAndExpand" />
             <StackLayout Margin="20" Orientation="Horizontal">
-                <Button
+                <!--<Button
                     Padding="10"
                     xct:CornerRadiusEffect.CornerRadius="20"
                     Background="Orange"
@@ -52,7 +60,7 @@
                     FontSize="18"
                     HorizontalOptions="CenterAndExpand"
                     Text="Creaza Cont"
-                    TextColor="Black" />
+                    TextColor="Black" />-->
                 <Button
                     Padding="10"
                     xct:CornerRadiusEffect.CornerRadius="20"
@@ -68,7 +76,7 @@
 
             </StackLayout>
         </StackLayout>
-        <StackLayout VerticalOptions="EndAndExpand">
+        <!--<StackLayout VerticalOptions="EndAndExpand">
 
             <Button
                 Margin="10"
@@ -82,7 +90,7 @@
                 Text="Anuleaza"
                 TextColor="Black" />
 
-        </StackLayout>
+        </StackLayout>-->
 
     </StackLayout>
 </ContentPage>

@@ -135,9 +135,25 @@ namespace FoodDeliveryApp.Services
                 superMarkets = JsonConvert.DeserializeObject<List<Companie>>(content, settings);
             }
         }
-        public async Task<List<ServerOrder>> loadServerOrders(string email)
+        public async Task<List<ServerOrder>> loadServerOrders()
         {
-            Uri uri = new Uri($"{ServerConstants.BaseUrl}/foodapp/getallorders/{email}");
+            Uri uri = new Uri($"{ServerConstants.BaseUrl}/foodappmanage/getalldriverorders");
+            HttpResponseMessage response = await client.GetAsync(uri).ConfigureAwait(false);
+            if (response.IsSuccessStatusCode)
+            {
+                string content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var settings = new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore,
+                    MissingMemberHandling = MissingMemberHandling.Ignore
+                };
+                serverOrders = JsonConvert.DeserializeObject<List<ServerOrder>>(content, settings);
+            }
+            return serverOrders;
+        }
+        public async Task<List<ServerOrder>> loadServerOrders(int restaurantRefId)
+        {
+            Uri uri = new Uri($"{ServerConstants.BaseUrl}/foodappmanage/getallrestaurantorders/{restaurantRefId}");
             HttpResponseMessage response = await client.GetAsync(uri).ConfigureAwait(false);
             if (response.IsSuccessStatusCode)
             {

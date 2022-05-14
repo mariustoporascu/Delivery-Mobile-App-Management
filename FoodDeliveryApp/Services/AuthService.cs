@@ -26,7 +26,7 @@ namespace FoodDeliveryApp.Services
 
         public async Task<string> LoginUser(UserModel userModel)
         {
-            Uri uri = new Uri($"{ServerConstants.BaseUrl}/auth/login");
+            Uri uri = new Uri($"{ServerConstants.BaseUrl}/auth/loginmanage");
             return await sendRequest(userModel, uri);
 
         }

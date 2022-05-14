@@ -80,98 +80,98 @@
                             </StackLayout>
                         </StackLayout>
 
-                        
-                            <CollectionView
-                                x:Name="ItemsListView"
-                                BackgroundColor="{AppThemeBinding Light=LightGray,
-                                                                  Dark=Gray}"
-                                SelectionMode="None">
-                                <CollectionView.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackLayout BackgroundColor="{AppThemeBinding Light=LightCyan, Dark=LightCyan}">
+
+                        <CollectionView
+                            x:Name="ItemsListView"
+                            BackgroundColor="{AppThemeBinding Light=LightGray,
+                                                              Dark=Gray}"
+                            SelectionMode="None">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout BackgroundColor="{AppThemeBinding Light=LightCyan, Dark=LightCyan}">
+                                        <StackLayout
+                                            Margin="2"
+                                            x:DataType="model:ServerOrder"
+                                            BackgroundColor="{AppThemeBinding Light=DarkCyan,
+                                                                              Dark=DarkCyan}">
                                             <StackLayout
                                                 Margin="2"
-                                                x:DataType="model:ServerOrder"
-                                                BackgroundColor="{AppThemeBinding Light=DarkCyan,
-                                                                                  Dark=DarkCyan}">
+                                                BackgroundColor="{AppThemeBinding Light=LightCyan,
+                                                                                  Dark=LightCyan}"
+                                                HorizontalOptions="FillAndExpand"
+                                                Orientation="Horizontal">
                                                 <StackLayout
-                                                    Margin="2"
-                                                    BackgroundColor="{AppThemeBinding Light=LightCyan,
-                                                                                      Dark=LightCyan}"
-                                                    HorizontalOptions="FillAndExpand"
-                                                    Orientation="Horizontal">
-                                                    <StackLayout
+                                                    HorizontalOptions="CenterAndExpand"
+                                                    VerticalOptions="CenterAndExpand"
+                                                    WidthRequest="90">
+                                                    <Label
+                                                        FontSize="Small"
                                                         HorizontalOptions="CenterAndExpand"
-                                                        VerticalOptions="CenterAndExpand"
-                                                        WidthRequest="90">
-                                                        <Label
-                                                            FontSize="Small"
-                                                            HorizontalOptions="CenterAndExpand"
-                                                            HorizontalTextAlignment="Center"
-                                                            LineBreakMode="WordWrap"
-                                                            Style="{DynamicResource ListItemTextStyle}"
-                                                            Text="{Binding OrderId}"
-                                                            TextColor="Black" />
+                                                        HorizontalTextAlignment="Center"
+                                                        LineBreakMode="WordWrap"
+                                                        Style="{DynamicResource ListItemTextStyle}"
+                                                        Text="{Binding OrderId}"
+                                                        TextColor="Black" />
 
-                                                    </StackLayout>
-                                                    <StackLayout
-                                                        HorizontalOptions="CenterAndExpand"
-                                                        VerticalOptions="CenterAndExpand"
-                                                        WidthRequest="80">
-                                                        <Label
-                                                            FontSize="Small"
-                                                            HorizontalTextAlignment="Center"
-                                                            LineBreakMode="NoWrap"
-                                                            Style="{DynamicResource ListItemTextStyle}"
-                                                            Text="{Binding Status}"
-                                                            TextColor="Black" />
-
-                                                    </StackLayout>
-                                                    <StackLayout
-                                                        HorizontalOptions="CenterAndExpand"
-                                                        VerticalOptions="CenterAndExpand"
-                                                        WidthRequest="95">
-                                                        <Label
-                                                            FontSize="Small"
-                                                            HorizontalTextAlignment="Center"
-                                                            LineBreakMode="NoWrap"
-                                                            Style="{DynamicResource ListItemTextStyle}"
-                                                            Text="{Binding TotalOrdered}"
-                                                            TextColor="Black" />
-
-                                                    </StackLayout>
-                                                    <StackLayout
-                                                        HorizontalOptions="CenterAndExpand"
-                                                        VerticalOptions="CenterAndExpand"
-                                                        WidthRequest="100">
-                                                        <Label
-                                                            FontSize="Small"
-                                                            HorizontalTextAlignment="Center"
-                                                            LineBreakMode="NoWrap"
-                                                            Style="{DynamicResource ListItemTextStyle}"
-                                                            Text="{Binding Created, StringFormat='{0:MMMM dd, yyyy}'}"
-                                                            TextColor="Black" />
-                                                        <Label
-                                                            FontSize="Small"
-                                                            HorizontalTextAlignment="Center"
-                                                            LineBreakMode="NoWrap"
-                                                            Style="{DynamicResource ListItemTextStyle}"
-                                                            Text="{Binding Created, StringFormat='{}{0:hh\\:mm}'}"
-                                                            TextColor="Black" />
-                                                    </StackLayout>
                                                 </StackLayout>
-                                                <StackLayout.GestureRecognizers>
-                                                    <TapGestureRecognizer
-                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:OrdersViewModel}}, Path=ItemTapped}"
-                                                        CommandParameter="{Binding .}"
-                                                        NumberOfTapsRequired="1" />
-                                                </StackLayout.GestureRecognizers>
-                                            </StackLayout>
+                                                <StackLayout
+                                                    HorizontalOptions="CenterAndExpand"
+                                                    VerticalOptions="CenterAndExpand"
+                                                    WidthRequest="80">
+                                                    <Label
+                                                        FontSize="Small"
+                                                        HorizontalTextAlignment="Center"
+                                                        LineBreakMode="WordWrap"
+                                                        Style="{DynamicResource ListItemTextStyle}"
+                                                        Text="{Binding Status}"
+                                                        TextColor="Black" />
 
+                                                </StackLayout>
+                                                <StackLayout
+                                                    HorizontalOptions="CenterAndExpand"
+                                                    VerticalOptions="CenterAndExpand"
+                                                    WidthRequest="95">
+                                                    <Label
+                                                        FontSize="Small"
+                                                        HorizontalTextAlignment="Center"
+                                                        LineBreakMode="NoWrap"
+                                                        Style="{DynamicResource ListItemTextStyle}"
+                                                        Text="{Binding TotalOrdered}"
+                                                        TextColor="Black" />
+
+                                                </StackLayout>
+                                                <StackLayout
+                                                    HorizontalOptions="CenterAndExpand"
+                                                    VerticalOptions="CenterAndExpand"
+                                                    WidthRequest="100">
+                                                    <Label
+                                                        FontSize="Small"
+                                                        HorizontalTextAlignment="Center"
+                                                        LineBreakMode="NoWrap"
+                                                        Style="{DynamicResource ListItemTextStyle}"
+                                                        Text="{Binding Created, StringFormat='{0:MMMM dd, yyyy}'}"
+                                                        TextColor="Black" />
+                                                    <Label
+                                                        FontSize="Small"
+                                                        HorizontalTextAlignment="Center"
+                                                        LineBreakMode="NoWrap"
+                                                        Style="{DynamicResource ListItemTextStyle}"
+                                                        Text="{Binding Created, StringFormat='{}{0:hh\\:mm}'}"
+                                                        TextColor="Black" />
+                                                </StackLayout>
+                                            </StackLayout>
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:OrdersViewModel}}, Path=ItemTapped}"
+                                                    CommandParameter="{Binding .}"
+                                                    NumberOfTapsRequired="1" />
+                                            </StackLayout.GestureRecognizers>
                                         </StackLayout>
-                                    </DataTemplate>
-                                </CollectionView.ItemTemplate>
-                            </CollectionView>
+
+                                    </StackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
                     </StackLayout>
                     <StackLayout
                         BackgroundColor="{AppThemeBinding Light=LightGray,
@@ -190,7 +190,7 @@
                                 BackgroundColor="Cyan"
                                 FontAttributes="Bold"
                                 FontSize="Large"
-                                Text="Nu ai nici o comanda plasata."
+                                Text="Nu ai nici o comanda."
                                 TextColor="Black" />
                         </Frame>
                     </StackLayout>

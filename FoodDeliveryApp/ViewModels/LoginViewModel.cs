@@ -42,7 +42,7 @@ namespace FoodDeliveryApp.ViewModels
                 SecureStorage.SetAsync(App.WEBEMAIL, UserName).Wait();
                 SecureStorage.SetAsync(App.WEBPASS, Password).Wait();
                 SecureStorage.SetAsync(App.LOGIN_WITH, "WebLogin").Wait();
-                MessagingCenter.Send<LoginViewModel>(this, "UpdateProfile");
+                //MessagingCenter.Send<LoginViewModel>(this, "UpdateProfile");
                 OnSignIn?.Invoke(this, new EventArgs());
 
             }

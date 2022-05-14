@@ -35,16 +35,17 @@ namespace FoodDeliveryApp.ViewModels
         public async Task ExecuteLoadOrdersCommand()
         {
             IsBusy = true;
-            string email = App.userInfo.Email;
             try
             {
-                IEnumerable<ServerOrder> serverOrders;
-                serverOrders = await DataStore.GetServerOrders(email).ConfigureAwait(false);
+                List<ServerOrder> serverOrders;
+                serverOrders = App.userInfo.IsDriver ? await DataStore.GetServerOrders().ConfigureAwait(false) : await DataStore.GetServerOrders(App.userInfo.RestaurantRefId).ConfigureAwait(false);
 
                 /*if (Device.RuntimePlatform == Device.Android)
                     serverOrders = await DataStore.GetServerOrders(email).ConfigureAwait(false);
                 else
                     serverOrders = DataStore.GetServerOrders(email).ConfigureAwait(false).GetAwaiter().GetResult();*/
+                if (!string.IsNullOrEmpty(App.userInfo.Id))
+                    serverOrders = serverOrders.FindAll(o => string.IsNullOrWhiteSpace(o.DriverRefId) && o.DriverRefId != App.userInfo.Id);
 
                 lock (Orders)
                 {

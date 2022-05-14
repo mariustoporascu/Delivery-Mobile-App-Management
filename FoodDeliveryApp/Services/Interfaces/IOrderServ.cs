@@ -6,8 +6,8 @@ namespace FoodDeliveryApp.Services
 {
     public interface IOrderServ
     {
-        Task<int> CreateOrder(Order order);
-        Task CreateOrderInfo(OrderInfo orderInfo);
-        Task CreateProductsInOrder(List<ProductInOrder> productsInOrder);
+        Task<bool> UpdateOrder(int orderId, string status);
+        Task<bool> LockDriverOrder(string email, int orderId);
+        Task<bool> UpdateProductsInOrder(List<ProductInOrder> productsInOrder);
     }
 }

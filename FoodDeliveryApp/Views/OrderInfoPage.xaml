@@ -9,6 +9,11 @@
     Title="{Binding Title}"
     x:DataType="local:OrderInfoViewModel"
     Shell.PresentationMode="Animated">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <xct:InvertedBoolConverter x:Key="invertBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <StackLayout BackgroundColor="{AppThemeBinding Light=Gray, Dark=LightGray}" VerticalOptions="FillAndExpand">
         <StackLayout BackgroundColor="{AppThemeBinding Light=LightGray, Dark=Gray}">
             <StackLayout Margin="2" BackgroundColor="{AppThemeBinding Light=LightGray, Dark=Gray}">
@@ -85,6 +90,82 @@
                                 Text="{Binding CurrOrder.TotalOrderedInterfata}"
                                 TextColor="Black"
                                 WidthRequest="95" />
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout
+                        Margin="5"
+                        Padding="5"
+                        xct:CornerRadiusEffect.CornerRadius="10"
+                        BackgroundColor="{AppThemeBinding Light=LightCyan,
+                                                          Dark=LightCyan}"
+                        HorizontalOptions="FillAndExpand"
+                        IsVisible="{Binding IsPickerVisible}"
+                        Orientation="Horizontal">
+                        <Picker
+                            x:Name="Selector"
+                            Title="Selecteaza un status nou."
+                            HorizontalOptions="FillAndExpand"
+                            ItemsSource="{Binding OrderStatus}"
+                            SelectedIndexChanged="Picker_SelectedIndexChanged"
+                            TitleColor="Black" />
+                    </StackLayout>
+                    <StackLayout IsVisible="{Binding OwnerViewVis}">
+                        <StackLayout
+                            Margin="5"
+                            Padding="5"
+                            xct:CornerRadiusEffect.CornerRadius="10"
+                            BackgroundColor="{AppThemeBinding Light=LightCyan,
+                                                              Dark=LightCyan}"
+                            HorizontalOptions="FillAndExpand"
+                            IsVisible="{Binding HasDriver}"
+                            Orientation="Horizontal">
+                            <StackLayout BackgroundColor="{AppThemeBinding Light=LightCyan, Dark=LightCyan}" Orientation="Horizontal">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="Small"
+                                    HorizontalOptions="CenterAndExpand"
+                                    HorizontalTextAlignment="Center"
+                                    LineBreakMode="WordWrap"
+                                    Style="{DynamicResource ListItemTextStyle}"
+                                    Text="Detalii sofer:"
+                                    TextColor="Black"
+                                    VerticalTextAlignment="Center"
+                                    WidthRequest="80" />
+
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="Small"
+                                    HorizontalOptions="CenterAndExpand"
+                                    HorizontalTextAlignment="Center"
+                                    LineBreakMode="WordWrap"
+                                    Style="{DynamicResource ListItemTextStyle}"
+                                    Text="{Binding CurrOrderDriver.FirstName}"
+                                    TextColor="Black"
+                                    VerticalTextAlignment="Center"
+                                    WidthRequest="75" />
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="Small"
+                                    HorizontalOptions="CenterAndExpand"
+                                    HorizontalTextAlignment="Center"
+                                    LineBreakMode="WordWrap"
+                                    Style="{DynamicResource ListItemTextStyle}"
+                                    Text="{Binding CurrOrderDriver.LastName}"
+                                    TextColor="Black"
+                                    VerticalTextAlignment="Center"
+                                    WidthRequest="75" />
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="Small"
+                                    HorizontalOptions="CenterAndExpand"
+                                    HorizontalTextAlignment="Center"
+                                    LineBreakMode="WordWrap"
+                                    Style="{DynamicResource ListItemTextStyle}"
+                                    Text="{Binding CurrOrderDriver.TelefonNo}"
+                                    TextColor="Black"
+                                    VerticalTextAlignment="Center"
+                                    WidthRequest="100" />
+                            </StackLayout>
                         </StackLayout>
                     </StackLayout>
                     <StackLayout
@@ -174,6 +255,15 @@
                                 WidthRequest="95" />
                         </StackLayout>
                     </StackLayout>
+                </StackLayout>
+                <StackLayout IsVisible="{Binding OwnerViewVis, Converter={StaticResource invertBoolConverter}}">
+                    <Button
+                        Margin="20,0,20,0"
+                        Clicked="Button_Clicked"
+                        FontSize="Default"
+                        IsVisible="{Binding HasDriver, Converter={StaticResource invertBoolConverter}}"
+                        Text="Blockeaza comanda pentru tine."
+                        TextColor="Black" />
                 </StackLayout>
                 <StackLayout
                     Margin="5"

@@ -1,4 +1,5 @@
 ﻿using FoodDeliveryApp.Models.MapsModels;
+using FoodDeliveryApp.Models.ShopModels;
 using FoodDeliveryApp.Services;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,13 +8,14 @@ using Xamarin.Forms.Maps;
 
 namespace FoodDeliveryApp.ViewModels
 {
-    public class MapsViewModel
+    public class MapsViewModel : BaseViewModel
     {
         public Geocoder geoCoder;
         public Pin pinRoute1 = new Pin
         {
-            Label = "Adresa mea"
+            Label = "Cernavoda"
         };
+        Dictionary<int, UserLocation> userLocations = new Dictionary<int, UserLocation>();
         public MapsViewModel()
         {
             geoCoder = new Geocoder();
@@ -21,35 +23,26 @@ namespace FoodDeliveryApp.ViewModels
 
         public async Task LoadMyLocation()
         {
-            if (App.isLoggedIn && App.userInfo.CompleteProfile)
+            IEnumerable<Position> aproxLocation = await geoCoder.GetPositionsForAddressAsync("Centru, Cernavoda, Romania");
+            if (aproxLocation.Count() > 0)
             {
-                Position myPosition = new Position(App.userInfo.CoordX, App.userInfo.CoordY);
-                pinRoute1.Position = myPosition;
-
-            }
-            else
-            {
-                IEnumerable<Position> aproxLocation = await geoCoder.GetPositionsForAddressAsync("Centru, Cernavoda, Romania");
-                if (aproxLocation.Count() > 0)
-                {
-                    Position position1 = aproxLocation.FirstOrDefault();
-                    pinRoute1.Position = position1;
-                }
+                Position position1 = aproxLocation.FirstOrDefault();
+                pinRoute1.Position = position1;
             }
         }
-        internal async Task<GoogleDirection> LoadRoute(Pin pin)
+        public async Task<Dictionary<int, UserLocation>> GetUserLocations()
         {
-            if (App.isLoggedIn)
+            userLocations.Clear();
+            List<ServerOrder> serverOrders;
+            serverOrders = App.userInfo.IsDriver ? await DataStore.GetServerOrders().ConfigureAwait(false) : await DataStore.GetServerOrders(App.userInfo.RestaurantRefId).ConfigureAwait(false);
+            foreach (ServerOrder serverOrder in serverOrders)
             {
-                var googleDirection = await MapsApiServ.ServiceClientInstance.GetDirections(pinRoute1.Position, pin.Position);
-                if (googleDirection.Routes != null && googleDirection.Routes.Count > 0)
-                {
-                    return googleDirection;
-                }
-                return null;
+                if (serverOrder.Status != "Livrata" && serverOrder.Status != "Refuzata"
+                    && serverOrder.Status != "Anulata" && App.userInfo.IsDriver ? serverOrder.DriverRefId == App.userInfo.Id : true)
+                    userLocations.Add(serverOrder.OrderId, serverOrder.DeliveryLocation);
 
             }
-            return null;
+            return userLocations;
         }
     }
 }

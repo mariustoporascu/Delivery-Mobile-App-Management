@@ -129,9 +129,13 @@ namespace FoodDeliveryApp.Services
             return _serverInfo.subCateg;
         }
 
-        public async Task<IEnumerable<ServerOrder>> GetServerOrders(string email)
+        public async Task<List<ServerOrder>> GetServerOrders()
         {
-            return await _serverInfo.loadServerOrders(email).ConfigureAwait(false);
+            return await _serverInfo.loadServerOrders().ConfigureAwait(false);
+        }
+        public async Task<List<ServerOrder>> GetServerOrders(int restaurantRefId)
+        {
+            return await _serverInfo.loadServerOrders(restaurantRefId).ConfigureAwait(false);
         }
     }
 }
