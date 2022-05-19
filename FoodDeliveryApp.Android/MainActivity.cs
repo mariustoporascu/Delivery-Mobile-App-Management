@@ -8,6 +8,7 @@ using Android.Widget;
 using Xamarin.Forms;
 using Plugin.FacebookClient;
 using FoodDeliveryApp.Constants;
+using Xamarin.Essentials;
 
 namespace FoodDeliveryApp.Droid
 {
@@ -95,10 +96,16 @@ namespace FoodDeliveryApp.Droid
         {
             using (var alert = new AlertDialog.Builder(this))
             {
-                alert.SetTitle("Confirm Exit");
-                alert.SetMessage("Are you sure you want to exit?");
-                alert.SetPositiveButton("Yes", (sender, args) => { FinishAffinity(); });
-                alert.SetNegativeButton("No", (sender, args) => { }); // do nothing
+                alert.SetTitle("Confirma inchiderea aplicatiei");
+                alert.SetMessage("Esti sigur ca vrei sa inchizi aplicatia?");
+                alert.SetPositiveButton("Da", (sender, args) =>
+                {
+                    FinishAffinity();
+                    if (IsServiceRunning(typeof(AndroidLocationService)))
+                        StopService(serviceIntent);
+                    Preferences.Set("LocationServiceRunning", false);
+                });
+                alert.SetNegativeButton("Nu", (sender, args) => { }); // do nothing
 
                 var dialog = alert.Create();
                 dialog.Show();

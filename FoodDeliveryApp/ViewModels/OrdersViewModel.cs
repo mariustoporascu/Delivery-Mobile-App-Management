@@ -45,7 +45,8 @@ namespace FoodDeliveryApp.ViewModels
                 else
                     serverOrders = DataStore.GetServerOrders(email).ConfigureAwait(false).GetAwaiter().GetResult();*/
                 if (!string.IsNullOrEmpty(App.userInfo.Id))
-                    serverOrders = serverOrders.FindAll(o => string.IsNullOrWhiteSpace(o.DriverRefId) && o.DriverRefId != App.userInfo.Id);
+                    serverOrders = serverOrders.FindAll(o => string.IsNullOrWhiteSpace(o.DriverRefId) && o.DriverRefId != App.userInfo.Id &&
+                    (o.IsRestaurant ? o.Status != "Plasata" && o.Status != "Preluata" : true));
 
                 lock (Orders)
                 {
@@ -59,7 +60,7 @@ namespace FoodDeliveryApp.ViewModels
                     else
                         IsPageVisible = false;
                 }
-                Task.Delay(2000).Wait();
+                await Task.Delay(1000);
 
             }
             catch (Exception ex)

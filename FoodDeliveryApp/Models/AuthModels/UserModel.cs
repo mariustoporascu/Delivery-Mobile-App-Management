@@ -10,6 +10,7 @@
         private double _coordX;
         private double _coordY;
         private string _id = string.Empty;
+        private string _loginToken;
         public bool IsDriver { get => _isDriver; set => SetProperty(ref _isDriver, value); }
         public bool IsOwner { get => _isOwner; set => SetProperty(ref _isOwner, value); }
         public int RestaurantRefId { get => _restaurantRefId; set => SetProperty(ref _restaurantRefId, value); }
@@ -18,5 +19,7 @@
         public string Password { get => _password; set => SetProperty(ref _password, value); }
         public double CoordX { get => _coordX; set => SetProperty(ref _coordX, value); }
         public double CoordY { get => _coordY; set => SetProperty(ref _coordY, value); }
+        public string LoginToken { get => _loginToken; set => SetProperty(ref _loginToken, value); }
+
     }
 }

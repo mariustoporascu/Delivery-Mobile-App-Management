@@ -21,8 +21,8 @@ namespace FoodDeliveryApp.Droid
             var pendingIntent = PendingIntent.GetActivity(context, 0, intent, PendingIntentFlags.UpdateCurrent);
 
             var notificationBuilder = new NotificationCompat.Builder(context, foregroundChannelId)
-                .SetContentTitle("Food app delivery")
-                .SetContentText("Locatia ta este urmarita.")
+                .SetContentTitle("Food app delivery - Location")
+                .SetContentText("Locatia ta este urmarita pentru livrari.")
                 .SetSmallIcon(Resource.Drawable.location)
                 .SetOngoing(true)
                 .SetContentIntent(pendingIntent);

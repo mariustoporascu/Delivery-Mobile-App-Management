@@ -41,7 +41,6 @@ namespace FoodDeliveryApp.Services
         private async Task<string> sendRequest(UserModel userModel, Uri uri)
         {
             var _httpClient = new HttpClient();
-            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             var json = JsonConvert.SerializeObject(userModel);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
             HttpResponseMessage httpResponseMessage = await _httpClient.PostAsync(uri, data);

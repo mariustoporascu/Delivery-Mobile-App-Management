@@ -1,6 +1,7 @@
 ﻿using FoodDeliveryApp.Models.AuthModels;
 using FoodDeliveryApp.Views;
 using System;
+using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -14,6 +15,8 @@ namespace FoodDeliveryApp.ViewModels
         {
             Title = "Acasa";
             LogoutCommand = new Command(LogOutFunct);
+            Task.Run(async () => await DataStore.Init().ConfigureAwait(false));
+
         }
         void LogOutFunct()
         {

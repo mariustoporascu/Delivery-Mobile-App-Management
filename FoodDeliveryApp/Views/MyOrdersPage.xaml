@@ -121,7 +121,7 @@
                                                     <Label
                                                         FontSize="Small"
                                                         HorizontalTextAlignment="Center"
-                                                        LineBreakMode="NoWrap"
+                                                        LineBreakMode="WordWrap"
                                                         Style="{DynamicResource ListItemTextStyle}"
                                                         Text="{Binding Status}"
                                                         TextColor="Black" />

@@ -58,7 +58,7 @@ namespace FoodDeliveryApp.ViewModels
                     else
                         IsPageVisible = false;
                 }
-                Task.Delay(2000).Wait();
+                await Task.Delay(1000);
 
             }
             catch (Exception ex)

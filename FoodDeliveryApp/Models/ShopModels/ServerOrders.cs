@@ -13,6 +13,12 @@ namespace FoodDeliveryApp.Models.ShopModels
         public bool IsRestaurant { get; set; }
         public int RestaurantRefId { get; set; }
         public string DriverRefId { get; set; }
+        public string EstimatedTime { get; set; }
+        public bool? HasUserConfirmedET { get; set; }
+        public bool RestaurantGaveRating { get; set; } = false;
+        public bool DriverGaveRating { get; set; } = false;
+        public int RatingClientDeLaSofer { get; set; }
+        public int RatingClientDeLaRestaurant { get; set; }
         public DateTime Created { get; set; }
         [JsonProperty("productsInOrder")]
         public List<ProductInOrder> ProductsInOrder { get; set; }

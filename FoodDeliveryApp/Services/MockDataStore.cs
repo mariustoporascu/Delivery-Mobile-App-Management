@@ -17,7 +17,10 @@ namespace FoodDeliveryApp.Services
         {
             await _serverInfo.loadAppInfo().ConfigureAwait(false);
         }
-
+        public Companie GetRestaurant(int restaurantId)
+        {
+            return _serverInfo.restaurante.FirstOrDefault(r => r.RestaurantId == restaurantId);
+        }
         public Item GetItem(int id)
         {
             return _serverInfo.items.FirstOrDefault(s => s.ProductId == id);
