@@ -1,7 +1,6 @@
 ﻿using FoodDeliveryApp.ViewModels;
 using System;
 using System.Diagnostics;
-using Xamarin.CommunityToolkit.Extensions;
 using Xamarin.Forms;
 
 namespace FoodDeliveryApp.Views

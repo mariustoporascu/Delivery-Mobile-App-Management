@@ -1,9 +1,6 @@
 ﻿using AuthenticationServices;
 using FoodDeliveryApp.iOS.Services;
-using FoodDeliveryApp.Models.AuthModels;
-using FoodDeliveryApp.Services;
 using Foundation;
-using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using UIKit;

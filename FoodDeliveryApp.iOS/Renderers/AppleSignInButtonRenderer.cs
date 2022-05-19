@@ -1,5 +1,4 @@
 ﻿using AuthenticationServices;
-using FoodDeliveryApp.Controls;
 using System;
 using UIKit;
 using Xamarin.Forms.Platform.iOS;

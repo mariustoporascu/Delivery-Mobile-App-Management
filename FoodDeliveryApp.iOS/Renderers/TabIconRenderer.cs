@@ -1,5 +1,4 @@
 ﻿using CoreGraphics;
-using FoodDeliveryApp;
 using FoodDeliveryApp.iOS.Renderers;
 using UIKit;
 using Xamarin.Forms;

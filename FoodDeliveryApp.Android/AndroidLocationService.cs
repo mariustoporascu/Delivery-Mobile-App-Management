@@ -1,11 +1,10 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
 using Android.OS;
 using FoodDeliveryApp.Constants;
 using FoodDeliveryApp.Services;
+using System.Threading;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace FoodDeliveryApp.Droid

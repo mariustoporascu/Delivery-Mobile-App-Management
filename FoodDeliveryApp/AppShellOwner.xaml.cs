@@ -1,6 +1,4 @@
-﻿using FoodDeliveryApp.Services;
-using FoodDeliveryApp.Views;
-using System.Threading.Tasks;
+﻿using FoodDeliveryApp.Views;
 using Xamarin.Forms;
 
 namespace FoodDeliveryApp

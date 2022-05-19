@@ -1,10 +1,4 @@
-﻿using FoodDeliveryApp.Constants;
-using FoodDeliveryApp.Services;
-using FoodDeliveryApp.Views;
-using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using Xamarin.CommunityToolkit.Extensions;
+﻿using FoodDeliveryApp.Views;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 

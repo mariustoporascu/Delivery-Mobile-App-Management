@@ -1,7 +1,6 @@
 ﻿using FoodDeliveryApp.Models.AuthModels;
 using FoodDeliveryApp.Services;
 using FoodDeliveryApp.Views;
-using Newtonsoft.Json;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;

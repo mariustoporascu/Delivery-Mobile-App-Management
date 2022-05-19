@@ -1,4 +1,5 @@
-﻿using FoodDeliveryApp.Models.ShopModels;
+﻿using FoodDeliveryApp.Constants;
+using FoodDeliveryApp.Models.ShopModels;
 using FoodDeliveryApp.Views;
 using MvvmHelpers;
 using System;
@@ -6,7 +7,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using FoodDeliveryApp.Constants;
 
 namespace FoodDeliveryApp.ViewModels
 {

@@ -1,14 +1,11 @@
-﻿using System;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
-using Android.Widget;
-using Xamarin.Forms;
-using Plugin.FacebookClient;
 using FoodDeliveryApp.Constants;
 using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace FoodDeliveryApp.Droid
 {

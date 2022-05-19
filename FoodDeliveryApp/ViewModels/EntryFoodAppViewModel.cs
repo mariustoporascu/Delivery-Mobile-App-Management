@@ -1,5 +1,4 @@
 ﻿using FoodDeliveryApp.Models.AuthModels;
-using FoodDeliveryApp.Views;
 using System;
 using System.Threading.Tasks;
 using Xamarin.Essentials;

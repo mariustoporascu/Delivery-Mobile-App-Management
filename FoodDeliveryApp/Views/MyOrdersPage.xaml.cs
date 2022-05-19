@@ -1,6 +1,4 @@
 ﻿using FoodDeliveryApp.ViewModels;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace FoodDeliveryApp.Views

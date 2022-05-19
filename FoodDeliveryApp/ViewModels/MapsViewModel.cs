@@ -1,6 +1,4 @@
-﻿using FoodDeliveryApp.Models.MapsModels;
-using FoodDeliveryApp.Models.ShopModels;
-using FoodDeliveryApp.Services;
+﻿using FoodDeliveryApp.Models.ShopModels;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
