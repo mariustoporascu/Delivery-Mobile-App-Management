@@ -1,7 +1,7 @@
 # AIO Livrari Cernavoda - Management Mobile App
 Management part for Delivery Mobile App in Xamarin Forms Framework
 
-•	Used Visual Studio Code to develop using C#, XAML.
+•	Used Visual Studio to develop using C#, XAML.
 
 •	Developed fully functional management part for delivery mobile application(Android/iOS).
 
