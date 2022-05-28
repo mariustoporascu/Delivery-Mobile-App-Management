@@ -5,17 +5,20 @@ using Android.OS;
 using Android.Runtime;
 using FoodDeliveryApp.Constants;
 using Xamarin.Essentials;
+using AndroidX.AppCompat.App;
 using Xamarin.Forms;
 
 namespace FoodDeliveryApp.Droid
 {
-    [Activity(Label = "FoodDeliveryApp", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.Locale | ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize, ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "FoodDeliveryApp", Icon = "@mipmap/ic_launcher", Theme = "@style/MainTheme", ConfigurationChanges = ConfigChanges.Locale | ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize, ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         Intent serviceIntent;
         private const int RequestCode = 5469;
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            AppCompatDelegate.DefaultNightMode = AppCompatDelegate.ModeNightNo;
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
@@ -91,7 +94,7 @@ namespace FoodDeliveryApp.Droid
 
         private void ConfirmWithDialog()
         {
-            using (var alert = new AlertDialog.Builder(this))
+            using (var alert = new Android.App.AlertDialog.Builder(this))
             {
                 alert.SetTitle("Confirma inchiderea aplicatiei");
                 alert.SetMessage("Esti sigur ca vrei sa inchizi aplicatia?");

@@ -1,4 +1,5 @@
 ﻿using FoodDeliveryApp.Constants;
+using FoodDeliveryApp.Models.ShopModels;
 using FoodDeliveryApp.ViewModels;
 using System;
 using System.Diagnostics;
@@ -22,9 +23,13 @@ namespace FoodDeliveryApp.Views
         {
             base.OnAppearing();
             if (App.userInfo.IsOwner)
+            {
+                Header.Text = "Administrare comenzi restaurant.";
                 Info.Text = "Aici va puteti gestiona comenzile primite, vizualiza detalii despre soferul care a preluat comanda si nu numai.";
+            }
             else
             {
+                Header.Text = "Administrare comenzi pentru livratori.";
                 Info.Text = "Aici va puteti gestiona comenzile, bloca anumite comenzi pentru a fi livrate de catre tine, vizualiza pe harta destinatiile pentru livrari si nu numai.";
                 await SetupLocation();
 

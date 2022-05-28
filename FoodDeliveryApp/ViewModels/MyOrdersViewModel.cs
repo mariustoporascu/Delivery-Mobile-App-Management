@@ -1,4 +1,5 @@
-﻿using FoodDeliveryApp.Models.ShopModels;
+﻿using FoodDeliveryApp.Constants;
+using FoodDeliveryApp.Models.ShopModels;
 using FoodDeliveryApp.Views;
 using MvvmHelpers;
 using System;
@@ -13,10 +14,14 @@ namespace FoodDeliveryApp.ViewModels
     {
         private ObservableRangeCollection<ServerOrder> _orders;
         public ObservableRangeCollection<ServerOrder> Orders { get => _orders; set => SetProperty(ref _orders, value); }
+        private List<string> _orderStatuses;
+        public List<string> OrderStatus { get => _orderStatuses; set => SetProperty(ref _orderStatuses, value); }
         public Command LoadOrdersCommand { get; }
         private bool isLoggedIn = false;
         public bool IsLoggedIn { get => isLoggedIn; set => SetProperty(ref isLoggedIn, value); }
         public Command<ServerOrder> ItemTapped { get; }
+        public DateTime SelectedTime { get; set; } = DateTime.UtcNow.AddHours(3);
+        List<ServerOrder> serverOrders;
 
         private bool isPageVisible = false;
         public bool IsPageVisible
@@ -29,7 +34,12 @@ namespace FoodDeliveryApp.ViewModels
             Orders = new ObservableRangeCollection<ServerOrder>();
             IsLoggedIn = App.isLoggedIn;
             ItemTapped = new Command<ServerOrder>(OnItemSelected);
-
+            OrderStatus = new List<string>();
+            OrderStatus.Clear();
+            OrderStatus.Add("Toate");
+            OrderStatus.Add(ServerConstants.DefaultOrderStatus);
+            OrderStatus.AddRange(ServerConstants.OrderStatusOwner);
+            OrderStatus.AddRange(ServerConstants.OrderStatusDriver);
             LoadOrdersCommand = new Command(async () => await ExecuteLoadOrdersCommand());
         }
         public async Task ExecuteLoadOrdersCommand()
@@ -37,7 +47,6 @@ namespace FoodDeliveryApp.ViewModels
             IsBusy = true;
             try
             {
-                List<ServerOrder> serverOrders;
                 serverOrders = App.userInfo.IsDriver ? await DataStore.GetServerOrders().ConfigureAwait(false) : await DataStore.GetServerOrders(App.userInfo.RestaurantRefId).ConfigureAwait(false);
 
                 /*if (Device.RuntimePlatform == Device.Android)
@@ -46,11 +55,10 @@ namespace FoodDeliveryApp.ViewModels
                     serverOrders = DataStore.GetServerOrders(email).ConfigureAwait(false).GetAwaiter().GetResult();*/
 
                 serverOrders = serverOrders.FindAll(o => !string.IsNullOrWhiteSpace(o.DriverRefId) && o.DriverRefId == App.userInfo.Id);
+
                 lock (Orders)
                 {
-                    Orders.Clear();
-                    if (serverOrders != null)
-                        Orders.AddRange(serverOrders);
+                    FilterBy(SelectedTime, "Toate");
                     if (Orders.Count > 0)
                     {
                         IsPageVisible = true;
@@ -69,6 +77,15 @@ namespace FoodDeliveryApp.ViewModels
             {
                 IsBusy = false;
             }
+        }
+        public void FilterBy(DateTime time, string status)
+        {
+            Orders.Clear();
+            if (serverOrders != null && status == "Toate")
+                Orders.AddRange(serverOrders.FindAll(or => or.Created.Day == time.Day && or.Created.Month == time.Month));
+            else if (serverOrders != null)
+                Orders.AddRange(serverOrders.FindAll(or => or.Created.Day == time.Day && or.Created.Month == time.Month
+                && or.Status == status));
         }
         async void OnItemSelected(ServerOrder item)
         {

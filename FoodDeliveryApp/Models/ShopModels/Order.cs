@@ -1,4 +1,6 @@
-﻿namespace FoodDeliveryApp.Models.ShopModels
+﻿using System;
+
+namespace FoodDeliveryApp.Models.ShopModels
 {
     public class Order : BaseModel
     {
@@ -6,6 +8,8 @@
         public string _status;
         public string Status { get => _status; set => SetProperty(ref _status, value); }
         public decimal TotalOrdered { get; set; }
+        public decimal TransportFee { get; set; }
+
         public string TotalOrderedInterfata { get; set; }
         public string CustomerId { get; set; }
         private string _estimatedTime;
@@ -14,6 +18,8 @@
         public bool IsRestaurant { get; set; } = false;
         public int RestaurantRefId { get; set; }
         public string DriverRefId { get; set; }
+        public DateTime Created { get; set; }
+
         private bool _driverGaveRating;
         public bool DriverGaveRating { get => _driverGaveRating; set => SetProperty(ref _driverGaveRating, value); }
 

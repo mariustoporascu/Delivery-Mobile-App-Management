@@ -13,10 +13,11 @@ namespace FoodDeliveryApp.Views
 {
     public partial class LoginPage : ContentPage
     {
+        LoginViewModel vm;
         public LoginPage()
         {
             InitializeComponent();
-            var vm = new LoginViewModel();
+            BindingContext =  vm = new LoginViewModel();
             if (Device.RuntimePlatform == Device.iOS)
                 vm.OnSignIn += OnSignInApple;
             else
@@ -34,6 +35,7 @@ namespace FoodDeliveryApp.Views
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+            vm.IsBusy = true;
             await onStart();
             if (App.isLoggedIn)
             {
@@ -42,6 +44,7 @@ namespace FoodDeliveryApp.Views
                 else
                     OnSignIn(this, new EventArgs());
             }
+            vm.IsBusy = false;
         }
         async Task onStart()
         {
@@ -56,6 +59,8 @@ namespace FoodDeliveryApp.Views
             {
                 if (lWith.Equals("WebLogin"))
                 {
+                    vm.UserName = webMail;
+                    vm.Password = webPass;
                     loginResult = await authService.LoginUser(new UserModel { Email = webMail, Password = webPass });
                     finalEmail = webMail;
                 }

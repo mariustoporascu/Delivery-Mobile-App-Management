@@ -31,21 +31,18 @@
         <ShellContent
             Title="Acasa"
             ContentTemplate="{DataTemplate local:EntryFoodAppPage}"
-            Icon="{AppThemeBinding Light=img_home.png,
-                                   Dark=img_home.png}"
+            Icon="home.png"
             Route="EntryFoodAppPage" />
 
         <ShellContent
             Title="Harta"
             ContentTemplate="{DataTemplate local:MapsPage}"
-            Icon="{AppThemeBinding Light=img_map.png,
-                                   Dark=img_map.png}"
+            Icon="location.png"
             Route="MapsPage" />
         <ShellContent
             Title="Comenzi"
             ContentTemplate="{DataTemplate local:OrdersPage}"
-            Icon="{AppThemeBinding Light=img_orders.png,
-                                   Dark=img_orders.png}"
+            Icon="orders.png"
             Route="OrdersPage" />
     </TabBar>
 

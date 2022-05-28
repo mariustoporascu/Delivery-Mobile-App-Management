@@ -14,7 +14,6 @@ namespace FoodDeliveryApp.ViewModels
         {
             Title = "Acasa";
             LogoutCommand = new Command(LogOutFunct);
-            Task.Run(async () => await DataStore.Init().ConfigureAwait(false));
 
         }
         void LogOutFunct()

@@ -9,6 +9,8 @@ namespace FoodDeliveryApp.Models.ShopModels
         public int OrderId { get; set; }
         public string Status { get; set; }
         public decimal TotalOrdered { get; set; }
+        public decimal TransportFee { get; set; }
+
         public string CustomerId { get; set; }
         public bool IsRestaurant { get; set; }
         public int RestaurantRefId { get; set; }

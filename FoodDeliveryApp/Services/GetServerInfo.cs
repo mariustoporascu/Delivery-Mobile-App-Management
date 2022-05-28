@@ -35,7 +35,6 @@ namespace FoodDeliveryApp.Services
             await loadServerRestaurante().ConfigureAwait(false);
             await loadServerSuperMarkets().ConfigureAwait(false);
             await loadServerMeasuringUnits().ConfigureAwait(false);
-            loadCartPrefs();
         }
 
         public void loadCartPrefs()
@@ -144,6 +143,13 @@ namespace FoodDeliveryApp.Services
                 bool authid = client.DefaultRequestHeaders.TryGetValues("authid", out var val2);
                 if (!authid && !authkey)
                 {
+                    client.DefaultRequestHeaders.Add("authkey", App.userInfo.LoginToken);
+                    client.DefaultRequestHeaders.Add("authid", App.userInfo.Email);
+                }
+                else
+                {
+                    client.DefaultRequestHeaders.Remove("authkey");
+                    client.DefaultRequestHeaders.Remove("authid");
                     client.DefaultRequestHeaders.Add("authkey", App.userInfo.LoginToken);
                     client.DefaultRequestHeaders.Add("authid", App.userInfo.Email);
                 }

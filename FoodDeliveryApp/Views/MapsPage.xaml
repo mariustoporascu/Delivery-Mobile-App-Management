@@ -10,7 +10,7 @@
     x:DataType="local:MapsViewModel"
     Shell.PresentationMode="Animated">
 
-    <StackLayout BackgroundColor="{AppThemeBinding Light=LightGray, Dark=Gray}">
+    <StackLayout BackgroundColor="PaleGoldenrod">
         <Label
             FontSize="Large"
             HorizontalOptions="CenterAndExpand"

@@ -23,6 +23,7 @@ namespace FoodDeliveryApp.Views
                 {
                     ItemsListView.ScrollTo(0, position: ScrollToPosition.Start);
                 }
+                StatusPick.SelectedIndex = 0;
             }
             else
             {
@@ -36,5 +37,15 @@ namespace FoodDeliveryApp.Views
             ItemsListView.ItemsSource = null;
         }
 
+        private void DatePicker_DateSelected(object sender, DateChangedEventArgs e)
+        {
+            viewModel.SelectedTime = e.NewDate;
+            viewModel.FilterBy(e.NewDate, (string)StatusPick.SelectedItem);
+        }
+
+        private void Selector_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            viewModel.FilterBy(viewModel.SelectedTime, (string)StatusPick.SelectedItem);
+        }
     }
 }
