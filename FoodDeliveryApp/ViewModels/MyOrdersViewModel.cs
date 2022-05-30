@@ -47,12 +47,12 @@ namespace FoodDeliveryApp.ViewModels
             IsBusy = true;
             try
             {
-                serverOrders = App.userInfo.IsDriver ? await DataStore.GetServerOrders().ConfigureAwait(false) : await DataStore.GetServerOrders(App.userInfo.RestaurantRefId).ConfigureAwait(false);
+                serverOrders = App.userInfo.IsDriver ? await DataStore.GetServerOrders() : await DataStore.GetServerOrders(App.userInfo.RestaurantRefId);
 
                 /*if (Device.RuntimePlatform == Device.Android)
-                    serverOrders = await DataStore.GetServerOrders(email).ConfigureAwait(false);
+                    serverOrders = await DataStore.GetServerOrders(email);
                 else
-                    serverOrders = DataStore.GetServerOrders(email).ConfigureAwait(false).GetAwaiter().GetResult();*/
+                    serverOrders = DataStore.GetServerOrders(email).GetAwaiter().GetResult();*/
 
                 serverOrders = serverOrders.FindAll(o => !string.IsNullOrWhiteSpace(o.DriverRefId) && o.DriverRefId == App.userInfo.Id);
 

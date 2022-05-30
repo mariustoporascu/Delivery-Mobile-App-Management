@@ -49,7 +49,7 @@ namespace FoodDeliveryApp.Services
             TryAddHeaders();
 
             Uri uri = new Uri($"{ServerConstants.BaseUrl}/foodappmanage/updatestatus/{orderId}&{status}");
-            HttpResponseMessage httpResponseMessage = await _httpClient.GetAsync(uri).ConfigureAwait(false);
+            HttpResponseMessage httpResponseMessage = await _httpClient.GetAsync(uri);
 
             if (httpResponseMessage.IsSuccessStatusCode)
             {
@@ -65,7 +65,7 @@ namespace FoodDeliveryApp.Services
             TryAddHeaders();
 
             Uri uri = new Uri($"{ServerConstants.BaseUrl}/foodappmanage/ratingclient/{isOwner}&{orderId}&{rating}");
-            HttpResponseMessage httpResponseMessage = await _httpClient.GetAsync(uri).ConfigureAwait(false);
+            HttpResponseMessage httpResponseMessage = await _httpClient.GetAsync(uri);
 
             if (httpResponseMessage.IsSuccessStatusCode)
             {
@@ -79,7 +79,7 @@ namespace FoodDeliveryApp.Services
             TryAddHeaders();
 
             Uri uri = new Uri($"{ServerConstants.BaseUrl}/foodappmanage/setesttime/{orderId}&{estTime}");
-            HttpResponseMessage httpResponseMessage = await _httpClient.GetAsync(uri).ConfigureAwait(false);
+            HttpResponseMessage httpResponseMessage = await _httpClient.GetAsync(uri);
 
             if (httpResponseMessage.IsSuccessStatusCode)
             {
@@ -95,7 +95,7 @@ namespace FoodDeliveryApp.Services
             TryAddHeaders();
 
             Uri uri = new Uri($"{ServerConstants.BaseUrl}/foodappmanage/driverlockorder/{email}&{orderId}");
-            HttpResponseMessage httpResponseMessage = await _httpClient.GetAsync(uri).ConfigureAwait(false);
+            HttpResponseMessage httpResponseMessage = await _httpClient.GetAsync(uri);
 
             if (httpResponseMessage.IsSuccessStatusCode)
             {

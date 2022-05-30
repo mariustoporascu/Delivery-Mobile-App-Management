@@ -65,15 +65,15 @@ namespace FoodDeliveryApp.Services
                  position2.Latitude.ToString("N7", CultureInfo.InvariantCulture) + "&" +
                  position2.Longitude.ToString("N7", CultureInfo.InvariantCulture) + "&" +
                  position1.Latitude.ToString("N7", CultureInfo.InvariantCulture) + "&" +
-                 position1.Longitude.ToString("N7", CultureInfo.InvariantCulture)).ConfigureAwait(false);
+                 position1.Longitude.ToString("N7", CultureInfo.InvariantCulture));
             if (response.IsSuccessStatusCode)
             {
-                var json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var json = await response.Content.ReadAsStringAsync();
                 if (!string.IsNullOrWhiteSpace(json))
                 {
                     googleDirection = await Task.Run(() =>
                        JsonConvert.DeserializeObject<GoogleDirection>(json)
-                    ).ConfigureAwait(false);
+                    );
 
                 }
 

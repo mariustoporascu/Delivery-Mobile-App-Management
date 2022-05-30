@@ -15,7 +15,7 @@ namespace FoodDeliveryApp.Services
         }
         public async Task Init()
         {
-            await _serverInfo.loadAppInfo().ConfigureAwait(false);
+            await _serverInfo.loadAppInfo();
         }
         public Companie GetRestaurant(int restaurantId)
         {
@@ -134,11 +134,11 @@ namespace FoodDeliveryApp.Services
 
         public async Task<List<ServerOrder>> GetServerOrders()
         {
-            return await _serverInfo.loadServerOrders().ConfigureAwait(false);
+            return await _serverInfo.loadServerOrders();
         }
         public async Task<List<ServerOrder>> GetServerOrders(int restaurantRefId)
         {
-            return await _serverInfo.loadServerOrders(restaurantRefId).ConfigureAwait(false);
+            return await _serverInfo.loadServerOrders(restaurantRefId);
         }
     }
 }

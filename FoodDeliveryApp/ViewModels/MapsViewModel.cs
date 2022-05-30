@@ -32,7 +32,7 @@ namespace FoodDeliveryApp.ViewModels
         {
             userLocations.Clear();
             List<ServerOrder> serverOrders;
-            serverOrders = App.userInfo.IsDriver ? await DataStore.GetServerOrders().ConfigureAwait(false) : await DataStore.GetServerOrders(App.userInfo.RestaurantRefId).ConfigureAwait(false);
+            serverOrders = App.userInfo.IsDriver ? await DataStore.GetServerOrders() : await DataStore.GetServerOrders(App.userInfo.RestaurantRefId);
             foreach (ServerOrder serverOrder in serverOrders)
             {
                 if (serverOrder.Status != "Livrata" && serverOrder.Status != "Refuzata"
