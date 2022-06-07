@@ -38,15 +38,15 @@ namespace FoodDeliveryApp.Services
                 bool authid = client.DefaultRequestHeaders.TryGetValues("authid", out var val2);
                 if (!authid && !authkey)
                 {
-                    client.DefaultRequestHeaders.Add("authkey", App.userInfo.LoginToken);
-                    client.DefaultRequestHeaders.Add("authid", App.userInfo.Email);
+                    client.DefaultRequestHeaders.Add("authkey", App.UserInfo.LoginToken);
+                    client.DefaultRequestHeaders.Add("authid", App.UserInfo.Email);
                 }
                 else
                 {
                     client.DefaultRequestHeaders.Remove("authkey");
                     client.DefaultRequestHeaders.Remove("authid");
-                    client.DefaultRequestHeaders.Add("authkey", App.userInfo.LoginToken);
-                    client.DefaultRequestHeaders.Add("authid", App.userInfo.Email);
+                    client.DefaultRequestHeaders.Add("authkey", App.UserInfo.LoginToken);
+                    client.DefaultRequestHeaders.Add("authid", App.UserInfo.Email);
                 }
 
             }

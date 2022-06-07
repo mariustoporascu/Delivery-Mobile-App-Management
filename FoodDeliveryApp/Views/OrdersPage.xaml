@@ -65,27 +65,49 @@
                                 VerticalOptions="CenterAndExpand"
                                 WidthRequest="95" />
 
-                            <DatePicker
-                                x:Name="Datapick"
-                                DateSelected="DatePicker_DateSelected"
-                                FontSize="Small"
-                                HorizontalOptions="Center"
-                                TextColor="Black"
-                                TextTransform="None"
-                                WidthRequest="100" />
+                            <StackLayout Orientation="Horizontal" WidthRequest="120">
+
+                                <DatePicker
+                                    x:Name="Datapick"
+                                    DateSelected="DatePicker_DateSelected"
+                                    FontSize="Small"
+                                    HorizontalOptions="Center"
+                                    TextColor="Black"
+                                    TextTransform="None" />
+                                <Image
+                                    Margin="0,0,0,0"
+                                    Aspect="AspectFit"
+                                    HorizontalOptions="Center"
+                                    Source="edit.png" />
+                            </StackLayout>
                         </StackLayout>
 
                         <CollectionView x:Name="ItemsListView" SelectionMode="None">
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
-                                    <StackLayout>
-                                        <StackLayout Margin="2" x:DataType="model:ServerOrder">
+                                    <StackLayout Margin="2" x:DataType="model:ServerOrder">
+                                        <StackLayout
+                                            Margin="2"
+                                            xct:CornerRadiusEffect.CornerRadius="10"
+                                            BackgroundColor="LightCyan"
+                                            HorizontalOptions="FillAndExpand">
                                             <StackLayout
-                                                Margin="2"
-                                                xct:CornerRadiusEffect.CornerRadius="10"
-                                                BackgroundColor="LightCyan"
+                                                HorizontalOptions="CenterAndExpand"
+                                                IsVisible="{Binding Source={RelativeSource AncestorType={x:Type local:OrdersViewModel}}, Path=CanSeeExtraInfo}"
+                                                Orientation="Horizontal"
+                                                VerticalOptions="FillAndExpand">
+                                                <Label
+                                                    FontSize="Small"
+                                                    HorizontalTextAlignment="Center"
+                                                    LineBreakMode="WordWrap"
+                                                    Text="{Binding CompanieName}"
+                                                    TextColor="Black" />
+                                            </StackLayout>
+                                            <StackLayout
                                                 HorizontalOptions="FillAndExpand"
-                                                Orientation="Horizontal">
+                                                Orientation="Horizontal"
+                                                VerticalOptions="FillAndExpand">
+
                                                 <StackLayout
                                                     HorizontalOptions="CenterAndExpand"
                                                     VerticalOptions="CenterAndExpand"
@@ -126,30 +148,26 @@
                                                 <StackLayout
                                                     HorizontalOptions="CenterAndExpand"
                                                     VerticalOptions="CenterAndExpand"
-                                                    WidthRequest="100">
+                                                    WidthRequest="120">
                                                     <Label
                                                         FontSize="Small"
                                                         HorizontalTextAlignment="Center"
-                                                        LineBreakMode="NoWrap"
-                                                        Text="{Binding Created, StringFormat='{0:MMMM dd, yyyy}'}"
-                                                        TextColor="Black" />
-                                                    <Label
-                                                        FontSize="Small"
-                                                        HorizontalTextAlignment="Center"
-                                                        LineBreakMode="NoWrap"
-                                                        Text="{Binding Created, StringFormat='{}{0:hh\\:mm}'}"
+                                                        LineBreakMode="WordWrap"
+                                                        Text="{Binding PaymentMethod}"
                                                         TextColor="Black" />
                                                 </StackLayout>
                                             </StackLayout>
-                                            <StackLayout.GestureRecognizers>
-                                                <TapGestureRecognizer
-                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:OrdersViewModel}}, Path=ItemTapped}"
-                                                    CommandParameter="{Binding .}"
-                                                    NumberOfTapsRequired="1" />
-                                            </StackLayout.GestureRecognizers>
+
                                         </StackLayout>
 
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:OrdersViewModel}}, Path=ItemTapped}"
+                                                CommandParameter="{Binding .}"
+                                                NumberOfTapsRequired="1" />
+                                        </StackLayout.GestureRecognizers>
                                     </StackLayout>
+
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>

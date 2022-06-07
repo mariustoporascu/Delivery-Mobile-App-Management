@@ -17,10 +17,11 @@ namespace FoodDeliveryApp.Services
         public List<SubCateg> subCateg;
         private HttpClient client;
         public List<CartItem> cartItems;
-        public List<Companie> restaurante;
-        public List<Companie> superMarkets;
+        public List<Companie> companii;
         public List<ServerOrder> serverOrders;
+        public List<TipCompanie> tipCompanii;
         public List<UnitatiMasura> unitati;
+        public List<AvailableCity> cities;
 
         public GetServerInfo()
         {
@@ -29,12 +30,14 @@ namespace FoodDeliveryApp.Services
 
         public async Task loadAppInfo()
         {
+            loadCartPrefs();
             await loadServerCateg();
             await loadServerSubCateg();
             await loadServerProducts();
-            await loadServerRestaurante();
-            await loadServerSuperMarkets();
+            await loadServerCompanii();
+            await loadServerTipCompanii();
             await loadServerMeasuringUnits();
+            await loadServerAvailableCity();
         }
 
         public void loadCartPrefs()
@@ -59,6 +62,21 @@ namespace FoodDeliveryApp.Services
                 MissingMemberHandling = MissingMemberHandling.Ignore
             };
             CartPrefs = JsonConvert.SerializeObject(cartPrefs, settings);
+        }
+        async Task loadServerAvailableCity()
+        {
+            Uri uri = new Uri($"{ServerConstants.BaseUrl}/foodapp/getallcities");
+            HttpResponseMessage response = await client.GetAsync(uri);
+            if (response.IsSuccessStatusCode)
+            {
+                string content = await response.Content.ReadAsStringAsync();
+                var settings = new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore,
+                    MissingMemberHandling = MissingMemberHandling.Ignore
+                };
+                cities = JsonConvert.DeserializeObject<List<AvailableCity>>(content, settings);
+            }
         }
         async Task loadServerProducts()
         {
@@ -105,9 +123,9 @@ namespace FoodDeliveryApp.Services
                 subCateg = JsonConvert.DeserializeObject<List<SubCateg>>(content, settings);
             }
         }
-        async Task loadServerRestaurante()
+        async Task loadServerCompanii()
         {
-            Uri uri = new Uri($"{ServerConstants.BaseUrl}/foodapp/getallrestaurante");
+            Uri uri = new Uri($"{ServerConstants.BaseUrl}/foodapp/getallcompanii");
             HttpResponseMessage response = await client.GetAsync(uri);
             if (response.IsSuccessStatusCode)
             {
@@ -117,12 +135,12 @@ namespace FoodDeliveryApp.Services
                     NullValueHandling = NullValueHandling.Ignore,
                     MissingMemberHandling = MissingMemberHandling.Ignore
                 };
-                restaurante = JsonConvert.DeserializeObject<List<Companie>>(content, settings);
+                companii = JsonConvert.DeserializeObject<List<Companie>>(content, settings);
             }
         }
-        async Task loadServerSuperMarkets()
+        async Task loadServerTipCompanii()
         {
-            Uri uri = new Uri($"{ServerConstants.BaseUrl}/foodapp/getallsupermarkets");
+            Uri uri = new Uri($"{ServerConstants.BaseUrl}/foodapp/getalltipcompanii");
             HttpResponseMessage response = await client.GetAsync(uri);
             if (response.IsSuccessStatusCode)
             {
@@ -132,7 +150,7 @@ namespace FoodDeliveryApp.Services
                     NullValueHandling = NullValueHandling.Ignore,
                     MissingMemberHandling = MissingMemberHandling.Ignore
                 };
-                superMarkets = JsonConvert.DeserializeObject<List<Companie>>(content, settings);
+                tipCompanii = JsonConvert.DeserializeObject<List<TipCompanie>>(content, settings);
             }
         }
         private void TryAddHeaders()
@@ -143,15 +161,15 @@ namespace FoodDeliveryApp.Services
                 bool authid = client.DefaultRequestHeaders.TryGetValues("authid", out var val2);
                 if (!authid && !authkey)
                 {
-                    client.DefaultRequestHeaders.Add("authkey", App.userInfo.LoginToken);
-                    client.DefaultRequestHeaders.Add("authid", App.userInfo.Email);
+                    client.DefaultRequestHeaders.Add("authkey", App.UserInfo.LoginToken);
+                    client.DefaultRequestHeaders.Add("authid", App.UserInfo.Email);
                 }
                 else
                 {
                     client.DefaultRequestHeaders.Remove("authkey");
                     client.DefaultRequestHeaders.Remove("authid");
-                    client.DefaultRequestHeaders.Add("authkey", App.userInfo.LoginToken);
-                    client.DefaultRequestHeaders.Add("authid", App.userInfo.Email);
+                    client.DefaultRequestHeaders.Add("authkey", App.UserInfo.LoginToken);
+                    client.DefaultRequestHeaders.Add("authid", App.UserInfo.Email);
                 }
 
             }

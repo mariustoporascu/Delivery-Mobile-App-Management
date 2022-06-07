@@ -13,5 +13,11 @@ namespace FoodDeliveryApp.Constants
             "In curs de livrare","Refuzata","Livrata"
             };
         public const string DefaultOrderStatus = "Plasata";
+        public const string Gdpr = "https://manage.livro.ro/files/GDPR.pdf";
+        public const string Termeni = "https://manage.livro.ro/files/Termeni.pdf";
+        public const string IntrebariOwner = "https://manage.livro.ro/files/Intrebariowner.pdf";
+        public const string IntrebariDriver = "https://manage.livro.ro/files/Intrebaridriver.pdf";
+        public const string TimeUrl = "https://worldtimeapi.org/api/timezone/Europe/Bucharest";
+
     }
 }

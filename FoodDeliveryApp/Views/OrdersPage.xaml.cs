@@ -24,6 +24,7 @@ namespace FoodDeliveryApp.Views
                     ItemsListView.ScrollTo(0, position: ScrollToPosition.Start);
                 }
                 StatusPick.SelectedIndex = 0;
+
             }
             else
             {

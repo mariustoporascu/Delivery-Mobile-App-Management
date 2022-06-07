@@ -5,6 +5,7 @@ using MvvmHelpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -47,14 +48,15 @@ namespace FoodDeliveryApp.ViewModels
             IsBusy = true;
             try
             {
-                serverOrders = App.userInfo.IsDriver ? await DataStore.GetServerOrders() : await DataStore.GetServerOrders(App.userInfo.RestaurantRefId);
+                serverOrders = App.UserInfo.IsDriver ? await DataStore.GetServerOrders() : await DataStore.GetServerOrders(App.UserInfo.CompanieRefId);
 
                 /*if (Device.RuntimePlatform == Device.Android)
                     serverOrders = await DataStore.GetServerOrders(email);
                 else
                     serverOrders = DataStore.GetServerOrders(email).GetAwaiter().GetResult();*/
-
-                serverOrders = serverOrders.FindAll(o => !string.IsNullOrWhiteSpace(o.DriverRefId) && o.DriverRefId == App.userInfo.Id);
+                foreach (var order in serverOrders)
+                    order.CompanieName = DataStore.GetCompanie(order.CompanieRefId).Name;
+                serverOrders = serverOrders.FindAll(o => !string.IsNullOrWhiteSpace(o.DriverRefId) && o.DriverRefId == App.UserInfo.Id);
 
                 lock (Orders)
                 {
@@ -82,10 +84,10 @@ namespace FoodDeliveryApp.ViewModels
         {
             Orders.Clear();
             if (serverOrders != null && status == "Toate")
-                Orders.AddRange(serverOrders.FindAll(or => or.Created.Day == time.Day && or.Created.Month == time.Month));
+                Orders.AddRange(serverOrders.FindAll(or => or.Created.Day == time.Day && or.Created.Month == time.Month).OrderBy(or => or.CompanieRefId));
             else if (serverOrders != null)
                 Orders.AddRange(serverOrders.FindAll(or => or.Created.Day == time.Day && or.Created.Month == time.Month
-                && or.Status == status));
+                && or.Status == status).OrderBy(or => or.CompanieRefId));
         }
         async void OnItemSelected(ServerOrder item)
         {

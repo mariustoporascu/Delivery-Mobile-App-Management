@@ -1,7 +1,9 @@
-﻿using FoodDeliveryApp.Models.AuthModels;
+﻿using FoodDeliveryApp.Constants;
+using FoodDeliveryApp.Models.AuthModels;
 using FoodDeliveryApp.Services;
 using FoodDeliveryApp.ViewModels;
 using Newtonsoft.Json;
+using OneSignalSDK.Xamarin;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -17,7 +19,7 @@ namespace FoodDeliveryApp.Views
         public LoginPage()
         {
             InitializeComponent();
-            BindingContext =  vm = new LoginViewModel();
+            BindingContext = vm = new LoginViewModel();
             if (Device.RuntimePlatform == Device.iOS)
                 vm.OnSignIn += OnSignInApple;
             else
@@ -32,9 +34,50 @@ namespace FoodDeliveryApp.Views
                     OnSignIn(this, new EventArgs());
             }
         }
+        private async void PasswordForgotClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushModalAsync(new GenerateTokenPage());
+        }
+        private async void TermeniClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                await Navigation.PushModalAsync(new GoogleDriveViewerPage(ServerConstants.Termeni));
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+        private async void GDPRclicked(object sender, EventArgs e)
+        {
+            try
+            {
+                await Navigation.PushModalAsync(new GoogleDriveViewerPage(ServerConstants.Gdpr));
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+            if (string.IsNullOrWhiteSpace(App.FirebaseUserToken))
+            {
+                App.FirebaseUserToken = OneSignal.Default.DeviceState.userId;
+                try
+                {
+                    SecureStorage.SetAsync(App.FBToken, App.FirebaseUserToken).Wait();
+
+                }
+                catch (Exception)
+                {
+
+                }
+            }
             vm.IsBusy = true;
             await onStart();
             if (App.isLoggedIn)
@@ -61,7 +104,7 @@ namespace FoodDeliveryApp.Views
                 {
                     vm.UserName = webMail;
                     vm.Password = webPass;
-                    loginResult = await authService.LoginUser(new UserModel { Email = webMail, Password = webPass });
+                    loginResult = await authService.Execute(new UserModel { Email = webMail, Password = webPass, FireBaseToken = App.FirebaseUserToken }, Constants.AuthOperations.Login);
                     finalEmail = webMail;
                 }
             }
@@ -75,11 +118,11 @@ namespace FoodDeliveryApp.Views
                     NullValueHandling = NullValueHandling.Ignore,
                     MissingMemberHandling = MissingMemberHandling.Ignore
                 };
-                App.userInfo = JsonConvert.DeserializeObject<UserModel>(loginResult.Trim(), settings);
-                App.userInfo.Email = finalEmail;
+                App.UserInfo = JsonConvert.DeserializeObject<UserModel>(loginResult.Trim(), settings);
+                App.UserInfo.Email = finalEmail;
                 if (string.IsNullOrEmpty(finalId))
                 {
-                    App.userInfo.Password = webPass;
+                    App.UserInfo.Password = webPass;
                 }
             }
         }
@@ -94,7 +137,7 @@ namespace FoodDeliveryApp.Views
             {
                 Debug.WriteLine(ex.Message);
             }
-            if (App.userInfo.IsOwner)
+            if (App.UserInfo.IsOwner)
                 App.Current.MainPage = new AppShellOwner();
             else
                 App.Current.MainPage = new AppShellDriver();
@@ -110,7 +153,7 @@ namespace FoodDeliveryApp.Views
             {
                 Debug.WriteLine(ex.Message);
             }
-            if (App.userInfo.IsOwner)
+            if (App.UserInfo.IsOwner)
                 App.Current.MainPage = new AppShellOwner();
             else
                 App.Current.MainPage = new AppShellDriver();

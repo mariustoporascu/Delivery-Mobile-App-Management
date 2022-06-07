@@ -10,15 +10,20 @@ namespace FoodDeliveryApp.ViewModels
     {
         public Command LogoutCommand { get; }
         public event EventHandler OnLogout = delegate { };
+        private string _telNo;
+        public string TelNo { get => _telNo; set => SetProperty(ref _telNo, value); }
+        private bool _canChangeTelNo;
+        public bool CanChangeTelNo { get => _canChangeTelNo; set => SetProperty(ref _canChangeTelNo, value); }
         public EntryFoodAppViewModel()
         {
             Title = "Acasa";
             LogoutCommand = new Command(LogOutFunct);
-
+            TelNo = App.UserInfo.TelNo;
+            CanChangeTelNo = App.UserInfo.IsDriver;
         }
         void LogOutFunct()
         {
-            App.userInfo = new UserModel();
+            App.UserInfo = new UserModel();
             App.isLoggedIn = false;
             SecureStorage.RemoveAll();
             OnLogout(this, new EventArgs());

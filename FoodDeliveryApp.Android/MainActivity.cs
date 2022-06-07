@@ -10,7 +10,7 @@ using Xamarin.Forms;
 
 namespace FoodDeliveryApp.Droid
 {
-    [Activity(Label = "FoodDeliveryApp", Icon = "@mipmap/ic_launcher", Theme = "@style/MainTheme", ConfigurationChanges = ConfigChanges.Locale | ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize, ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "FoodDeliveryApp", Icon = "@mipmap/ic_launcher", Theme = "@style/MainTheme", ConfigurationChanges = ConfigChanges.Locale | ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.ColorMode, ScreenOrientation = ScreenOrientation.Portrait, Exported = true)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         Intent serviceIntent;
@@ -37,6 +37,8 @@ namespace FoodDeliveryApp.Droid
                 this.StartActivity(intent);
             }
             LoadApplication(new App());
+
+
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
@@ -97,7 +99,14 @@ namespace FoodDeliveryApp.Droid
             using (var alert = new Android.App.AlertDialog.Builder(this))
             {
                 alert.SetTitle("Confirma inchiderea aplicatiei");
-                alert.SetMessage("Esti sigur ca vrei sa inchizi aplicatia?");
+                if (App.UserInfo.IsDriver)
+                {
+                    alert.SetMessage("Esti sigur ca vrei sa inchizi aplicatia? Inchiderea ei v-a opri si serviciul pentru locatia ta, iti recomandam sa o lasi in background.");
+                }
+                else
+                {
+                    alert.SetMessage("Esti sigur ca vrei sa inchizi aplicatia?");
+                }
                 alert.SetPositiveButton("Da", (sender, args) =>
                 {
                     FinishAffinity();

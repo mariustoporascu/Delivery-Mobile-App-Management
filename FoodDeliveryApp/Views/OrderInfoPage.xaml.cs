@@ -1,6 +1,7 @@
 ﻿using FoodDeliveryApp.ViewModels;
 using System;
 using System.Diagnostics;
+using Xamarin.CommunityToolkit.Extensions;
 using Xamarin.Forms;
 
 namespace FoodDeliveryApp.Views
@@ -20,6 +21,7 @@ namespace FoodDeliveryApp.Views
             base.OnAppearing();
             try
             {
+
                 if (viewModel.CurrOrder != null)
                 {
                     Selector.SelectedIndex = Selector.ItemsSource.IndexOf(viewModel.CurrOrder.Status);
@@ -90,7 +92,10 @@ namespace FoodDeliveryApp.Views
             try
             {
                 if (await viewModel.LockDriverOrder())
+                {
                     await DisplayAlert("Succes", "Comanda a fost blocata pentru tine.", "OK");
+                    await Shell.Current.Navigation.PopToRootAsync();
+                }
                 else
                     await DisplayAlert("Eroare", "Comanda nu s-a putut bloca, reincercati!.", "OK");
             }
@@ -99,11 +104,12 @@ namespace FoodDeliveryApp.Views
                 Debug.WriteLine(ex.Message);
             }
         }
+
         private async void GetClientRat(object sender, System.EventArgs e)
         {
             try
             {
-                int selected = App.userInfo.IsOwner ? Rating.SelectedStarValue : Rating2.SelectedStarValue;
+                int selected = App.UserInfo.IsOwner ? Rating.SelectedStarValue : Rating2.SelectedStarValue;
                 var prompt = await DisplayAlert("Confirmati", $"Ati selectat {selected} stelut{(selected == 1 ? 'a' : 'e')}. Confirmati ca selectia este in regula.", "OK", "Cancel");
                 if (prompt)
                 {
@@ -117,6 +123,10 @@ namespace FoodDeliveryApp.Views
             {
                 Debug.WriteLine(ex.Message);
             }
+        }
+        private async void ModifyClicked(object sender, EventArgs e)
+        {
+            Navigation.ShowPopup(new ChangeTotalAndLeaveCommPopUp(viewModel.CurrOrder.OrderId));
         }
     }
 }

@@ -11,7 +11,8 @@ namespace FoodDeliveryApp.ViewModels
         public Geocoder geoCoder;
         public Pin pinRoute1 = new Pin
         {
-            Label = "Cernavoda"
+            Label = "Cernavoda",
+            Type = PinType.Generic
         };
         Dictionary<int, UserLocation> userLocations = new Dictionary<int, UserLocation>();
         public MapsViewModel()
@@ -21,7 +22,7 @@ namespace FoodDeliveryApp.ViewModels
 
         public async Task LoadMyLocation()
         {
-            IEnumerable<Position> aproxLocation = await geoCoder.GetPositionsForAddressAsync("Centru, Cernavoda, Romania");
+            IEnumerable<Position> aproxLocation = await geoCoder.GetPositionsForAddressAsync("Dacia, Cernavoda, Constanta, Romania");
             if (aproxLocation.Count() > 0)
             {
                 Position position1 = aproxLocation.FirstOrDefault();
@@ -32,12 +33,20 @@ namespace FoodDeliveryApp.ViewModels
         {
             userLocations.Clear();
             List<ServerOrder> serverOrders;
-            serverOrders = App.userInfo.IsDriver ? await DataStore.GetServerOrders() : await DataStore.GetServerOrders(App.userInfo.RestaurantRefId);
+            serverOrders = App.UserInfo.IsDriver ? await DataStore.GetServerOrders() : await DataStore.GetServerOrders(App.UserInfo.CompanieRefId);
             foreach (ServerOrder serverOrder in serverOrders)
             {
                 if (serverOrder.Status != "Livrata" && serverOrder.Status != "Refuzata"
-                    && serverOrder.Status != "Anulata" && App.userInfo.IsDriver ? serverOrder.DriverRefId == App.userInfo.Id : true)
-                    userLocations.Add(serverOrder.OrderId, serverOrder.DeliveryLocation);
+                    && serverOrder.Status != "Anulata")
+                {
+                    if (App.UserInfo.IsDriver && serverOrder.Status != "Plasata" && serverOrder.Status != "Preluata"
+                        && (string.IsNullOrWhiteSpace(serverOrder.DriverRefId) || serverOrder.DriverRefId == App.UserInfo.Id))
+                        userLocations.Add(serverOrder.OrderId, serverOrder.DeliveryLocation);
+                    else if (App.UserInfo.IsOwner)
+                    {
+                        userLocations.Add(serverOrder.OrderId, serverOrder.DeliveryLocation);
+                    }
+                }
 
             }
             return userLocations;

@@ -1,10 +1,11 @@
 ﻿using CoreGraphics;
+using FoodDeliveryApp;
 using FoodDeliveryApp.iOS.Renderers;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
-[assembly: ExportRenderer(typeof(AppShell), typeof(TabIconRenderer))]
+[assembly: ExportRenderer(typeof(AppShellDriver), typeof(TabIconRenderer))]
 namespace FoodDeliveryApp.iOS.Renderers
 {
     public class TabIconRenderer : ShellRenderer

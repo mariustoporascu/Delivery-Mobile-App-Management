@@ -104,8 +104,45 @@
                     FontAttributes="None"
                     FontSize="Medium"
                     Text="Ai uitat parola?"
+                    Clicked="PasswordForgotClicked"
                     TextColor="Black"
                     TextTransform="None" />
+            </StackLayout>
+            <StackLayout HorizontalOptions="CenterAndExpand">
+                <Label
+                    HorizontalTextAlignment="Center"
+                    LineBreakMode="WordWrap"
+                    Text="Continuand autentificarea confirmati faptul ca sunteti de acord cu:"
+                    TextColor="Black" />
+                <StackLayout
+                    HorizontalOptions="CenterAndExpand"
+                    Orientation="Horizontal"
+                    Spacing="20">
+                    <Button
+                        Margin="0"
+                        Padding="0"
+                        xct:CornerRadiusEffect.CornerRadius="30"
+                        BackgroundColor="Transparent"
+                        Clicked="TermeniClicked"
+                        FontSize="Small"
+                        HorizontalOptions="Start"
+                        ImageSource="orders.png"
+                        Text="Termeni si conditii"
+                        TextColor="Black"
+                        TextTransform="None" />
+                    <Button
+                        Margin="0"
+                        Padding="0"
+                        xct:CornerRadiusEffect.CornerRadius="30"
+                        BackgroundColor="Transparent"
+                        Clicked="GDPRclicked"
+                        FontSize="Small"
+                        HorizontalOptions="Start"
+                        ImageSource="lock.png"
+                        Text="Protectia Datelor"
+                        TextColor="Black"
+                        TextTransform="None" />
+                </StackLayout>
             </StackLayout>
             <StackLayout HeightRequest="100" VerticalOptions="EndAndExpand" />
         </StackLayout>

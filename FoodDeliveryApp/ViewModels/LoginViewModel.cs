@@ -25,7 +25,7 @@ namespace FoodDeliveryApp.ViewModels
         async Task AfterSignIn()
         {
             var authService = DependencyService.Get<IAuthController>();
-            string loginResult = await authService.LoginUser(new UserModel { Email = UserName, Password = Password });
+            string loginResult = await authService.Execute(new UserModel { Email = UserName, Password = Password, FireBaseToken = App.FirebaseUserToken }, Constants.AuthOperations.Login);
 
             if (loginResult != string.Empty && !loginResult.Contains("Password is wrong.")
                 && !loginResult.Contains("Email is wrong or user not existing.") && !loginResult.Contains("Login data invalid."))
@@ -36,9 +36,9 @@ namespace FoodDeliveryApp.ViewModels
                     NullValueHandling = NullValueHandling.Ignore,
                     MissingMemberHandling = MissingMemberHandling.Ignore
                 };
-                App.userInfo = JsonConvert.DeserializeObject<UserModel>(loginResult.Trim(), settings);
-                App.userInfo.Email = UserName;
-                App.userInfo.Password = Password;
+                App.UserInfo = JsonConvert.DeserializeObject<UserModel>(loginResult.Trim(), settings);
+                App.UserInfo.Email = UserName;
+                App.UserInfo.Password = Password;
                 SecureStorage.SetAsync(App.WEBEMAIL, UserName).Wait();
                 SecureStorage.SetAsync(App.WEBPASS, Password).Wait();
                 SecureStorage.SetAsync(App.LOGIN_WITH, "WebLogin").Wait();

@@ -33,7 +33,16 @@
             ContentTemplate="{DataTemplate local:EntryFoodAppPage}"
             Icon="home.png"
             Route="EntryFoodAppPage" />
-
+        <ShellContent
+            Title="Produse"
+            ContentTemplate="{DataTemplate local:ItemsPage}"
+            Icon="search.png"
+            Route="ItemsPage" />
+        <ShellContent
+            Title="Cos"
+            ContentTemplate="{DataTemplate local:CosContentPage}"
+            Icon="cart.png"
+            Route="CosContentPage" />
         <ShellContent
             Title="Harta"
             ContentTemplate="{DataTemplate local:MapsPage}"

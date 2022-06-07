@@ -12,7 +12,11 @@ namespace FoodDeliveryApp
             InitializeComponent();
             Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
             Routing.RegisterRoute(nameof(OrderInfoPage), typeof(OrderInfoPage));
+            Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
             Routing.RegisterRoute(nameof(ProductInOrderPage), typeof(ProductInOrderPage));
+            Routing.RegisterRoute(nameof(GoogleDriveViewerPage), typeof(GoogleDriveViewerPage));
+            Routing.RegisterRoute(nameof(GenerateTokenPage), typeof(GenerateTokenPage));
+            Routing.RegisterRoute(nameof(ResetPasswordPage), typeof(ResetPasswordPage));
             Task.Run(async () => await DependencyService.Get<IDataStore>().Init());
 
         }

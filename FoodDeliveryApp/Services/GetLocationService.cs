@@ -21,7 +21,7 @@ namespace FoodDeliveryApp.Services
         }
         partial class DriverLocation
         {
-            public string Id { get; set; }
+            public string UserId { get; set; }
             public double CoordX { get; set; }
             public double CoordY { get; set; }
         }
@@ -33,15 +33,15 @@ namespace FoodDeliveryApp.Services
                 bool authid = _httpClient.DefaultRequestHeaders.TryGetValues("authid", out var val2);
                 if (!authid && !authkey)
                 {
-                    _httpClient.DefaultRequestHeaders.Add("authkey", App.userInfo.LoginToken);
-                    _httpClient.DefaultRequestHeaders.Add("authid", App.userInfo.Email);
+                    _httpClient.DefaultRequestHeaders.Add("authkey", App.UserInfo.LoginToken);
+                    _httpClient.DefaultRequestHeaders.Add("authid", App.UserInfo.Email);
                 }
                 else
                 {
                     _httpClient.DefaultRequestHeaders.Remove("authkey");
                     _httpClient.DefaultRequestHeaders.Remove("authid");
-                    _httpClient.DefaultRequestHeaders.Add("authkey", App.userInfo.LoginToken);
-                    _httpClient.DefaultRequestHeaders.Add("authid", App.userInfo.Email);
+                    _httpClient.DefaultRequestHeaders.Add("authkey", App.UserInfo.LoginToken);
+                    _httpClient.DefaultRequestHeaders.Add("authid", App.UserInfo.Email);
                 }
 
             }
@@ -60,7 +60,7 @@ namespace FoodDeliveryApp.Services
                     token.ThrowIfCancellationRequested();
                     try
                     {
-                        await Task.Delay(2000);
+                        await Task.Delay(3000);
                         var request = new GeolocationRequest(GeolocationAccuracy.High);
                         var location = await Geolocation.GetLocationAsync(request);
 
@@ -70,7 +70,7 @@ namespace FoodDeliveryApp.Services
                             Uri uri = new Uri($"{ServerConstants.BaseUrl}/foodappmanage/driverupdatelocation");
                             var driverLocation = new DriverLocation
                             {
-                                Id = App.userInfo.Id,
+                                UserId = App.UserInfo.Id,
                                 CoordX = location.Latitude,
                                 CoordY = location.Longitude
                             };

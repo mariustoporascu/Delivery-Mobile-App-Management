@@ -5,6 +5,7 @@ using MvvmHelpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -22,7 +23,12 @@ namespace FoodDeliveryApp.ViewModels
         public Command<ServerOrder> ItemTapped { get; }
         public DateTime SelectedTime { get; set; } = DateTime.UtcNow.AddHours(3);
         List<ServerOrder> serverOrders;
-
+        private bool canSeeExtraInfo = false;
+        public bool CanSeeExtraInfo
+        {
+            get => canSeeExtraInfo;
+            set => SetProperty(ref canSeeExtraInfo, value);
+        }
         private bool isPageVisible = false;
         public bool IsPageVisible
         {
@@ -41,6 +47,7 @@ namespace FoodDeliveryApp.ViewModels
             OrderStatus.AddRange(ServerConstants.OrderStatusOwner);
             OrderStatus.AddRange(ServerConstants.OrderStatusDriver);
             LoadOrdersCommand = new Command(async () => await ExecuteLoadOrdersCommand());
+            CanSeeExtraInfo = App.UserInfo.IsDriver;
         }
         public async Task ExecuteLoadOrdersCommand()
         {
@@ -48,15 +55,18 @@ namespace FoodDeliveryApp.ViewModels
             try
             {
 
-                serverOrders = App.userInfo.IsDriver ? await DataStore.GetServerOrders() : await DataStore.GetServerOrders(App.userInfo.RestaurantRefId);
-
+                serverOrders = App.UserInfo.IsDriver ? await DataStore.GetServerOrders() : await DataStore.GetServerOrders(App.UserInfo.CompanieRefId);
+                foreach (var order in serverOrders)
+                    order.CompanieName = DataStore.GetCompanie(order.CompanieRefId).Name;
                 /*if (Device.RuntimePlatform == Device.Android)
                     serverOrders = await DataStore.GetServerOrders(email);
                 else
                     serverOrders = DataStore.GetServerOrders(email).GetAwaiter().GetResult();*/
-                if (!string.IsNullOrEmpty(App.userInfo.Id))
-                    serverOrders = serverOrders.FindAll(o => string.IsNullOrWhiteSpace(o.DriverRefId) && o.DriverRefId != App.userInfo.Id &&
-                    (o.IsRestaurant ? o.Status != "Plasata" && o.Status != "Preluata" : true));
+
+                var companii = DataStore.GetCompanii(0).ToList();
+                if (!string.IsNullOrEmpty(App.UserInfo.Id))
+                    serverOrders = serverOrders.FindAll(o => string.IsNullOrWhiteSpace(o.DriverRefId) && o.DriverRefId != App.UserInfo.Id &&
+                    (companii.Find(comp => comp.CompanieId == o.CompanieRefId).TipCompanieRefId == 1 ? o.Status != "Plasata" && o.Status != "Preluata" : true));
 
 
                 lock (Orders)
@@ -85,10 +95,10 @@ namespace FoodDeliveryApp.ViewModels
         {
             Orders.Clear();
             if (serverOrders != null && status == "Toate")
-                Orders.AddRange(serverOrders.FindAll(or => or.Created.Day == time.Day && or.Created.Month == time.Month));
+                Orders.AddRange(serverOrders.FindAll(or => or.Created.Day == time.Day && or.Created.Month == time.Month).OrderBy(or => or.CompanieRefId));
             else if (serverOrders != null)
                 Orders.AddRange(serverOrders.FindAll(or => or.Created.Day == time.Day && or.Created.Month == time.Month
-                && or.Status == status));
+                && or.Status == status).OrderBy(or => or.CompanieRefId));
         }
 
         async void OnItemSelected(ServerOrder item)

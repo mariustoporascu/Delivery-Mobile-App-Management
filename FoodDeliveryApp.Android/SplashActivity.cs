@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace FoodDeliveryApp.Droid
 {
-    [Activity(Theme = "@style/MyTheme.Splash", MainLauncher = true, NoHistory = true)]
+    [Activity(Theme = "@style/MyTheme.Splash", MainLauncher = true, NoHistory = true,Exported = true)]
     public class SplashActivity : AppCompatActivity
     {
 

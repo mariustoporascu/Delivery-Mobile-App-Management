@@ -23,8 +23,8 @@ namespace FoodDeliveryApp.ViewModels
         public Companie Restaurant { get => _restaurant; set => SetProperty(ref _restaurant, value); }
         public Command<OrderProductDisplay> ItemTapped { get; }
         public Command RefreshCommand { get; }
-        private List<string> _orderStatuses;
-        public List<string> OrderStatus { get => _orderStatuses; set => SetProperty(ref _orderStatuses, value); }
+        private ObservableRangeCollection<string> _orderStatuses;
+        public ObservableRangeCollection<string> OrderStatus { get => _orderStatuses; set => SetProperty(ref _orderStatuses, value); }
         private bool _isPickerVisible = false;
         public bool IsPickerVisible { get => _isPickerVisible; set => SetProperty(ref _isPickerVisible, value); }
         private bool _isPickerVisible2 = false;
@@ -33,6 +33,12 @@ namespace FoodDeliveryApp.ViewModels
         public bool HasDriver { get => _hasDriver; set => SetProperty(ref _hasDriver, value); }
         private bool _ownerViewVis = false;
         public bool OwnerViewVis { get => _ownerViewVis; set => SetProperty(ref _ownerViewVis, value); }
+        private bool _hasEstimatedTime = false;
+        public bool HasEstimatedTime { get => _hasEstimatedTime; set => SetProperty(ref _hasEstimatedTime, value); }
+        private bool _canChangeNextStatus = false;
+        public bool CanChangeNextStatus { get => _canChangeNextStatus; set => SetProperty(ref _canChangeNextStatus, value); }
+        private bool _hasComments = false;
+        public bool HasComments { get => _hasComments; set => SetProperty(ref _hasComments, value); }
         private bool _orderConfirmed = false;
         public bool OrderConfirmed { get => _orderConfirmed; set => SetProperty(ref _orderConfirmed, value); }
         private Driver orderDriver;
@@ -54,7 +60,7 @@ namespace FoodDeliveryApp.ViewModels
             ItemTapped = new Command<OrderProductDisplay>(async (item) => await OnItemSelected(item));
             RefreshCommand = new Command(RefreshView);
             ChangeRatingClient = new Command(IntermediateClientRating);
-
+            OrderStatus = new ObservableRangeCollection<string>();
             TimpEstimat = new List<string>();
             TimpEstimat.Clear();
             for (int i = 1; i < 100; i++)
@@ -81,12 +87,12 @@ namespace FoodDeliveryApp.ViewModels
         }
         public async Task<bool> GiveClientRating(int rating)
         {
-            if (await OrderService.RateClient(App.userInfo.IsOwner, OrderId, rating))
+            if (await OrderService.RateClient(App.UserInfo.IsOwner, OrderId, rating))
             {
-                if (App.userInfo.IsOwner)
+                if (App.UserInfo.IsOwner)
                 {
-                    CurrOrder.RestaurantGaveRating = true;
-                    CurrOrder.RatingClientDeLaRestaurant = rating;
+                    CurrOrder.CompanieGaveRating = true;
+                    CurrOrder.RatingClientDeLaCompanie = rating;
                 }
                 else
                 {
@@ -100,9 +106,34 @@ namespace FoodDeliveryApp.ViewModels
         public async Task<bool> ChangeOrderStatus(int status)
         {
             var changedStatus = OrderStatus[status];
-            if (await OrderService.UpdateOrder(OrderId, changedStatus))
+            if (await OrderService.UpdateOrder(OrderId, changedStatus, App.UserInfo.IsOwner))
             {
                 CurrOrder.Status = changedStatus;
+
+                OrderStatus.Clear();
+                if (App.UserInfo.IsOwner)
+                {
+                    var statusesToAdd = new List<string>();
+                    if (CurrOrder.Status == "Plasata")
+                        statusesToAdd.Add(ServerConstants.OrderStatusOwner[0]);
+                    else
+                        statusesToAdd.Add(ServerConstants.OrderStatusOwner[ServerConstants.OrderStatusOwner.IndexOf(CurrOrder.Status) + 1]);
+                    statusesToAdd.Add(ServerConstants.OrderStatusOwner[ServerConstants.OrderStatusOwner.Count - 1]);
+                    OrderStatus.AddRange(statusesToAdd);
+                }
+                else
+                {
+                    var statusesToAdd = new List<string>();
+                    if (CurrOrder.Status == "In curs de livrare")
+                    {
+                        statusesToAdd.Add(ServerConstants.OrderStatusDriver[1]);
+                        statusesToAdd.Add(ServerConstants.OrderStatusDriver[2]);
+                    }
+                    else
+                        statusesToAdd.Add(ServerConstants.OrderStatusDriver[0]);
+                    OrderStatus.AddRange(statusesToAdd);
+                }
+
                 if (CurrOrder.Status == "Preluata")
                     IsPickerVisible2 = true;
                 else
@@ -119,7 +150,8 @@ namespace FoodDeliveryApp.ViewModels
             var changedStatus = TimpEstimat[status];
             if (await OrderService.EstimateOrder(OrderId, changedStatus))
             {
-
+                HasEstimatedTime = true;
+                CanChangeNextStatus = false;
                 return true;
 
             }
@@ -127,7 +159,7 @@ namespace FoodDeliveryApp.ViewModels
         }
         public async Task<bool> LockDriverOrder()
         {
-            if (await OrderService.LockDriverOrder(App.userInfo.Email, OrderId))
+            if (await OrderService.LockDriverOrder(App.UserInfo.Email, OrderId))
             {
                 HasDriver = true;
                 return true;
@@ -141,7 +173,7 @@ namespace FoodDeliveryApp.ViewModels
             {
                 if (OrderId > 0)
                 {
-                    var serverOrders = App.userInfo.IsDriver ? await DataStore.GetServerOrders() : await DataStore.GetServerOrders(App.userInfo.RestaurantRefId);
+                    var serverOrders = App.UserInfo.IsDriver ? await DataStore.GetServerOrders() : await DataStore.GetServerOrders(App.UserInfo.CompanieRefId);
 
                     if (serverOrders.Count > 0)
                         LoadOrder(OrderId);
@@ -167,27 +199,28 @@ namespace FoodDeliveryApp.ViewModels
                     OrderId = orderId,
                     CustomerId = order.CustomerId,
                     Status = order.Status,
-                    IsRestaurant = order.IsRestaurant,
-                    RestaurantRefId = order.RestaurantRefId,
+                    CompanieRefId = order.CompanieRefId,
                     TotalOrdered = order.TotalOrdered,
+                    TransportFee = order.TransportFee,
                     RatingClientDeLaSofer = order.RatingClientDeLaSofer,
-                    RatingClientDeLaRestaurant = order.RatingClientDeLaRestaurant,
-                    RestaurantGaveRating = order.RestaurantGaveRating,
+                    Comments = order.Comments,
+                    RatingClientDeLaCompanie = order.RatingClientDeLaCompanie,
+                    CompanieGaveRating = order.CompanieGaveRating,
                     DriverGaveRating = order.DriverGaveRating,
                     TotalOrderedInterfata = order.TotalOrdered + " RON",
                     EstimatedTime = order.EstimatedTime,
                     HasUserConfirmedET = order.HasUserConfirmedET,
                     DriverRefId = order.DriverRefId,
                 };
-                OrderConfirmed = CurrOrder.HasUserConfirmedET != null;
+                HasEstimatedTime = !string.IsNullOrWhiteSpace(order.EstimatedTime);
+                OrderConfirmed = order.HasUserConfirmedET != null;
                 if (OrderConfirmed)
                     StatusConfirmare = (bool)CurrOrder.HasUserConfirmedET ? "Da" : "Nu";
                 Items.Clear();
                 var itemsInOrder = new ObservableRangeCollection<OrderProductDisplay>();
-                if (order.IsRestaurant)
-                {
-                    Restaurant = DataStore.GetRestaurant((int)order.RestaurantRefId);
-                }
+
+                Restaurant = DataStore.GetCompanie((int)order.CompanieRefId);
+                HasComments = !string.IsNullOrWhiteSpace(order.Comments);
                 foreach (var prodInOrder in order.ProductsInOrder)
                 {
                     var item = DataStore.GetItem(prodInOrder.ProductRefId);
@@ -198,15 +231,28 @@ namespace FoodDeliveryApp.ViewModels
                         Name = item.Name,
                         GramajInterfata = item.GramajInterfata,
                         PretInterfata = (item.Price * prodInOrder.UsedQuantity).ToString() + " RON",
-                        Cantitate = prodInOrder.UsedQuantity
+                        Cantitate = prodInOrder.UsedQuantity,
+                        ClientComments = prodInOrder.ClientComments,
+                        HasComments = !string.IsNullOrWhiteSpace(prodInOrder.ClientComments)
                     });
                 }
                 Items.AddRange(itemsInOrder);
 
-                if (App.userInfo.IsOwner)
+                if (App.UserInfo.IsOwner)
                 {
                     OwnerViewVis = true;
-                    OrderStatus = ServerConstants.OrderStatusOwner;
+
+                    OrderStatus.Clear();
+                    var statusesToAdd = new List<string>();
+                    if (CurrOrder.Status == "Plasata")
+                        statusesToAdd.Add(ServerConstants.OrderStatusOwner[0]);
+                    else
+                        statusesToAdd.Add(ServerConstants.OrderStatusOwner[ServerConstants.OrderStatusOwner.IndexOf(CurrOrder.Status) + 1]);
+                    statusesToAdd.Add(ServerConstants.OrderStatusOwner[ServerConstants.OrderStatusOwner.Count - 1]);
+
+                    OrderStatus.AddRange(statusesToAdd);
+
+
                     if (!string.IsNullOrWhiteSpace(CurrOrder.DriverRefId))
                     {
                         HasDriver = true;
@@ -228,6 +274,10 @@ namespace FoodDeliveryApp.ViewModels
                         CanGiveRating = true;
                     else
                         CanGiveRating = false;
+                    if (CurrOrder.Status == "Preluata" && !OrderConfirmed)
+                        CanChangeNextStatus = false;
+                    else
+                        CanChangeNextStatus = true;
                 }
                 else
                 {
@@ -237,8 +287,21 @@ namespace FoodDeliveryApp.ViewModels
                         HasDriver = true;
                     else
                         HasDriver = false;
-                    OrderStatus = ServerConstants.OrderStatusDriver;
-                    if ((ServerConstants.OrderStatusOwner.Contains(CurrOrder.Status) && !CurrOrder.Status.Contains("Predata Soferului"))
+
+                    OrderStatus.Clear();
+                    var statusesToAdd = new List<string>();
+                    if (CurrOrder.Status == "In curs de livrare")
+                    {
+                        statusesToAdd.Add(ServerConstants.OrderStatusDriver[1]);
+                        statusesToAdd.Add(ServerConstants.OrderStatusDriver[2]);
+                    }
+                    else
+                        statusesToAdd.Add(ServerConstants.OrderStatusDriver[0]);
+                    OrderStatus.AddRange(statusesToAdd);
+
+
+                    CanChangeNextStatus = true;
+                    if ((ServerConstants.OrderStatusOwner.Contains(CurrOrder.Status) && !CurrOrder.Status.Contains("Predata Soferului") || CurrOrder.DriverRefId != App.UserInfo.Id)
                         || CurrOrder.Status.Contains("Plasata") || CurrOrder.Status.Contains("Livrata") || CurrOrder.Status.Contains("Refuzata"))
                         IsPickerVisible = false;
                     else
