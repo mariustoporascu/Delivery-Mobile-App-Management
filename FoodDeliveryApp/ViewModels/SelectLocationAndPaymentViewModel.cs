@@ -43,19 +43,7 @@ namespace FoodDeliveryApp.ViewModels
             PaymentMethods.Add("Plata cu cardul la livrare");
             AvailableCities = new List<string>();
             AvailableCities.AddRange(DataStore.GetAvailableCities().ToList().Select(city => city.Name));
-            /*            if (locationId > 0)
-                        {
-                            LocationId = locationId;
-                            var location = App.UserInfo.Locations.Find(loc => loc.LocationId == locationId);
-                            LocationName = location.LocationName;
-                            City = location.City;
-                            BuildingInfo = location.BuildingInfo;
-                            Street = location.Street;
-                            CoordX = location.CoordX;
-                            CoordY = location.CoordY;
-                            LocationReference = location;
 
-                        }*/
             SaveLocation = new Command(OnSaveLocation);
             TimpEstimat = new List<string>();
             TimpEstimat.Clear();
@@ -64,14 +52,13 @@ namespace FoodDeliveryApp.ViewModels
                 if (i % 5 == 0)
                     TimpEstimat.Add($"{i} min");
             }
-            /*foreach (var loc in App.UserInfo.Locations)
-                Locations.Add($"{loc.LocationName},{loc.BuildingInfo},{loc.Street},{loc.City}");*/
+
         }
         void OnSaveLocation()
         {
             Location = new UserLocation
             {
-                LocationName = LocationName,
+                LocationName = "Comanda telefon",
                 NrTelefon = NrTelefon,
                 City = City,
                 Street = Street,

@@ -13,18 +13,18 @@
     <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
         <Image
             Grid.Row="0"
-            Aspect="AspectFill"
+            Aspect="Fill"
             HorizontalOptions="FillAndExpand"
             Source="splash_auth.png"
             VerticalOptions="FillAndExpand" />
-        <StackLayout Grid.Row="0" Margin="35,100,35,5">
+        <StackLayout Grid.Row="0" Margin="35,65,35,5">
             <StackLayout Margin="0,0,0,0" Padding="0">
                 <Label
                     FontSize="40"
                     Text="Ai uitat parola?"
                     TextColor="Black" />
                 <Label
-                    FontSize="22"
+                    FontSize="20"
                     Text="Genereaza cod de recuperare."
                     TextColor="Gray" />
             </StackLayout>
@@ -102,6 +102,8 @@
                     TextColor="Black"
                     TextTransform="None" />
             </StackLayout>
+            <StackLayout HeightRequest="60" VerticalOptions="EndAndExpand" />
+
         </StackLayout>
     </Grid>
 </ContentPage>

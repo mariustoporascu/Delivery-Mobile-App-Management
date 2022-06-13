@@ -2,6 +2,7 @@
 using Android.Content;
 using Android.OS;
 using AndroidX.Core.App;
+using System;
 
 namespace FoodDeliveryApp.Droid
 {
@@ -13,11 +14,12 @@ namespace FoodDeliveryApp.Droid
 
         public Notification GetServiceStartedNotification()
         {
+
             var intent = new Intent(context, typeof(MainActivity));
             intent.AddFlags(ActivityFlags.SingleTop);
             intent.PutExtra("Title", "Message");
-
-            var pendingIntent = PendingIntent.GetActivity(context, 0, intent, PendingIntentFlags.UpdateCurrent);
+            var pendFlags = PendingIntentFlags.Immutable;
+            var pendingIntent = PendingIntent.GetActivity(context, 0, intent, pendFlags);
 
             var notificationBuilder = new NotificationCompat.Builder(context, foregroundChannelId)
                 .SetContentTitle("Livro M - Location")
@@ -44,6 +46,7 @@ namespace FoodDeliveryApp.Droid
             }
 
             return notificationBuilder.Build();
+
         }
     }
 }

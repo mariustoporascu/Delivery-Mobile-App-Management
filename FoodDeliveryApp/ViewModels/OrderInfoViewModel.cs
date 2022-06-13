@@ -21,7 +21,6 @@ namespace FoodDeliveryApp.ViewModels
         public ObservableRangeCollection<OrderProductDisplay> Items { get => _items; set => SetProperty(ref _items, value); }
         private Companie _restaurant;
         public Companie Restaurant { get => _restaurant; set => SetProperty(ref _restaurant, value); }
-        public Command<OrderProductDisplay> ItemTapped { get; }
         public Command RefreshCommand { get; }
         private ObservableRangeCollection<string> _orderStatuses;
         public ObservableRangeCollection<string> OrderStatus { get => _orderStatuses; set => SetProperty(ref _orderStatuses, value); }
@@ -57,7 +56,6 @@ namespace FoodDeliveryApp.ViewModels
         {
             Title = "Detalii Comanda";
             Items = new ObservableRangeCollection<OrderProductDisplay>();
-            ItemTapped = new Command<OrderProductDisplay>(async (item) => await OnItemSelected(item));
             RefreshCommand = new Command(RefreshView);
             ChangeRatingClient = new Command(IntermediateClientRating);
             OrderStatus = new ObservableRangeCollection<string>();
@@ -201,6 +199,7 @@ namespace FoodDeliveryApp.ViewModels
                     Status = order.Status,
                     CompanieRefId = order.CompanieRefId,
                     TotalOrdered = order.TotalOrdered,
+                    TelephoneOrdered = order.TelephoneOrdered,
                     TransportFee = order.TransportFee,
                     RatingClientDeLaSofer = order.RatingClientDeLaSofer,
                     Comments = order.Comments,
@@ -262,7 +261,7 @@ namespace FoodDeliveryApp.ViewModels
                     {
                         HasDriver = false;
                     }
-                    if (ServerConstants.OrderStatusDriver.Contains(CurrOrder.Status) || CurrOrder.Status == "Anulata")
+                    if (ServerConstants.OrderStatusDriver.Contains(CurrOrder.Status) || CurrOrder.Status == "Anulata" || CurrOrder.Status == "Predata Soferului")
                         IsPickerVisible = false;
                     else
                         IsPickerVisible = true;
@@ -270,7 +269,7 @@ namespace FoodDeliveryApp.ViewModels
                         IsPickerVisible2 = true;
                     else
                         IsPickerVisible2 = false;
-                    if (CurrOrder.Status.Contains("Livrata") || CurrOrder.Status.Contains("Refuzata") || CurrOrder.Status.Contains("Anulata"))
+                    if ((CurrOrder.Status.Contains("Livrata") || CurrOrder.Status.Contains("Refuzata") || CurrOrder.Status.Contains("Anulata")) && !CurrOrder.TelephoneOrdered)
                         CanGiveRating = true;
                     else
                         CanGiveRating = false;
@@ -306,7 +305,7 @@ namespace FoodDeliveryApp.ViewModels
                         IsPickerVisible = false;
                     else
                         IsPickerVisible = true;
-                    if (CurrOrder.Status.Contains("Livrata") || CurrOrder.Status.Contains("Refuzata"))
+                    if ((CurrOrder.Status.Contains("Livrata") || CurrOrder.Status.Contains("Refuzata")) && !CurrOrder.TelephoneOrdered)
                         CanGiveRating = true;
                     else
                         CanGiveRating = false;
@@ -319,13 +318,6 @@ namespace FoodDeliveryApp.ViewModels
             }
 
         }
-        async Task OnItemSelected(OrderProductDisplay item)
-        {
-            if (item == null)
-                return;
 
-            // This will push the ItemDetailPage onto the navigation stack
-            await Shell.Current.GoToAsync($"{nameof(ProductInOrderPage)}?{nameof(ProductInOrderViewModel.ItemId)}={item.ProductId}");
-        }
     }
 }

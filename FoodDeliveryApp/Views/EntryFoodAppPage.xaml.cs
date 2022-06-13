@@ -14,6 +14,7 @@ namespace FoodDeliveryApp.Views
     public partial class EntryFoodAppPage : ContentPage
     {
         EntryFoodAppViewModel viewModel;
+        bool locationGranted = false;
         public EntryFoodAppPage()
         {
             InitializeComponent();
@@ -25,14 +26,14 @@ namespace FoodDeliveryApp.Views
             base.OnAppearing();
             if (App.UserInfo.IsOwner)
             {
-                Header.Text = "Administrare comenzi restaurant.";
+                Header.Text = $"Administrare comenzi {viewModel.DataStore.GetCompanie(App.UserInfo.CompanieRefId).Name}.";
                 Info.Text = "Aici va puteti gestiona comenzile primite, vizualiza detalii despre soferul care a preluat comanda si nu numai.";
             }
             else
             {
                 viewModel.TelNo = App.UserInfo.TelNo;
                 viewModel.CanChangeTelNo = App.UserInfo.IsDriver;
-                Header.Text = "Administrare comenzi pentru livratori.";
+                Header.Text = $"Administrare comenzi {App.UserInfo.Email}.";
                 Info.Text = "Aici va puteti gestiona comenzile, bloca anumite comenzi pentru a fi livrate de catre tine, vizualiza pe harta destinatiile pentru livrari si nu numai.";
                 await SetupLocation();
 
@@ -80,9 +81,9 @@ namespace FoodDeliveryApp.Views
         }
         private async Task SetupLocation()
         {
-            var locationPermission = await GetLocationPermissions();
+            locationGranted = await GetLocationPermissions();
 
-            if (Device.RuntimePlatform == Device.Android && locationPermission)
+            if (Device.RuntimePlatform == Device.Android && locationGranted)
             {
                 if (Preferences.Get("LocationServiceRunning", false) == false)
                 {

@@ -26,8 +26,6 @@ namespace FoodDeliveryApp.Views
 
             viewModel.IsLoggedIn = true;
             viewModel.LoadItemsCommand.Execute(null);
-            ItemsListView.ScrollTo(0, position: ScrollToPosition.Start);
-            viewModel.GetTime();
 
         }
         private async void GoToFinalizeOrder(object sender, EventArgs e)

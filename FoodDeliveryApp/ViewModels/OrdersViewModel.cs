@@ -58,10 +58,6 @@ namespace FoodDeliveryApp.ViewModels
                 serverOrders = App.UserInfo.IsDriver ? await DataStore.GetServerOrders() : await DataStore.GetServerOrders(App.UserInfo.CompanieRefId);
                 foreach (var order in serverOrders)
                     order.CompanieName = DataStore.GetCompanie(order.CompanieRefId).Name;
-                /*if (Device.RuntimePlatform == Device.Android)
-                    serverOrders = await DataStore.GetServerOrders(email);
-                else
-                    serverOrders = DataStore.GetServerOrders(email).GetAwaiter().GetResult();*/
 
                 var companii = DataStore.GetCompanii(0).ToList();
                 if (!string.IsNullOrEmpty(App.UserInfo.Id))

@@ -15,6 +15,8 @@ namespace FoodDeliveryApp.Models.ShopModels
         public string CustomerId { get; set; }
         private string _estimatedTime;
         public string Comments { get; set; }
+        public string PaymentMethod { get; set; }
+        public string CompanieName { get; set; }
 
         public string EstimatedTime { get => _estimatedTime; set => SetProperty(ref _estimatedTime, value); }
         public bool? HasUserConfirmedET { get; set; }

@@ -6,14 +6,13 @@
     xmlns:local="clr-namespace:FoodDeliveryApp.ViewModels"
     xmlns:model="clr-namespace:FoodDeliveryApp.Models.ShopModels"
     xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-    x:Name="Items"
     Title="{Binding Title}"
     x:DataType="local:SelectLocationAndPaymentViewModel"
     Shell.PresentationMode="ModalAnimated">
     <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
         <Image
             Grid.Row="0"
-            Aspect="AspectFill"
+            Aspect="Fill"
             HorizontalOptions="FillAndExpand"
             Source="splash_auth.png"
             VerticalOptions="FillAndExpand" />
@@ -21,12 +20,12 @@
             <StackLayout Margin="0,0,0,0" Padding="0">
                 <Label
                     FontSize="28"
-                    Text="Modalitate Plata si Detaliile Clientului"
+                    LineBreakMode="WordWrap"
+                    Text="Detalii comanda"
                     TextColor="Black" />
             </StackLayout>
 
             <StackLayout
-                Margin="0,50,0,0"
                 Padding="5"
                 xct:CornerRadiusEffect.CornerRadius="10"
                 BackgroundColor="LightCyan"
@@ -45,13 +44,13 @@
                     TextTransform="None" />
             </StackLayout>
             <StackLayout
-                Margin="0,20,0,0"
                 Padding="5"
                 xct:CornerRadiusEffect.CornerRadius="10"
                 BackgroundColor="{AppThemeBinding Light=LightCyan,
                                                   Dark=LightCyan}"
                 HorizontalOptions="FillAndExpand"
-                Orientation="Vertical">
+                Orientation="Vertical"
+                VerticalOptions="CenterAndExpand">
                 <Picker
                     x:Name="Selector2"
                     Title="Timp informativ de pregatire."
@@ -63,7 +62,6 @@
                     TitleColor="Black" />
             </StackLayout>
             <StackLayout
-                Margin="0,10,0,0"
                 Padding="10"
                 xct:CornerRadiusEffect.CornerRadius="10"
                 BackgroundColor="LightCyan"
@@ -92,6 +90,7 @@
                     TextColor="White"
                     TextTransform="None" />
                 <Button
+                    Margin="0,0,0,30"
                     BackgroundColor="Transparent"
                     Clicked="OnDismissButtonClicked"
                     FontAttributes="None"

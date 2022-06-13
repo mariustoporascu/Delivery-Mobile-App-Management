@@ -97,7 +97,7 @@ namespace FoodDeliveryApp.Views
                     await Shell.Current.Navigation.PopToRootAsync();
                 }
                 else
-                    await DisplayAlert("Eroare", "Comanda nu s-a putut bloca, reincercati!.", "OK");
+                    await DisplayAlert("Eroare", "Comanda nu s-a putut bloca sau ai atins numarul maxim de comenzi, reincercati!", "OK");
             }
             catch (Exception ex)
             {

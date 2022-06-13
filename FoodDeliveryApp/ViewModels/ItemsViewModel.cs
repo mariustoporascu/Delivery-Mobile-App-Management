@@ -20,12 +20,8 @@ namespace FoodDeliveryApp.ViewModels
         public List<Categ> SCateg { get; set; }
         public List<CartItem> CItems { get; set; }
         private string searchItem = "";
-        private Item _selectedItem;
         public Command LoadItemsCommand { get; }
-        /*public Command<Item> MinusCommand { get; }
-        public Command<Item> PlusCommand { get; }*/
         public Command SearchCommand { get; }
-        public Command<Item> ItemTapped { get; }
 
         public string SearchItem
         {
@@ -42,9 +38,6 @@ namespace FoodDeliveryApp.ViewModels
             SCateg = new List<Categ>();
             SSubCateg = new List<SubCateg>();
             LoadItemsCommand = new Command(ExecuteLoadItemsCommand);
-            ItemTapped = new Command<Item>((item) => OnItemSelected(item));
-            /*MinusCommand = new Command<Item>(OnMinus);
-            PlusCommand = new Command<Item>(OnPlus);*/
             SearchCommand = new Command(Searching);
         }
 
@@ -53,7 +46,7 @@ namespace FoodDeliveryApp.ViewModels
 
             try
             {
-                SearchItem = "";
+                SearchItem = string.Empty;
                 ItemsSubCateg.Clear();
                 var newListSub = new ObservableRangeCollection<Grouping<SubCateg, Item>>();
                 if (SItems.Count == 0)
@@ -106,8 +99,7 @@ namespace FoodDeliveryApp.ViewModels
         }
         void Searching()
         {
-            if (string.IsNullOrWhiteSpace(SearchItem))
-                return;
+
             try
             {
                 ItemsSubCateg.Clear();
@@ -136,35 +128,6 @@ namespace FoodDeliveryApp.ViewModels
             }
         }
 
-        Item SelectedItem
-        {
-            get => _selectedItem;
-            set
-            {
-                SetProperty(ref _selectedItem, value);
-                OnItemSelected(value);
-            }
-        }
-
-        /*void OnMinus(Item itemVM)
-        {
-            if (CItems == null)
-                return;
-            var item = CItems.Find(citem => citem.ProductId == itemVM.ProductId);
-            if (itemVM == null || item == null)
-                return;
-            item.Cantitate--;
-            item.PriceTotal = item.Cantitate * itemVM.Price;
-            itemVM.Cantitate--;
-            if (item.Cantitate == 0)
-            {
-                CItems.Remove(item);
-                DataStore.DeleteFromCart(item);
-            }
-            else
-                DataStore.SaveCart(item);
-
-        }*/
         public bool CheckHasAnother()
         {
             var hasAnotherCompany = CItems.Find(ci => ci.CompanieRefId != App.UserInfo.CompanieRefId);
@@ -172,40 +135,6 @@ namespace FoodDeliveryApp.ViewModels
                 return true;
             return false;
         }
-        /*void OnPlus(Item itemVM)
-        {
-            if (CItems == null)
-                return;
-            if (itemVM == null)
-                return;
 
-            var item = CItems.Find(citem => citem.ProductId == itemVM.ProductId);
-
-            if (item == null)
-            {
-                item = new CartItem
-                {
-                    ProductId = itemVM.ProductId,
-                    Gramaj = itemVM.Gramaj,
-                    Name = itemVM.Name,
-                    Cantitate = itemVM.Cantitate,
-                    CompanieRefId = RefId
-                };
-                CItems.Add(item);
-            }
-            item.Cantitate++;
-            item.PriceTotal = item.Cantitate * itemVM.Price;
-            itemVM.Cantitate++;
-            DataStore.SaveCart(item);
-
-        }*/
-        async void OnItemSelected(Item item)
-        {
-            if (item == null)
-                return;
-
-            // This will push the ItemDetailPage onto the navigation stack
-            await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.ItemId)}={item.ProductId}&{nameof(ItemDetailViewModel.RefId)}={App.UserInfo.CompanieRefId}");
-        }
     }
 }

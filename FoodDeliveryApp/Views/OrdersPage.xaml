@@ -34,19 +34,17 @@
                             <Label
                                 FontAttributes="Bold"
                                 FontSize="Small"
-                                HorizontalOptions="CenterAndExpand"
                                 HorizontalTextAlignment="Center"
                                 LineBreakMode="WordWrap"
                                 Text="Nr"
                                 TextColor="Black"
                                 VerticalOptions="CenterAndExpand"
-                                WidthRequest="90" />
+                                WidthRequest="70" />
 
                             <Picker
                                 x:Name="StatusPick"
                                 Title="Status"
                                 FontSize="Small"
-                                HorizontalOptions="CenterAndExpand"
                                 HorizontalTextAlignment="Center"
                                 ItemsSource="{Binding OrderStatus}"
                                 SelectedIndexChanged="Selector_SelectedIndexChanged"
@@ -57,15 +55,14 @@
                             <Label
                                 FontAttributes="Bold"
                                 FontSize="Small"
-                                HorizontalOptions="CenterAndExpand"
                                 HorizontalTextAlignment="Center"
                                 LineBreakMode="WordWrap"
                                 Text="Total"
                                 TextColor="Black"
                                 VerticalOptions="CenterAndExpand"
-                                WidthRequest="95" />
+                                WidthRequest="70" />
 
-                            <StackLayout Orientation="Horizontal" WidthRequest="120">
+                            <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
 
                                 <DatePicker
                                     x:Name="Datapick"
@@ -81,96 +78,87 @@
                                     Source="edit.png" />
                             </StackLayout>
                         </StackLayout>
-
-                        <CollectionView x:Name="ItemsListView" SelectionMode="None">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <StackLayout Margin="2" x:DataType="model:ServerOrder">
-                                        <StackLayout
-                                            Margin="2"
-                                            xct:CornerRadiusEffect.CornerRadius="10"
-                                            BackgroundColor="LightCyan"
-                                            HorizontalOptions="FillAndExpand">
+                        <RefreshView Command="{Binding LoadOrdersCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+                            <CollectionView ItemsSource="{Binding Orders}" SelectionMode="None">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackLayout Margin="2" x:DataType="model:ServerOrder">
                                             <StackLayout
-                                                HorizontalOptions="CenterAndExpand"
-                                                IsVisible="{Binding Source={RelativeSource AncestorType={x:Type local:OrdersViewModel}}, Path=CanSeeExtraInfo}"
-                                                Orientation="Horizontal"
-                                                VerticalOptions="FillAndExpand">
-                                                <Label
-                                                    FontSize="Small"
-                                                    HorizontalTextAlignment="Center"
-                                                    LineBreakMode="WordWrap"
-                                                    Text="{Binding CompanieName}"
-                                                    TextColor="Black" />
-                                            </StackLayout>
-                                            <StackLayout
-                                                HorizontalOptions="FillAndExpand"
-                                                Orientation="Horizontal"
-                                                VerticalOptions="FillAndExpand">
-
+                                                Margin="2"
+                                                Padding="0,10,0,10"
+                                                xct:CornerRadiusEffect.CornerRadius="10"
+                                                BackgroundColor="LightCyan"
+                                                HorizontalOptions="FillAndExpand">
                                                 <StackLayout
                                                     HorizontalOptions="CenterAndExpand"
-                                                    VerticalOptions="CenterAndExpand"
-                                                    WidthRequest="90">
+                                                    IsVisible="{Binding Source={RelativeSource AncestorType={x:Type local:OrdersViewModel}}, Path=CanSeeExtraInfo}"
+                                                    Orientation="Horizontal"
+                                                    VerticalOptions="FillAndExpand">
                                                     <Label
-                                                        FontSize="Small"
-                                                        HorizontalOptions="CenterAndExpand"
-                                                        HorizontalTextAlignment="Center"
-                                                        LineBreakMode="WordWrap"
-                                                        Text="{Binding OrderId}"
-                                                        TextColor="Black" />
-
-                                                </StackLayout>
-                                                <StackLayout
-                                                    HorizontalOptions="CenterAndExpand"
-                                                    VerticalOptions="CenterAndExpand"
-                                                    WidthRequest="80">
-                                                    <Label
+                                                        FontAttributes="Bold"
                                                         FontSize="Small"
                                                         HorizontalTextAlignment="Center"
                                                         LineBreakMode="WordWrap"
-                                                        Text="{Binding Status}"
+                                                        Text="{Binding CompanieName}"
                                                         TextColor="Black" />
-
                                                 </StackLayout>
                                                 <StackLayout
-                                                    HorizontalOptions="CenterAndExpand"
-                                                    VerticalOptions="CenterAndExpand"
-                                                    WidthRequest="95">
-                                                    <Label
-                                                        FontSize="Small"
-                                                        HorizontalTextAlignment="Center"
-                                                        LineBreakMode="NoWrap"
-                                                        Text="{Binding TotalOrdered}"
-                                                        TextColor="Black" />
+                                                    HorizontalOptions="FillAndExpand"
+                                                    Orientation="Horizontal"
+                                                    VerticalOptions="FillAndExpand">
 
+                                                    <StackLayout VerticalOptions="CenterAndExpand" WidthRequest="70">
+                                                        <Label
+                                                            FontSize="Small"
+                                                            HorizontalOptions="CenterAndExpand"
+                                                            HorizontalTextAlignment="Center"
+                                                            LineBreakMode="WordWrap"
+                                                            Text="{Binding OrderId}"
+                                                            TextColor="Black" />
+
+                                                    </StackLayout>
+                                                    <StackLayout VerticalOptions="CenterAndExpand" WidthRequest="80">
+                                                        <Label
+                                                            FontSize="Small"
+                                                            HorizontalTextAlignment="Center"
+                                                            LineBreakMode="WordWrap"
+                                                            Text="{Binding Status}"
+                                                            TextColor="Black" />
+
+                                                    </StackLayout>
+                                                    <StackLayout VerticalOptions="CenterAndExpand" WidthRequest="70">
+                                                        <Label
+                                                            FontSize="Small"
+                                                            HorizontalTextAlignment="Center"
+                                                            LineBreakMode="NoWrap"
+                                                            Text="{Binding TotalOrdered}"
+                                                            TextColor="Black" />
+
+                                                    </StackLayout>
+                                                    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                                                        <Label
+                                                            FontSize="Small"
+                                                            HorizontalTextAlignment="Center"
+                                                            LineBreakMode="WordWrap"
+                                                            Text="{Binding PaymentMethod}"
+                                                            TextColor="Black" />
+                                                    </StackLayout>
                                                 </StackLayout>
-                                                <StackLayout
-                                                    HorizontalOptions="CenterAndExpand"
-                                                    VerticalOptions="CenterAndExpand"
-                                                    WidthRequest="120">
-                                                    <Label
-                                                        FontSize="Small"
-                                                        HorizontalTextAlignment="Center"
-                                                        LineBreakMode="WordWrap"
-                                                        Text="{Binding PaymentMethod}"
-                                                        TextColor="Black" />
-                                                </StackLayout>
+
                                             </StackLayout>
 
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:OrdersViewModel}}, Path=ItemTapped}"
+                                                    CommandParameter="{Binding .}"
+                                                    NumberOfTapsRequired="1" />
+                                            </StackLayout.GestureRecognizers>
                                         </StackLayout>
 
-                                        <StackLayout.GestureRecognizers>
-                                            <TapGestureRecognizer
-                                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:OrdersViewModel}}, Path=ItemTapped}"
-                                                CommandParameter="{Binding .}"
-                                                NumberOfTapsRequired="1" />
-                                        </StackLayout.GestureRecognizers>
-                                    </StackLayout>
-
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </RefreshView>
                     </StackLayout>
                 </StackLayout>
                 <StackLayout IsVisible="{Binding IsLoggedIn, Converter={StaticResource invertBoolConverter}}" VerticalOptions="FillAndExpand">

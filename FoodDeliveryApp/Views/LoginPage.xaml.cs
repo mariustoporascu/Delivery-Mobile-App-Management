@@ -127,7 +127,7 @@ namespace FoodDeliveryApp.Views
             }
         }
 
-        private void OnSignInApple(object sender, EventArgs e)
+        private async void OnSignInApple(object sender, EventArgs e)
         {
             try
             {
@@ -137,6 +137,9 @@ namespace FoodDeliveryApp.Views
             {
                 Debug.WriteLine(ex.Message);
             }
+            vm.IsBusy = true;
+            await DependencyService.Get<IDataStore>().Init();
+            vm.IsBusy = false;
             if (App.UserInfo.IsOwner)
                 App.Current.MainPage = new AppShellOwner();
             else
@@ -153,6 +156,9 @@ namespace FoodDeliveryApp.Views
             {
                 Debug.WriteLine(ex.Message);
             }
+            vm.IsBusy = true;
+            await DependencyService.Get<IDataStore>().Init();
+            vm.IsBusy = false;
             if (App.UserInfo.IsOwner)
                 App.Current.MainPage = new AppShellOwner();
             else

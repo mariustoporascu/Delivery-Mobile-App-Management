@@ -6,7 +6,6 @@
     xmlns:local="clr-namespace:FoodDeliveryApp.Views"
     Title="FoodDeliveryApp"
     Shell.PresentationMode="Animated">
-
     <!--
         The overall app visual hierarchy is defined here, along with navigation.
         
@@ -27,7 +26,8 @@
             <Style BasedOn="{StaticResource BaseStyle}" TargetType="TabBar" />
         </ResourceDictionary>
     </Shell.Resources>
-    <TabBar>
+
+        <TabBar>
         <ShellContent
             Title="Acasa"
             ContentTemplate="{DataTemplate local:EntryFoodAppPage}"
@@ -51,5 +51,4 @@
             Icon="lock.png"
             Route="MyOrdersPage" />
     </TabBar>
-
 </Shell>

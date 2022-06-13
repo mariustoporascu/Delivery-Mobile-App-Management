@@ -4,8 +4,13 @@ namespace FoodDeliveryApp.Constants
 {
     public static class ServerConstants
     {
+#if !DEBUG
         public const string BaseUrl = "https://manage.livro.ro/api";
         public const string BaseUrl2 = "https://manage.livro.ro";
+#else
+        public const string BaseUrl = "http://livro.sytes.net/foodapp/api";
+        public const string BaseUrl2 = "http://livro.sytes.net/foodapp";
+#endif
         public static List<string> OrderStatusOwner = new List<string>{
             "Preluata","In pregatire","Pregatita pentru livrare","Predata Soferului","Anulata"
             };

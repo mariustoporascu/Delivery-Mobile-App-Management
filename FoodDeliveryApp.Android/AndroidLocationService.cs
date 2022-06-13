@@ -9,7 +9,7 @@ using Xamarin.Forms;
 
 namespace FoodDeliveryApp.Droid
 {
-    [Service]
+    [Service(Exported = true)]
     public class AndroidLocationService : Service
     {
         CancellationTokenSource _cts;
@@ -25,6 +25,7 @@ namespace FoodDeliveryApp.Droid
             _cts = new CancellationTokenSource();
 
             Notification notification = new NotificationHelper().GetServiceStartedNotification();
+
             StartForeground(SERVICE_RUNNING_NOTIFICATION_ID, notification);
 
             Task.Run(() =>
@@ -49,7 +50,7 @@ namespace FoodDeliveryApp.Droid
                 }
             }, _cts.Token);
 
-            return StartCommandResult.Sticky;
+            return StartCommandResult.NotSticky;
         }
 
         public override void OnDestroy()

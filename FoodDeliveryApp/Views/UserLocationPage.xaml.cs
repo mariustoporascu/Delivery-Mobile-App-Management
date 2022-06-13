@@ -25,48 +25,6 @@ namespace FoodDeliveryApp.Views
             BindingContext = viewModel;
 
         }
-        protected override async void OnAppearing()
-        {
-            base.OnAppearing();
-
-            AppMap.Pins.Clear();
-            Pin goToPin = new Pin()
-            {
-                Label = "Adresa mea",
-                Type = PinType.Place,
-
-            };
-            if (viewModel.CoordX != 0 && viewModel.CoordY != 0)
-            {
-                try
-                {
-
-                    goToPin.Position = new Position(viewModel.CoordX, viewModel.CoordY);
-
-                    AppMap.Pins.Add(goToPin);
-                    AppMap.MoveToRegion(MapSpan.FromCenterAndRadius(goToPin.Position, Distance.FromMeters(100)));
-
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex.Message);
-                }
-
-
-            }
-            else
-            {
-                IEnumerable<Position> aproxLocation = await geoCoder.GetPositionsForAddressAsync("Centru, Cernavoda, Constanta, Romania");
-                if (aproxLocation.Count() > 0)
-                {
-                    Position position1 = aproxLocation.FirstOrDefault();
-                    goToPin.Position = position1;
-                    AppMap.Pins.Add(goToPin);
-                    if (AppMap.IsVisible)
-                        AppMap.MoveToRegion(MapSpan.FromCenterAndRadius(goToPin.Position, Distance.FromMeters(100)));
-                }
-            }
-        }
         private void CheckFieldCladireAp(object sender, TextChangedEventArgs e)
         {
             try
@@ -85,29 +43,6 @@ namespace FoodDeliveryApp.Views
                 Debug.WriteLine(ex.Message);
 
 
-            }
-        }
-        private void CheckFieldLocName(object sender, TextChangedEventArgs e)
-        {
-            try
-            {
-                if (LocName.Text.Split(null).Count() < 2)
-                {
-                    LocNameEntry.IsNotValid = true;
-                    LocNameEntry.IsValid = false;
-                }
-                if (!LocNameEntry.IsValid)
-                {
-                    LocName.TextColor = Color.Red;
-                    return;
-                }
-                LocName.TextColor = Color.Black;
-
-
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
             }
         }
         private async void CheckFieldNumeNrStrada(object sender, EventArgs e)
@@ -163,7 +98,7 @@ namespace FoodDeliveryApp.Views
         {
             try
             {
-                if (!string.IsNullOrWhiteSpace(viewModel.City) && LocNameEntry.IsValid && NumeNrStradaEntry.IsValid &&
+                if (!string.IsNullOrWhiteSpace(viewModel.City) && NumeNrStradaEntry.IsValid &&
                 CladireApEntry.IsValid && await VerifyLocation(false) && NrTelefonEntry.IsValid)
                     return true;
                 return false;
@@ -191,20 +126,6 @@ namespace FoodDeliveryApp.Views
                         {
 
                             var posn = aproxLocation.First();
-                            await Device.InvokeOnMainThreadAsync(() =>
-                            {
-                                AppMap.Pins.Clear();
-                                Pin goToPin = new Pin()
-                                {
-                                    Label = "Adresa mea",
-                                    Type = PinType.Place,
-                                    Position = posn,
-
-                                };
-                                AppMap.Pins.Add(goToPin);
-                                AppMap.MoveToRegion(MapSpan.FromCenterAndRadius(aproxLocation.First(), Distance.FromMeters(100)));
-                            });
-
                             viewModel.CoordX = posn.Latitude;
                             viewModel.CoordY = posn.Longitude;
                         }
@@ -221,35 +142,7 @@ namespace FoodDeliveryApp.Views
                 return false;
             }
         }
-        void UserMovedView(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
 
-            try
-            {
-
-                Pin goToPin;
-                var map = (Map)sender;
-                //User Actual Location
-                AppMap.Pins.Clear();
-
-                goToPin = new Pin()
-                {
-                    Label = "Adresa mea",
-                    Type = PinType.Place,
-                    Position = new Position(map.VisibleRegion.Center.Latitude, map.VisibleRegion.Center.Longitude)
-                };
-                AppMap.Pins.Add(goToPin);
-
-
-                viewModel.CoordX = map.VisibleRegion.Center.Latitude;
-                viewModel.CoordY = map.VisibleRegion.Center.Longitude;
-
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-        }
         private void CheckFieldNrTelefon(object sender, TextChangedEventArgs e)
         {
             try

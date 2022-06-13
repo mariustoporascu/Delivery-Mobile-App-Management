@@ -6,5 +6,4 @@
     <!--
         Define global resources and styles here, that apply to all pages in your app.
     -->
-    <Application.Resources />
 </Application>

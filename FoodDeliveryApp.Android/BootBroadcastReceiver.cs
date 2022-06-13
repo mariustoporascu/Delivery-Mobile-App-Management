@@ -3,7 +3,7 @@ using Android.Content;
 
 namespace FoodDeliveryApp.Droid
 {
-    [BroadcastReceiver(Name = "com.locationservice.app.BootBroadcastReceiver", Enabled = true)]
+    [BroadcastReceiver(Name = "com.locationservice.app.BootBroadcastReceiver", Enabled = true, Exported = true)]
     [IntentFilter(new[] { Intent.ActionBootCompleted })]
     public class BootBroadcastReceiver : BroadcastReceiver
     {

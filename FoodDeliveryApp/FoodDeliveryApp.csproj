@@ -57,17 +57,11 @@
 		<EmbeddedResource Update="Views\GoogleDriveViewerPage.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</EmbeddedResource>
-		<EmbeddedResource Update="Views\ItemDetailPage.xaml">
-		  <Generator>MSBuild:Compile</Generator>
-		</EmbeddedResource>
 		<EmbeddedResource Update="Views\ItemsPage.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Views\PlaceOrderPage.xaml">
 		  <Generator>MSBuild:Compile</Generator>
-		</EmbeddedResource>
-		<EmbeddedResource Update="Views\ProductInOrderPage.xaml">
-			<Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Views\ResetPasswordPage.xaml">
 		  <Generator>MSBuild:Compile</Generator>

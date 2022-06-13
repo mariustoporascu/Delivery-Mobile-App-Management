@@ -34,12 +34,13 @@ namespace FoodDeliveryApp.Views
         }
         async Task<string> GetPdf(string url)
         {
-            var filePath = Path.Combine(FileSystem.AppDataDirectory, url.Split('/').Last());
-
-            var pdfBytes = await client.GetByteArrayAsync(url);
-
             try
             {
+                var filePath = Path.Combine(FileSystem.AppDataDirectory, url.Split('/').Last());
+
+                var pdfBytes = await client.GetByteArrayAsync(url);
+
+
                 File.WriteAllBytes(filePath, pdfBytes);
 
                 return filePath;

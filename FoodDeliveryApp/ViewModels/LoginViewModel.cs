@@ -27,7 +27,7 @@ namespace FoodDeliveryApp.ViewModels
             var authService = DependencyService.Get<IAuthController>();
             string loginResult = await authService.Execute(new UserModel { Email = UserName, Password = Password, FireBaseToken = App.FirebaseUserToken }, Constants.AuthOperations.Login);
 
-            if (loginResult != string.Empty && !loginResult.Contains("Password is wrong.")
+            if (!string.IsNullOrWhiteSpace(loginResult) && !loginResult.Contains("Password is wrong.")
                 && !loginResult.Contains("Email is wrong or user not existing.") && !loginResult.Contains("Login data invalid."))
             {
                 App.isLoggedIn = true;

@@ -13,16 +13,17 @@ namespace FoodDeliveryApp.ViewModels
 {
     public class MyOrdersViewModel : BaseViewModel
     {
-        private ObservableRangeCollection<ServerOrder> _orders;
-        public ObservableRangeCollection<ServerOrder> Orders { get => _orders; set => SetProperty(ref _orders, value); }
+        private ObservableRangeCollection<Order> _orders;
+        public ObservableRangeCollection<Order> Orders { get => _orders; set => SetProperty(ref _orders, value); }
         private List<string> _orderStatuses;
         public List<string> OrderStatus { get => _orderStatuses; set => SetProperty(ref _orderStatuses, value); }
         public Command LoadOrdersCommand { get; }
         private bool isLoggedIn = false;
         public bool IsLoggedIn { get => isLoggedIn; set => SetProperty(ref isLoggedIn, value); }
-        public Command<ServerOrder> ItemTapped { get; }
+        public Command<Order> ItemTapped { get; }
         public DateTime SelectedTime { get; set; } = DateTime.UtcNow.AddHours(3);
         List<ServerOrder> serverOrders;
+        List<Order> uiOrders;
 
         private bool isPageVisible = false;
         public bool IsPageVisible
@@ -32,9 +33,9 @@ namespace FoodDeliveryApp.ViewModels
         }
         public MyOrdersViewModel()
         {
-            Orders = new ObservableRangeCollection<ServerOrder>();
+            Orders = new ObservableRangeCollection<Order>();
             IsLoggedIn = App.isLoggedIn;
-            ItemTapped = new Command<ServerOrder>(OnItemSelected);
+            ItemTapped = new Command<Order>(OnItemSelected);
             OrderStatus = new List<string>();
             OrderStatus.Clear();
             OrderStatus.Add("Toate");
@@ -48,18 +49,26 @@ namespace FoodDeliveryApp.ViewModels
             IsBusy = true;
             try
             {
+                uiOrders = new List<Order>();
+
                 serverOrders = App.UserInfo.IsDriver ? await DataStore.GetServerOrders() : await DataStore.GetServerOrders(App.UserInfo.CompanieRefId);
 
-                /*if (Device.RuntimePlatform == Device.Android)
-                    serverOrders = await DataStore.GetServerOrders(email);
-                else
-                    serverOrders = DataStore.GetServerOrders(email).GetAwaiter().GetResult();*/
                 foreach (var order in serverOrders)
                     order.CompanieName = DataStore.GetCompanie(order.CompanieRefId).Name;
                 serverOrders = serverOrders.FindAll(o => !string.IsNullOrWhiteSpace(o.DriverRefId) && o.DriverRefId == App.UserInfo.Id);
 
                 lock (Orders)
                 {
+                    foreach (var serverOrder in serverOrders)
+                        uiOrders.Add(new Order
+                        {
+                            OrderId = serverOrder.OrderId,
+                            Status = serverOrder.Status,
+                            CompanieName = serverOrder.CompanieName,
+                            PaymentMethod = serverOrder.PaymentMethod,
+                            TotalOrdered = serverOrder.TotalOrdered + serverOrder.TransportFee,
+                            Created = serverOrder.Created,
+                        });
                     FilterBy(SelectedTime, "Toate");
                     if (Orders.Count > 0)
                     {
@@ -84,12 +93,12 @@ namespace FoodDeliveryApp.ViewModels
         {
             Orders.Clear();
             if (serverOrders != null && status == "Toate")
-                Orders.AddRange(serverOrders.FindAll(or => or.Created.Day == time.Day && or.Created.Month == time.Month).OrderBy(or => or.CompanieRefId));
+                Orders.AddRange(uiOrders.FindAll(or => or.Created.Day == time.Day && or.Created.Month == time.Month).OrderBy(or => or.CompanieRefId));
             else if (serverOrders != null)
-                Orders.AddRange(serverOrders.FindAll(or => or.Created.Day == time.Day && or.Created.Month == time.Month
+                Orders.AddRange(uiOrders.FindAll(or => or.Created.Day == time.Day && or.Created.Month == time.Month
                 && or.Status == status).OrderBy(or => or.CompanieRefId));
         }
-        async void OnItemSelected(ServerOrder item)
+        async void OnItemSelected(Order item)
         {
             if (item == null)
                 return;
