@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.tmiit.livroappmng" android:installLocation="auto">
 	<uses-sdk android:minSdkVersion="24" android:targetSdkVersion="31" />
-	<application android:label="Livro M" android:theme="@style/MainTheme" android:icon="@mipmap/ic_launcher" android:usesCleartextTraffic="true">
+	<application android:label="Livro M" android:theme="@style/MainTheme" android:icon="@mipmap/ic_launcher" android:networkSecurityConfig="@xml/network_security_config">
 		<meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyAbttuY3AGygrfsJ1ERLxhGr0uCjwvn8fM" />
 		<meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/ic_stat_livro" />
 		<uses-library android:name="org.apache.http.legacy" android:required="false" />
@@ -21,6 +21,7 @@
 	<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 	<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+	<uses-permission android:name="android.permission.BLUETOOTH" />
 	<uses-feature android:name="android.hardware.location" android:required="false" />
 	<uses-feature android:name="android.hardware.location.gps" android:required="false" />
 	<uses-feature android:name="android.hardware.location.network" android:required="false" />

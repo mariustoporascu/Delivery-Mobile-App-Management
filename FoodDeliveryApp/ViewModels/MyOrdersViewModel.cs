@@ -31,6 +31,7 @@ namespace FoodDeliveryApp.ViewModels
             get => isPageVisible;
             set => SetProperty(ref isPageVisible, value);
         }
+        private bool isLoading = false;
         public MyOrdersViewModel()
         {
             Orders = new ObservableRangeCollection<Order>();
@@ -46,48 +47,55 @@ namespace FoodDeliveryApp.ViewModels
         }
         public async Task ExecuteLoadOrdersCommand()
         {
-            IsBusy = true;
-            try
+            if (!isLoading)
             {
-                uiOrders = new List<Order>();
-
-                serverOrders = App.UserInfo.IsDriver ? await DataStore.GetServerOrders() : await DataStore.GetServerOrders(App.UserInfo.CompanieRefId);
-
-                foreach (var order in serverOrders)
-                    order.CompanieName = DataStore.GetCompanie(order.CompanieRefId).Name;
-                serverOrders = serverOrders.FindAll(o => !string.IsNullOrWhiteSpace(o.DriverRefId) && o.DriverRefId == App.UserInfo.Id);
-
-                lock (Orders)
+                isLoading = true;
+                IsBusy = true;
+                try
                 {
-                    foreach (var serverOrder in serverOrders)
-                        uiOrders.Add(new Order
-                        {
-                            OrderId = serverOrder.OrderId,
-                            Status = serverOrder.Status,
-                            CompanieName = serverOrder.CompanieName,
-                            PaymentMethod = serverOrder.PaymentMethod,
-                            TotalOrdered = serverOrder.TotalOrdered + serverOrder.TransportFee,
-                            Created = serverOrder.Created,
-                        });
-                    FilterBy(SelectedTime, "Toate");
-                    if (Orders.Count > 0)
+                    uiOrders = new List<Order>();
+
+                    serverOrders = App.UserInfo.IsDriver ? await DataStore.GetServerOrders() : await DataStore.GetServerOrders(App.UserInfo.CompanieRefId);
+
+                    foreach (var order in serverOrders)
+                        order.CompanieName = DataStore.GetCompanie(order.CompanieRefId).Name;
+                    serverOrders = serverOrders.FindAll(o => !string.IsNullOrWhiteSpace(o.DriverRefId) && o.DriverRefId == App.UserInfo.Id);
+
+                    lock (Orders)
                     {
-                        IsPageVisible = true;
+                        foreach (var serverOrder in serverOrders)
+                            uiOrders.Add(new Order
+                            {
+                                OrderId = serverOrder.OrderId,
+                                Status = serverOrder.Status,
+                                CompanieName = serverOrder.CompanieName,
+                                PaymentMethod = serverOrder.PaymentMethod,
+                                TotalOrdered = serverOrder.TotalOrdered + serverOrder.TransportFee,
+                                Created = serverOrder.Created,
+                            });
+                        FilterBy(SelectedTime, "Toate");
+                        if (Orders.Count > 0)
+                        {
+                            IsPageVisible = true;
+                        }
+                        else
+                            IsPageVisible = false;
                     }
-                    else
-                        IsPageVisible = false;
+                    await Task.Delay(1000);
+
                 }
-                await Task.Delay(1000);
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }
+                finally
+                {
+                    IsBusy = false;
+                    isLoading = false;
+                }
 
             }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-            finally
-            {
-                IsBusy = false;
-            }
+
         }
         public void FilterBy(DateTime time, string status)
         {

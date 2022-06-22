@@ -15,6 +15,7 @@ namespace FoodDeliveryApp
             Routing.RegisterRoute(nameof(GoogleDriveViewerPage), typeof(GoogleDriveViewerPage));
             Routing.RegisterRoute(nameof(GenerateTokenPage), typeof(GenerateTokenPage));
             Routing.RegisterRoute(nameof(ResetPasswordPage), typeof(ResetPasswordPage));
+            Routing.RegisterRoute(nameof(PrinterPage), typeof(PrinterPage));
 
         }
 

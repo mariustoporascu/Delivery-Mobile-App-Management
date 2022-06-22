@@ -26,15 +26,18 @@ namespace FoodDeliveryApp.Views
             base.OnAppearing();
             if (App.UserInfo.IsOwner)
             {
-                Header.Text = $"Administrare comenzi {viewModel.DataStore.GetCompanie(App.UserInfo.CompanieRefId).Name}.";
-                Info.Text = "Aici va puteti gestiona comenzile primite, vizualiza detalii despre soferul care a preluat comanda si nu numai.";
+                viewModel.Companie = viewModel.DataStore.GetCompanie(App.UserInfo.CompanieRefId);
+                SwitchComenzi.IsToggled = viewModel.Companie.TemporaryClosed;
+                Header.Text = $"Administrare {viewModel.Companie.Name}.";
+                Info.Text = "Aici va puteti gestiona comenzile primite, vizualiza detalii despre soferul care a preluat comanda, introduce comenzile telefonice, bloca primirea comenzilor, etc.";
+                viewModel.CanChangeTelNo = false;
             }
             else
             {
                 viewModel.TelNo = App.UserInfo.TelNo;
                 viewModel.CanChangeTelNo = App.UserInfo.IsDriver;
-                Header.Text = $"Administrare comenzi {App.UserInfo.Email}.";
-                Info.Text = "Aici va puteti gestiona comenzile, bloca anumite comenzi pentru a fi livrate de catre tine, vizualiza pe harta destinatiile pentru livrari si nu numai.";
+                Header.Text = $"Administrare {App.UserInfo.Email}.";
+                Info.Text = "Aici va puteti gestiona comenzile, bloca anumite comenzi pentru a fi livrate de catre tine, vizualiza pe harta destinatiile pentru livrari, etc.";
                 await SetupLocation();
 
             }
@@ -142,8 +145,37 @@ namespace FoodDeliveryApp.Views
                 return true;
             else
             {
-                await this.DisplayToastAsync("Pentru contul de sofer avem nevoie de access la locatia telefonului.", 2300);
+                await Shell.Current.DisplayToastAsync("Pentru contul de sofer avem nevoie de access la locatia telefonului.", 2000);
                 return false;
+            }
+        }
+
+        private async void Switch_Toggled(object sender, ToggledEventArgs e)
+        {
+            try
+            {
+                if (SwitchComenzi.IsToggled == viewModel.Companie.TemporaryClosed)
+                    return;
+                var prompt = await DisplayAlert("Confirmati", "Doriti sa modificati statusul pentru primirea comenzilor de la clientii aplicatiei?", "OK", "Cancel");
+                if (prompt)
+                {
+                    if (await viewModel.OrderService.ToggleOrdering(App.UserInfo.CompanieRefId))
+                    {
+                        await DisplayAlert("Succes", "Alegerea ta a fost transmisa.", "OK");
+                        viewModel.Companie.TemporaryClosed = SwitchComenzi.IsToggled;
+                    }
+                    else
+                    {
+                        await DisplayAlert("Eroare", "Alegerea ta nu a fost transmisa.", "OK");
+                        SwitchComenzi.IsToggled = viewModel.Companie.TemporaryClosed;
+                    }
+                }
+                else
+                    SwitchComenzi.IsToggled = viewModel.Companie.TemporaryClosed;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
             }
         }
     }

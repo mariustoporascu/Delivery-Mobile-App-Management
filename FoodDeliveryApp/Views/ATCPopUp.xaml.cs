@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.CommunityToolkit.Extensions;
 using Xamarin.CommunityToolkit.UI.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -36,10 +37,12 @@ namespace FoodDeliveryApp.Views
             viewModel.Item.Cantitate++;
             viewModel.Item.PriceTotal = viewModel.Item.Cantitate * viewModel.RefPrice;
         }
-        void AddClicked(object sender, EventArgs e)
+        async void AddClicked(object sender, EventArgs e)
         {
             viewModel.DataStore.SaveCart(viewModel.Item);
             Dismiss(null);
+            await Shell.Current.DisplayToastAsync("Produsul a fost adaugat/modificat in cos.", 1500);
+
         }
     }
 }

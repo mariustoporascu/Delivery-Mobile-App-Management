@@ -27,31 +27,31 @@
             <Style BasedOn="{StaticResource BaseStyle}" TargetType="TabBar" />
         </ResourceDictionary>
     </Shell.Resources>
-        <TabBar>
-            <ShellContent
-                Title="Acasa"
-                ContentTemplate="{DataTemplate local:EntryFoodAppPage}"
-                Icon="home.png"
-                Route="EntryFoodAppPage" />
-            <ShellContent
-                Title="Produse"
-                ContentTemplate="{DataTemplate local:ItemsPage}"
-                Icon="search.png"
-                Route="ItemsPage" />
-            <ShellContent
-                Title="Cos"
-                ContentTemplate="{DataTemplate local:CosContentPage}"
-                Icon="cart.png"
-                Route="CosContentPage" />
-            <ShellContent
-                Title="Harta"
-                ContentTemplate="{DataTemplate local:MapsPage}"
-                Icon="location.png"
-                Route="MapsPage" />
-            <ShellContent
-                Title="Comenzi"
-                ContentTemplate="{DataTemplate local:OrdersPage}"
-                Icon="orders.png"
-                Route="OrdersPage" />
-        </TabBar>
+    <TabBar>
+        <ShellContent
+            Title="Acasa"
+            ContentTemplate="{DataTemplate local:EntryFoodAppPage}"
+            Icon="home.png"
+            Route="EntryFoodAppPage" />
+        <ShellContent
+            Title="Produse"
+            ContentTemplate="{DataTemplate local:ItemsPage}"
+            Icon="search.png"
+            Route="ItemsPage" />
+        <ShellContent
+            Title="Cos"
+            ContentTemplate="{DataTemplate local:CosContentPage}"
+            Icon="cart.png"
+            Route="CosContentPage" />
+        <!--<ShellContent
+            Title="Harta"
+            ContentTemplate="{DataTemplate local:MapsPage}"
+            Icon="location.png"
+            Route="MapsPage" />-->
+        <ShellContent
+            Title="Comenzi"
+            ContentTemplate="{DataTemplate local:OrdersPage}"
+            Icon="orders.png"
+            Route="OrdersPage" />
+    </TabBar>
 </Shell>

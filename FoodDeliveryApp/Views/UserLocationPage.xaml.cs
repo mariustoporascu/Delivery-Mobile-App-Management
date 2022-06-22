@@ -174,7 +174,7 @@ namespace FoodDeliveryApp.Views
                 if (await IsProfileValid())
                 {
                     viewModel.SaveLocation.Execute(null);
-                    await this.DisplayToastAsync("Detaliile clientului au fost adaugate.", 1300);
+                    await Shell.Current.DisplayToastAsync("Detaliile clientului au fost adaugate.", 1500);
                     await Navigation.PopModalAsync(true);
                 }
                 else

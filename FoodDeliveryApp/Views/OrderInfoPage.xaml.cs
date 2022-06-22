@@ -52,6 +52,8 @@ namespace FoodDeliveryApp.Views
 
                     else
                         await DisplayAlert("Eroare", "Statusul nu a fost schimbat, reincercati!", "OK");
+                    MessagingCenter.Send<OrderInfoPage>(this, "RefreshOrders");
+
                 }
             }
 
@@ -77,6 +79,8 @@ namespace FoodDeliveryApp.Views
                         await DisplayAlert("Succes", "Timpul estimat a fost transmis.", "OK");
                     else
                         await DisplayAlert("Eroare", "Timpul estimat nu a fost transmis, reincercati!", "OK");
+                    MessagingCenter.Send<OrderInfoPage>(this, "RefreshOrders");
+
                 }
             }
 
@@ -86,14 +90,29 @@ namespace FoodDeliveryApp.Views
             }
 
         }
-
+        private async void printTextButton_Clicked(object sender, EventArgs e)
+        {
+            await viewModel.BTPrinter.PrintText(viewModel.PrintingInfo.Replace("\r\n", "\n").ToString());
+        }
         private async void Button_Clicked(object sender, EventArgs e)
         {
             try
             {
+                bool prompt = false;
+                if (viewModel.CurrOrder.PaymentMethod == "Card la livrare")
+                {
+                    prompt = await DisplayAlert("Confirmati", "Aceasta comanda se poate incasa doar cu POS-ul mobil, sunteti sigur ca o puteti prelua?", "OK", "Cancel");
+                }
+                else
+                {
+                    prompt = true;
+                }
+                if (!prompt)
+                    return;
                 if (await viewModel.LockDriverOrder())
                 {
                     await DisplayAlert("Succes", "Comanda a fost blocata pentru tine.", "OK");
+                    MessagingCenter.Send<OrderInfoPage>(this, "RefreshOrders");
                     await Shell.Current.Navigation.PopToRootAsync();
                 }
                 else
@@ -117,6 +136,8 @@ namespace FoodDeliveryApp.Views
                         await DisplayAlert("Succes", "Alegerea ta a fost transmisa.", "OK");
                     else
                         await DisplayAlert("Eroare", "Alegerea ta nu a fost transmisa.", "OK");
+                    MessagingCenter.Send<OrderInfoPage>(this, "RefreshOrders");
+
                 }
             }
             catch (Exception ex)

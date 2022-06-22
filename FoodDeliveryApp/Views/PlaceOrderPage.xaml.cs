@@ -14,33 +14,33 @@ namespace FoodDeliveryApp.Views
         {
             InitializeComponent();
             BindingContext = vm = new PlaceOrderViewModel(location, paymentMethod, estimated);
-            if (Device.RuntimePlatform == Device.iOS)
+            /*if (Device.RuntimePlatform == Device.iOS)
                 vm.OnPlaceOrder += OnPlaceOrderApple;
             else
-            {
-                vm.OnPlaceOrder += OnPlaceOrder;
-                vm.OnPlaceOrderFailed += OnPlaceOrderFailed;
+            {*/
+            vm.OnPlaceOrder += OnPlaceOrder;
+            vm.OnPlaceOrderFailed += OnPlaceOrderFailed;
 
-            }
+            //}
 
         }
-        private void OnPlaceOrderApple(object sender, EventArgs e)
+        private async void OnPlaceOrderApple(object sender, EventArgs e)
         {
             try
             {
-                this.DisplayToastAsync("Comanda a fost plasata", 2300);
+                await this.DisplayToastAsync("Comanda a fost plasata", 2300);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
             }
-            Navigation.PopModalAsync(true);
+            await Shell.Current.Navigation.PopToRootAsync();
         }
         private async void OnPlaceOrder(object sender, EventArgs e)
         {
             try
             {
-                await this.DisplayToastAsync("Comanda a fost plasata", 1300);
+                await Shell.Current.DisplayToastAsync("Comanda a fost plasata", 1500);
             }
             catch (Exception ex)
             {

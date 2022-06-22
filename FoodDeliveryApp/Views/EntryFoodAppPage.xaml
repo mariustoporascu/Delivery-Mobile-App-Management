@@ -9,6 +9,11 @@
     Title="{Binding Title}"
     x:DataType="local:EntryFoodAppViewModel"
     Shell.PresentationMode="Animated">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <xct:InvertedBoolConverter x:Key="invertBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <StackLayout BackgroundColor="PaleGoldenrod" VerticalOptions="FillAndExpand">
         <Label
             x:Name="Header"
@@ -31,6 +36,21 @@
             LineBreakMode="WordWrap"
             TextColor="Black"
             VerticalOptions="CenterAndExpand" />
+        <StackLayout Margin="0,10,0,0" IsVisible="{Binding CanChangeTelNo, Converter={StaticResource invertBoolConverter}}">
+            <Label
+                FontSize="Medium"
+                HorizontalTextAlignment="Center"
+                LineBreakMode="WordWrap"
+                Text="Switch pentru blocare comenzi venite din aplicatia clientilor"
+                TextColor="Black" />
+            <Switch
+                x:Name="SwitchComenzi"
+                HorizontalOptions="CenterAndExpand"
+                OnColor="Green"
+                Scale="1.5"
+                ThumbColor="Orange"
+                Toggled="Switch_Toggled" />
+        </StackLayout>
         <StackLayout Margin="0,10,0,0" IsVisible="{Binding CanChangeTelNo}">
             <StackLayout
                 Margin="15"

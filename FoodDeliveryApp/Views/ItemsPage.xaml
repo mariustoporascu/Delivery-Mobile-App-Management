@@ -8,10 +8,7 @@
     xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
     Title="{Binding Title}"
     Shell.PresentationMode="Animated">
-    <!--
-        x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
-        https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
-    -->
+
     <StackLayout
         BackgroundColor="White"
         HorizontalOptions="FillAndExpand"
@@ -81,7 +78,7 @@
                                 Orientation="Vertical"
                                 VerticalOptions="FillAndExpand">
 
-                                <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
+                                <!--<StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
                                     <Image
                                         xct:CornerRadiusEffect.CornerRadius="20"
                                         Aspect="Fill"
@@ -94,6 +91,27 @@
 
                                         </Image.Source>
                                     </Image>
+
+                                </StackLayout>-->
+                                <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
+                                    <Label
+                                        FontSize="Medium"
+                                        HorizontalTextAlignment="Center"
+                                        LineBreakMode="WordWrap"
+                                        Text="Afisare in aplicatia clientilor"
+                                        TextColor="Black" />
+                                    <Button
+                                        Margin="0"
+                                        Padding="0"
+                                        BackgroundColor="Transparent"
+                                        Clicked="Switch_Toggled"
+                                        CommandParameter="{Binding .}"
+                                        FontSize="Small"
+                                        HorizontalOptions="Center"
+                                        ImageSource="save.png"
+                                        Text="{Binding StatusAvail}"
+                                        TextColor="{Binding Color}"
+                                        TextTransform="None" />
 
                                 </StackLayout>
                                 <StackLayout HeightRequest="150" VerticalOptions="CenterAndExpand">
@@ -135,6 +153,7 @@
                                         BackgroundColor="Transparent"
                                         Clicked="OnAddItem"
                                         CommandParameter="{Binding .}"
+                                        IsVisible="{Binding IsAvailable}"
                                         Source="buy.png" />
 
                                 </StackLayout>

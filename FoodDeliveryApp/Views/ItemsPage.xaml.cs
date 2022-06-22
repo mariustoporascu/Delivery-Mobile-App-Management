@@ -3,6 +3,7 @@ using FoodDeliveryApp.ViewModels;
 using System;
 using Xamarin.Forms;
 using Xamarin.CommunityToolkit.Extensions;
+using System.Diagnostics;
 
 namespace FoodDeliveryApp.Views
 {
@@ -14,6 +15,7 @@ namespace FoodDeliveryApp.Views
         {
             InitializeComponent();
             BindingContext = viewModel = new ItemsViewModel();
+            viewModel.FailedToChange += FailedToChange;
         }
         protected override void OnAppearing()
         {
@@ -53,6 +55,28 @@ namespace FoodDeliveryApp.Views
             if (string.IsNullOrWhiteSpace(viewModel.SearchItem))
                 return;
             viewModel.SearchCommand.Execute(null);
+        }
+        private async void FailedToChange(object sender, EventArgs e)
+        {
+            await DisplayAlert("Eroare", "Modificarea nu s-a putut efectua, reincercati!", "OK");
+        }
+
+        private async void Switch_Toggled(object sender, EventArgs e)
+        {
+            try
+            {
+                var prompt = await DisplayAlert("Confirmati", "Doriti sa modificati statusul pentru acest produs?", "OK", "Cancel");
+                if (prompt)
+                {
+                    var btnDetails = (Button)sender;
+                    var item = (Item)btnDetails.CommandParameter;
+                    viewModel.ToggleSwitchCommand.Execute(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
         //private void Entry_TextChanged(object sender, TextChangedEventArgs e)
         //{

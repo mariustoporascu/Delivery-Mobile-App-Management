@@ -156,5 +156,38 @@ namespace FoodDeliveryApp.Services
             return string.Empty;
         }
 
+        public async Task<bool> ToggleOrdering(int companieId)
+        {
+            TryAddHeaders();
+
+            Uri uri = new Uri($"{ServerConstants.BaseUrl}/foodappmanage/toggleordering/{companieId}");
+            HttpResponseMessage httpResponseMessage = await _httpClient.GetAsync(uri);
+
+            if (httpResponseMessage.IsSuccessStatusCode)
+            {
+                var respInfo = await httpResponseMessage.Content.ReadAsStringAsync();
+                if (respInfo.Contains("Campul a fost modificat"))
+                    return true;
+
+            }
+            return false;
+        }
+
+        public async Task<bool> ToggleProduct(int companieId, int productId)
+        {
+            TryAddHeaders();
+
+            Uri uri = new Uri($"{ServerConstants.BaseUrl}/foodappmanage/toggleproduct/{companieId}&{productId}");
+            HttpResponseMessage httpResponseMessage = await _httpClient.GetAsync(uri);
+
+            if (httpResponseMessage.IsSuccessStatusCode)
+            {
+                var respInfo = await httpResponseMessage.Content.ReadAsStringAsync();
+                if (respInfo.Contains("Campul a fost modificat"))
+                    return true;
+
+            }
+            return false;
+        }
     }
 }

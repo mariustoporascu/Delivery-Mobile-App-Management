@@ -1,4 +1,5 @@
 ﻿using FoodDeliveryApp.Models.AuthModels;
+using FoodDeliveryApp.Models.ShopModels;
 using System;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
@@ -14,6 +15,7 @@ namespace FoodDeliveryApp.ViewModels
         public string TelNo { get => _telNo; set => SetProperty(ref _telNo, value); }
         private bool _canChangeTelNo;
         public bool CanChangeTelNo { get => _canChangeTelNo; set => SetProperty(ref _canChangeTelNo, value); }
+        public Companie Companie { get; set; }
         public EntryFoodAppViewModel()
         {
             Title = "Acasa";

@@ -5,6 +5,7 @@ using MvvmHelpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -49,6 +50,7 @@ namespace FoodDeliveryApp.ViewModels
         private int orderId;
         private bool _canGiveRating = false;
         public bool CanGiveRating { get => _canGiveRating; set => SetProperty(ref _canGiveRating, value); }
+        public StringBuilder PrintingInfo = new StringBuilder();
         public Command ChangeRatingClient { get; }
         public event EventHandler GetRatClient = delegate { };
 
@@ -136,6 +138,10 @@ namespace FoodDeliveryApp.ViewModels
                     IsPickerVisible2 = true;
                 else
                     IsPickerVisible2 = false;
+                if (CurrOrder.Status == "Preluata" && !OrderConfirmed)
+                    CanChangeNextStatus = false;
+                else
+                    CanChangeNextStatus = true;
                 if (CurrOrder.Status.Contains("Predata Soferului") || CurrOrder.Status.Contains("Livrata") || CurrOrder.Status.Contains("Refuzata"))
                     IsPickerVisible = false;
                 return true;
@@ -204,6 +210,7 @@ namespace FoodDeliveryApp.ViewModels
                     RatingClientDeLaSofer = order.RatingClientDeLaSofer,
                     Comments = order.Comments,
                     RatingClientDeLaCompanie = order.RatingClientDeLaCompanie,
+                    PaymentMethod = order.PaymentMethod,
                     CompanieGaveRating = order.CompanieGaveRating,
                     DriverGaveRating = order.DriverGaveRating,
                     TotalOrderedInterfata = order.TotalOrdered + " RON",
@@ -211,6 +218,7 @@ namespace FoodDeliveryApp.ViewModels
                     HasUserConfirmedET = order.HasUserConfirmedET,
                     DriverRefId = order.DriverRefId,
                 };
+
                 HasEstimatedTime = !string.IsNullOrWhiteSpace(order.EstimatedTime);
                 OrderConfirmed = order.HasUserConfirmedET != null;
                 if (OrderConfirmed)
@@ -236,6 +244,18 @@ namespace FoodDeliveryApp.ViewModels
                     });
                 }
                 Items.AddRange(itemsInOrder);
+
+                PrintingInfo.Clear();
+                PrintingInfo.AppendLine($"COMANDA NR: {CurrOrder.OrderId}");
+                PrintingInfo.AppendLine();
+                foreach (var item in Items)
+                {
+                    PrintingInfo.AppendLine($"{item.Cantitate} X {item.Name}");
+                    if (item.HasComments)
+                        PrintingInfo.AppendLine($"Comentarii: {item.ClientComments}");
+                }
+                PrintingInfo.AppendLine();
+                PrintingInfo.AppendLine($"TOTAL: {CurrOrder.TotalOrdered}");
 
                 if (App.UserInfo.IsOwner)
                 {

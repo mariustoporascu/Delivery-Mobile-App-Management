@@ -309,70 +309,71 @@
                                 VerticalTextAlignment="Center"
                                 WidthRequest="90" />
                             <StackLayout
-                                BackgroundColor="{AppThemeBinding Light=LightCyan,
-                                                                  Dark=LightCyan}"
+                                Margin="0,5,0,5"
                                 HorizontalOptions="FillAndExpand"
                                 Orientation="Horizontal">
-                                <Label
-                                    FontAttributes="Bold"
-                                    FontSize="Small"
-                                    HorizontalTextAlignment="Center"
-                                    LineBreakMode="WordWrap"
-                                    Text="Nume complet"
-                                    TextColor="Black"
-                                    VerticalTextAlignment="Center"
-                                    WidthRequest="100" />
-
-                                <Label
-                                    FontAttributes="Bold"
-                                    FontSize="Small"
-                                    HorizontalTextAlignment="Center"
-                                    LineBreakMode="WordWrap"
-                                    Text="Nr. Telefon"
-                                    TextColor="Black"
-                                    VerticalTextAlignment="Center"
-                                    WidthRequest="100" />
-                                <Label
-                                    FontAttributes="Bold"
-                                    FontSize="Small"
+                                <StackLayout
                                     HorizontalOptions="CenterAndExpand"
-                                    HorizontalTextAlignment="Center"
-                                    LineBreakMode="WordWrap"
-                                    Text="Adresa"
-                                    TextColor="Black"
-                                    VerticalTextAlignment="Center" />
-                            </StackLayout>
-                            <StackLayout
-                                BackgroundColor="{AppThemeBinding Light=LightCyan,
-                                                                  Dark=LightCyan}"
-                                HorizontalOptions="FillAndExpand"
-                                Orientation="Horizontal">
-                                <Label
-                                    FontSize="Small"
-                                    HorizontalTextAlignment="Center"
-                                    LineBreakMode="WordWrap"
-                                    Text="{Binding CurrOrderInfo.FullName}"
-                                    TextColor="Black"
-                                    VerticalTextAlignment="Center"
-                                    WidthRequest="100" />
-
-                                <controls:AwesomeHyperLinkLabel
-                                    FontSize="Small"
-                                    HorizontalTextAlignment="Center"
-                                    LineBreakMode="WordWrap"
-                                    Text="{Binding CurrOrderInfo.PhoneNo}"
-                                    TextColor="Black"
-                                    VerticalTextAlignment="Center"
-                                    WidthRequest="100" />
-                                <Label
-                                    FontSize="Small"
+                                    Orientation="Vertical"
+                                    VerticalOptions="CenterAndExpand">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="Small"
+                                        HorizontalTextAlignment="Center"
+                                        LineBreakMode="WordWrap"
+                                        Text="Nume complet"
+                                        TextColor="Black"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        FontSize="Small"
+                                        HorizontalTextAlignment="Center"
+                                        LineBreakMode="WordWrap"
+                                        Text="{Binding CurrOrderInfo.FullName}"
+                                        TextColor="Black"
+                                        VerticalTextAlignment="Center" />
+                                </StackLayout>
+                                <StackLayout
+                                    Orientation="Vertical"
+                                    VerticalOptions="CenterAndExpand"
+                                    WidthRequest="100">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="Small"
+                                        HorizontalTextAlignment="Center"
+                                        LineBreakMode="WordWrap"
+                                        Text="Nr. Telefon"
+                                        TextColor="Black"
+                                        VerticalTextAlignment="Center" />
+                                    <controls:AwesomeHyperLinkLabel
+                                        FontSize="Small"
+                                        HorizontalTextAlignment="Center"
+                                        LineBreakMode="WordWrap"
+                                        Text="{Binding CurrOrderInfo.PhoneNo}"
+                                        TextColor="Black"
+                                        VerticalTextAlignment="Center" />
+                                </StackLayout>
+                                <StackLayout
                                     HorizontalOptions="CenterAndExpand"
-                                    HorizontalTextAlignment="Center"
-                                    LineBreakMode="WordWrap"
-                                    Text="{Binding CurrOrderInfo.Address}"
-                                    TextColor="Black"
-                                    VerticalTextAlignment="Center" />
+                                    Orientation="Vertical"
+                                    VerticalOptions="CenterAndExpand">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="Small"
+                                        HorizontalTextAlignment="Center"
+                                        LineBreakMode="WordWrap"
+                                        Text="Adresa"
+                                        TextColor="Black"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        FontSize="Small"
+                                        HorizontalTextAlignment="Center"
+                                        LineBreakMode="WordWrap"
+                                        Text="{Binding CurrOrderInfo.Address}"
+                                        TextColor="Black"
+                                        VerticalTextAlignment="Center" />
+                                </StackLayout>
                             </StackLayout>
+
                         </StackLayout>
                     </StackLayout>
                     <!--<StackLayout IsVisible="{Binding OwnerViewVis}">
@@ -397,7 +398,7 @@
                             Clicked="Button_Clicked"
                             FontSize="Medium"
                             IsVisible="{Binding HasDriver, Converter={StaticResource invertBoolConverter}}"
-                            Text="Blockeaza comanda pentru tine."
+                            Text="Blockeaza comanda pentru tine"
                             TextColor="Black"
                             TextTransform="None" />
                     </StackLayout>
@@ -502,7 +503,7 @@
                                 Text="Produs"
                                 TextColor="Black"
                                 VerticalTextAlignment="Center"
-                                WidthRequest="120" />
+                                WidthRequest="110" />
                             <Label
                                 FontAttributes="Bold"
                                 FontSize="Small"
@@ -543,14 +544,7 @@
 
                     <CollectionView.ItemTemplate>-->
 
-                        <FlexLayout
-                            AlignContent="SpaceAround"
-                            AlignItems="Start"
-                            BindableLayout.ItemsSource="{Binding Items}"
-                            Direction="Row"
-                            HorizontalOptions="FillAndExpand"
-                            JustifyContent="SpaceAround"
-                            Wrap="Wrap">
+                        <StackLayout BindableLayout.ItemsSource="{Binding Items}" HorizontalOptions="FillAndExpand">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate>
                                     <StackLayout
@@ -570,7 +564,7 @@
                                                 Text="{Binding Name}"
                                                 TextColor="Black"
                                                 VerticalTextAlignment="Center"
-                                                WidthRequest="120" />
+                                                WidthRequest="115" />
                                             <Label
                                                 FontSize="Small"
                                                 HorizontalTextAlignment="Center"
@@ -590,12 +584,12 @@
                                             <Label
                                                 FontAttributes="Bold"
                                                 FontSize="Small"
+                                                HorizontalOptions="CenterAndExpand"
                                                 HorizontalTextAlignment="Center"
                                                 LineBreakMode="WordWrap"
                                                 Text="{Binding Cantitate}"
                                                 TextColor="Black"
-                                                VerticalOptions="CenterAndExpand"
-                                                WidthRequest="95" />
+                                                VerticalOptions="CenterAndExpand" />
 
                                         </StackLayout>
                                         <StackLayout
@@ -622,9 +616,32 @@
                                     </StackLayout>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
-                        </FlexLayout>
+                        </StackLayout>
                     </StackLayout>
-
+                    <StackLayout
+                        HorizontalOptions="FillAndExpand"
+                        IsVisible="{Binding OwnerViewVis}"
+                        VerticalOptions="FillAndExpand">
+                        <StackLayout
+                            HorizontalOptions="FillAndExpand"
+                            IsVisible="{Binding OrderConfirmed}"
+                            VerticalOptions="FillAndExpand">
+                            <StackLayout
+                                HorizontalOptions="FillAndExpand"
+                                IsVisible="{Binding CanChangeNextStatus}"
+                                VerticalOptions="FillAndExpand">
+                                <Button
+                                    Margin="20,0,20,0"
+                                    xct:CornerRadiusEffect.CornerRadius="30"
+                                    BackgroundColor="LimeGreen"
+                                    Clicked="printTextButton_Clicked"
+                                    FontSize="Medium"
+                                    Text="Printeaza comanda"
+                                    TextColor="Black"
+                                    TextTransform="None" />
+                            </StackLayout>
+                        </StackLayout>
+                    </StackLayout>
                     <!--</CollectionView.ItemTemplate>
                 </CollectionView>-->
                 </StackLayout>

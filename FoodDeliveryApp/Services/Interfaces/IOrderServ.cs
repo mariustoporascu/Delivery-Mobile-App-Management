@@ -14,5 +14,7 @@ namespace FoodDeliveryApp.Services
         Task<bool> LockDriverOrder(string email, int orderId);
         Task<bool> UpdateProductsInOrder(List<ProductInOrder> productsInOrder);
         Task<bool> ModifyOrder(int orderId, string comment, decimal newTotal);
+        Task<bool> ToggleOrdering(int companieId);
+        Task<bool> ToggleProduct(int companieId, int productId);
     }
 }

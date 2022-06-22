@@ -13,6 +13,8 @@ namespace FoodDeliveryApp.ViewModels
         public IAuthController AuthController => DependencyService.Get<IAuthController>();
         public IOrderServ OrderService => DependencyService.Get<IOrderServ>();
 
+        public IBluetoothPrinterService BTPrinter => DependencyService.Get<IBluetoothPrinterService>();
+
         bool isBusy = true;
         public bool IsBusy
         {

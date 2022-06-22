@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FoodDeliveryApp.Views.PrinterPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <StackLayout Margin="20,0,20,0" VerticalOptions="CenterAndExpand">
+        <StackLayout
+            Margin="0,0,0,50"
+            HorizontalOptions="FillAndExpand"
+            Orientation="Horizontal"
+            Spacing="20">
+            <Entry
+                x:Name="printerNameEntry"
+                HorizontalOptions="Start"
+                IsReadOnly="True"
+                Placeholder="Please select printer." />
+            <Button
+                x:Name="selectButton"
+                Clicked="selectPrinterButton_Clicked"
+                Text="Select"
+                VerticalOptions="Center" />
+        </StackLayout>
+        <Label Text="Text for print." />
+        <Editor
+            x:Name="printBox"
+            AutoSize="TextChanges"
+            HorizontalOptions="FillAndExpand"
+            MaxLength="120"
+            Placeholder="Input text here (120 characters max)"
+            Text="This is sample text." />
+        <StackLayout
+            Margin="0,20,0,0"
+            HorizontalOptions="Center"
+            Orientation="Horizontal"
+            Spacing="20">
+            <Button
+                x:Name="printQrButton"
+                Clicked="printQrButton_Clicked"
+                IsEnabled="False"
+                Text="Print QR"
+                WidthRequest="150" />
+            <Button
+                x:Name="printTextButton"
+                Clicked="printTextButton_Clicked"
+                IsEnabled="False"
+                Text="Print Text"
+                WidthRequest="150" />
+        </StackLayout>
+    </StackLayout>
+
+</ContentPage>

@@ -35,6 +35,8 @@ namespace FoodDeliveryApp.ViewModels
             get => isPageVisible;
             set => SetProperty(ref isPageVisible, value);
         }
+        private bool isLoading = false;
+
         public OrdersViewModel()
         {
             Orders = new ObservableRangeCollection<ServerOrder>();
@@ -51,40 +53,46 @@ namespace FoodDeliveryApp.ViewModels
         }
         public async Task ExecuteLoadOrdersCommand()
         {
-            IsBusy = true;
-            try
+            if (!isLoading)
             {
-
-                serverOrders = App.UserInfo.IsDriver ? await DataStore.GetServerOrders() : await DataStore.GetServerOrders(App.UserInfo.CompanieRefId);
-                foreach (var order in serverOrders)
-                    order.CompanieName = DataStore.GetCompanie(order.CompanieRefId).Name;
-
-                var companii = DataStore.GetCompanii(0).ToList();
-                if (!string.IsNullOrEmpty(App.UserInfo.Id))
-                    serverOrders = serverOrders.FindAll(o => string.IsNullOrWhiteSpace(o.DriverRefId) && o.DriverRefId != App.UserInfo.Id &&
-                    (companii.Find(comp => comp.CompanieId == o.CompanieRefId).TipCompanieRefId == 1 ? o.Status != "Plasata" && o.Status != "Preluata" : true));
-
-
-                lock (Orders)
+                isLoading = true;
+                IsBusy = true;
+                try
                 {
-                    FilterBy(SelectedTime, "Toate");
-                    if (Orders.Count > 0)
-                    {
-                        IsPageVisible = true;
-                    }
-                    else
-                        IsPageVisible = false;
-                }
-                await Task.Delay(1000);
 
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-            finally
-            {
-                IsBusy = false;
+                    serverOrders = App.UserInfo.IsDriver ? await DataStore.GetServerOrders() : await DataStore.GetServerOrders(App.UserInfo.CompanieRefId);
+                    foreach (var order in serverOrders)
+                        order.CompanieName = DataStore.GetCompanie(order.CompanieRefId).Name;
+
+                    var companii = DataStore.GetCompanii(0).ToList();
+                    if (!string.IsNullOrEmpty(App.UserInfo.Id))
+                        serverOrders = serverOrders.FindAll(o => string.IsNullOrWhiteSpace(o.DriverRefId) && o.DriverRefId != App.UserInfo.Id &&
+                        (companii.Find(comp => comp.CompanieId == o.CompanieRefId).TipCompanieRefId == 1 ? o.Status != "Plasata" && o.Status != "Preluata" : true));
+
+
+                    lock (Orders)
+                    {
+                        FilterBy(SelectedTime, "Toate");
+                        if (Orders.Count > 0)
+                        {
+                            IsPageVisible = true;
+                        }
+                        else
+                            IsPageVisible = false;
+                    }
+                    await Task.Delay(1000);
+
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }
+                finally
+                {
+                    IsBusy = false;
+                    isLoading = false;
+                }
+
             }
         }
         public void FilterBy(DateTime time, string status)

@@ -20,18 +20,18 @@ namespace FoodDeliveryApp.Views
         {
             InitializeComponent();
             BindingContext = vm = new LoginViewModel();
-            if (Device.RuntimePlatform == Device.iOS)
+            /*if (Device.RuntimePlatform == Device.iOS)
                 vm.OnSignIn += OnSignInApple;
-            else
-                vm.OnSignIn += OnSignIn;
+            else*/
+            vm.OnSignIn += OnSignIn;
             vm.OnSignInFailed += OnSignInFailed;
             BindingContext = vm;
             if (App.isLoggedIn)
             {
-                if (Device.RuntimePlatform == Device.iOS)
+                /*if (Device.RuntimePlatform == Device.iOS)
                     OnSignInApple(this, new EventArgs());
-                else
-                    OnSignIn(this, new EventArgs());
+                else*/
+                OnSignIn(this, new EventArgs());
             }
         }
         private async void PasswordForgotClicked(object sender, EventArgs e)
@@ -82,10 +82,10 @@ namespace FoodDeliveryApp.Views
             await onStart();
             if (App.isLoggedIn)
             {
-                if (Device.RuntimePlatform == Device.iOS)
+                /*if (Device.RuntimePlatform == Device.iOS)
                     OnSignInApple(this, new EventArgs());
-                else
-                    OnSignIn(this, new EventArgs());
+                else*/
+                OnSignIn(this, new EventArgs());
             }
             vm.IsBusy = false;
         }
@@ -150,7 +150,7 @@ namespace FoodDeliveryApp.Views
         {
             try
             {
-                await this.DisplayToastAsync("Ai fost autentificat.", 1300);
+                await Shell.Current.DisplayToastAsync("Ai fost autentificat.", 1500);
             }
             catch (Exception ex)
             {
@@ -158,11 +158,11 @@ namespace FoodDeliveryApp.Views
             }
             vm.IsBusy = true;
             await DependencyService.Get<IDataStore>().Init();
-            vm.IsBusy = false;
             if (App.UserInfo.IsOwner)
                 App.Current.MainPage = new AppShellOwner();
             else
                 App.Current.MainPage = new AppShellDriver();
+            vm.IsBusy = false;
         }
 
         private async void OnSignInFailed(object sender, EventArgs e)

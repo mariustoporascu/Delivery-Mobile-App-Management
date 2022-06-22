@@ -22,6 +22,8 @@ namespace FoodDeliveryApp.ViewModels
         private string searchItem = "";
         public Command LoadItemsCommand { get; }
         public Command SearchCommand { get; }
+        public Command<Item> ToggleSwitchCommand { get; }
+        public event EventHandler FailedToChange = delegate { };
 
         public string SearchItem
         {
@@ -39,8 +41,21 @@ namespace FoodDeliveryApp.ViewModels
             SSubCateg = new List<SubCateg>();
             LoadItemsCommand = new Command(ExecuteLoadItemsCommand);
             SearchCommand = new Command(Searching);
+            ToggleSwitchCommand = new Command<Item>(async (item) => await ChangeStatus(item));
         }
-
+        async Task ChangeStatus(Item item)
+        {
+            if (item == null)
+                return;
+            if (await OrderService.ToggleProduct(App.UserInfo.CompanieRefId, item.ProductId))
+            {
+                item.IsAvailable = !item.IsAvailable;
+                item.StatusAvail = item.IsAvailable ? "Disponibil" : "Indisponibil";
+                item.Color = item.IsAvailable ? Color.Green : Color.Red;
+            }
+            else
+                FailedToChange?.Invoke(this, new EventArgs());
+        }
         void ExecuteLoadItemsCommand()
         {
 

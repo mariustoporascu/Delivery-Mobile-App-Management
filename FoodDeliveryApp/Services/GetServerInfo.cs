@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace FoodDeliveryApp.Services
 {
@@ -91,6 +92,11 @@ namespace FoodDeliveryApp.Services
                     MissingMemberHandling = MissingMemberHandling.Ignore
                 };
                 items = JsonConvert.DeserializeObject<List<Item>>(content, settings);
+                foreach (var item in items)
+                {
+                    item.StatusAvail = item.IsAvailable ? "Disponibil" : "Indisponibil";
+                    item.Color = item.IsAvailable ? Color.Green : Color.Red;
+                }
             }
         }
         async Task loadServerCateg()
