@@ -9,6 +9,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="OneSignalSDK.Xamarin" Version="4.0.0" />
+		<PackageReference Include="Plugin.Permissions" Version="6.0.1" />
 		<PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
 		<PackageReference Include="Xamarin.CommunityToolkit" Version="2.0.2" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.2-beta1" />

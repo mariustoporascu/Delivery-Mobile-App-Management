@@ -1,12 +1,13 @@
 ﻿using FoodDeliveryApp.Constants;
 using FoodDeliveryApp.Models.ShopModels;
 using FoodDeliveryApp.ViewModels;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using System;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Xamarin.CommunityToolkit.Extensions;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace FoodDeliveryApp.Views
@@ -39,7 +40,6 @@ namespace FoodDeliveryApp.Views
                 Header.Text = $"Administrare {App.UserInfo.Email}.";
                 Info.Text = "Aici va puteti gestiona comenzile, bloca anumite comenzi pentru a fi livrate de catre tine, vizualiza pe harta destinatiile pentru livrari, etc.";
                 await SetupLocation();
-
             }
         }
         private void LogOut(object sender, EventArgs e)
@@ -88,7 +88,7 @@ namespace FoodDeliveryApp.Views
 
             if (Device.RuntimePlatform == Device.Android && locationGranted)
             {
-                if (Preferences.Get("LocationServiceRunning", false) == false)
+                if (Xamarin.Essentials.Preferences.Get("LocationServiceRunning", false) == false)
                 {
                     MessagingCenter.Subscribe<LocationMessage>(this, "Location", message =>
                     {
@@ -117,14 +117,13 @@ namespace FoodDeliveryApp.Views
 
                     StartService();
                 }
-
             }
         }
         private void StartService()
         {
             var startServiceMessage = new StartServiceMessage();
             MessagingCenter.Send(startServiceMessage, "ServiceStarted");
-            Preferences.Set("LocationServiceRunning", true);
+            Xamarin.Essentials.Preferences.Set("LocationServiceRunning", true);
             Debug.WriteLine("Location Service has been started!");
         }
 
@@ -132,22 +131,47 @@ namespace FoodDeliveryApp.Views
         {
             var stopServiceMessage = new StopServiceMessage();
             MessagingCenter.Send(stopServiceMessage, "ServiceStopped");
-            Preferences.Set("LocationServiceRunning", false);
+            Xamarin.Essentials.Preferences.Set("LocationServiceRunning", false);
         }
 
         private async Task<bool> GetLocationPermissions()
         {
-            var status = await Xamarin.Essentials.Permissions.CheckStatusAsync<Xamarin.Essentials.Permissions.LocationAlways>();
+            try
+            {
+                var status = await CrossPermissions.Current.CheckPermissionStatusAsync<LocationAlwaysPermission>();
+                if (status != PermissionStatus.Granted)
+                {
+                    if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.LocationAlways))
+                    {
+                        await DisplayAlert("Eroare", "Pentru contul de sofer este neaparat sa avem acces la locatie.", "OK");
+                    }
+
+                    status = await CrossPermissions.Current.RequestPermissionAsync<LocationAlwaysPermission>();
+                }
+
+                if (status == PermissionStatus.Granted)
+                {
+                    return true;
+                }
+                else if (status != PermissionStatus.Unknown)
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return false;
+
+            /*var status = await Xamarin.Essentials.Permissions.CheckStatusAsync<Xamarin.Essentials.Permissions.LocationAlways>();
             if (status == Xamarin.Essentials.PermissionStatus.Granted)
                 return true;
             var getPerm = await Xamarin.Essentials.Permissions.RequestAsync<Xamarin.Essentials.Permissions.LocationAlways>();
             if (getPerm == Xamarin.Essentials.PermissionStatus.Granted)
                 return true;
             else
-            {
-                await Shell.Current.DisplayToastAsync("Pentru contul de sofer avem nevoie de access la locatia telefonului.", 2000);
-                return false;
-            }
+                return false;*/
         }
 
         private async void Switch_Toggled(object sender, ToggledEventArgs e)

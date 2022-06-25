@@ -18,7 +18,5 @@ public class MainApplication : Application
     public override void OnCreate()
     {
         base.OnCreate();
-
-
     }
 }

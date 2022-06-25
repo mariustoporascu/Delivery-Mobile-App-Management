@@ -20,34 +20,47 @@ namespace FoodDeliveryApp.ViewModels
         public LoginViewModel()
         {
             Login = new Command(async () => await AfterSignIn());
+            IsBusy = false;
         }
 
         async Task AfterSignIn()
         {
-            var authService = DependencyService.Get<IAuthController>();
-            string loginResult = await authService.Execute(new UserModel { Email = UserName, Password = Password, FireBaseToken = App.FirebaseUserToken }, Constants.AuthOperations.Login);
-
-            if (!string.IsNullOrWhiteSpace(loginResult) && !loginResult.Contains("Password is wrong.")
-                && !loginResult.Contains("Email is wrong or user not existing.") && !loginResult.Contains("Login data invalid."))
+            IsBusy = true;
+            try
             {
-                App.isLoggedIn = true;
-                var settings = new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore,
-                    MissingMemberHandling = MissingMemberHandling.Ignore
-                };
-                App.UserInfo = JsonConvert.DeserializeObject<UserModel>(loginResult.Trim(), settings);
-                App.UserInfo.Email = UserName;
-                App.UserInfo.Password = Password;
-                SecureStorage.SetAsync(App.WEBEMAIL, UserName).Wait();
-                SecureStorage.SetAsync(App.WEBPASS, Password).Wait();
-                SecureStorage.SetAsync(App.LOGIN_WITH, "WebLogin").Wait();
-                //MessagingCenter.Send<LoginViewModel>(this, "UpdateProfile");
-                OnSignIn?.Invoke(this, new EventArgs());
+                var authService = DependencyService.Get<IAuthController>();
+                string loginResult = await authService.Execute(new UserModel { Email = UserName, Password = Password, FireBaseToken = App.FirebaseUserToken }, Constants.AuthOperations.Login);
 
+                if (!string.IsNullOrWhiteSpace(loginResult) && !loginResult.Contains("Password is wrong.")
+                    && !loginResult.Contains("Email is wrong or user not existing.") && !loginResult.Contains("Login data invalid."))
+                {
+                    App.isLoggedIn = true;
+                    var settings = new JsonSerializerSettings
+                    {
+                        NullValueHandling = NullValueHandling.Ignore,
+                        MissingMemberHandling = MissingMemberHandling.Ignore
+                    };
+                    App.UserInfo = JsonConvert.DeserializeObject<UserModel>(loginResult.Trim(), settings);
+                    App.UserInfo.Email = UserName;
+                    App.UserInfo.Password = Password;
+                    SecureStorage.SetAsync(App.WEBEMAIL, UserName).Wait();
+                    SecureStorage.SetAsync(App.WEBPASS, Password).Wait();
+                    SecureStorage.SetAsync(App.LOGIN_WITH, "WebLogin").Wait();
+                    //MessagingCenter.Send<LoginViewModel>(this, "UpdateProfile");
+                    OnSignIn?.Invoke(this, new EventArgs());
+
+                }
+                else
+                    OnSignInFailed?.Invoke(this, new EventArgs());
             }
-            else
+            catch (Exception)
+            {
                 OnSignInFailed?.Invoke(this, new EventArgs());
+            }
+            finally
+            {
+                IsBusy = false;
+            }
 
         }
     }

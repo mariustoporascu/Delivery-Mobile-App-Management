@@ -1,4 +1,5 @@
 ﻿using FoodDeliveryApp.Models.ShopModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,7 +18,10 @@ namespace FoodDeliveryApp.Services
         {
             await _serverInfo.loadAppInfo();
         }
-
+        public List<string> GetPaymentMtds()
+        {
+            return _serverInfo.paymentMethods;
+        }
         public Item GetItem(int id)
         {
             return _serverInfo.items.FirstOrDefault(s => s.ProductId == id);
@@ -136,11 +140,26 @@ namespace FoodDeliveryApp.Services
 
         public async Task<List<ServerOrder>> GetServerOrders()
         {
-            return await _serverInfo.loadServerOrders();
+            try
+            {
+                return await _serverInfo.loadServerOrders();
+
+            }
+            catch (Exception)
+            {
+                return new List<ServerOrder>();
+            }
         }
         public async Task<List<ServerOrder>> GetServerOrders(int restaurantRefId)
         {
-            return await _serverInfo.loadServerOrders(restaurantRefId);
+            try
+            {
+                return await _serverInfo.loadServerOrders(restaurantRefId);
+            }
+            catch (Exception)
+            {
+                return new List<ServerOrder>();
+            }
         }
     }
 }

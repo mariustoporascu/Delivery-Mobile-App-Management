@@ -106,7 +106,8 @@
                                         BackgroundColor="Transparent"
                                         Clicked="Switch_Toggled"
                                         CommandParameter="{Binding .}"
-                                        FontSize="Small"
+                                        FontSize="{OnIdiom Tablet=Medium,
+                                                               Phone=Small}"
                                         HorizontalOptions="Center"
                                         ImageSource="save.png"
                                         Text="{Binding StatusAvail}"
@@ -120,20 +121,23 @@
                                         Orientation="Vertical"
                                         VerticalOptions="CenterAndExpand">
                                         <Label
-                                            FontSize="Medium"
+                                            FontSize="{OnIdiom Tablet=Large,
+                                                               Phone=Medium}"
                                             HorizontalTextAlignment="Center"
                                             LineBreakMode="WordWrap"
                                             Text="{Binding Name}"
                                             TextColor="Black" />
                                         <Label
-                                            FontSize="Medium"
+                                            FontSize="{OnIdiom Tablet=Large,
+                                                               Phone=Medium}"
                                             HorizontalTextAlignment="Center"
                                             LineBreakMode="NoWrap"
                                             Text="{Binding GramajInterfata}"
                                             TextColor="Black"
                                             VerticalOptions="End" />
                                         <Label
-                                            FontSize="Medium"
+                                            FontSize="{OnIdiom Tablet=Large,
+                                                               Phone=Medium}"
                                             HorizontalTextAlignment="Center"
                                             LineBreakMode="NoWrap"
                                             Text="{Binding PretInterfata}"

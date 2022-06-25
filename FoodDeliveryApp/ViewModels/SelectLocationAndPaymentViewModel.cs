@@ -38,9 +38,7 @@ namespace FoodDeliveryApp.ViewModels
         public SelectLocationAndPaymentViewModel()
         {
             Title = "Locatie si modalitate plata";
-            PaymentMethods = new List<string>();
-            PaymentMethods.Add("Cash la livrare");
-            PaymentMethods.Add("Card la livrare");
+            PaymentMethods = DataStore.GetPaymentMtds();
             AvailableCities = new List<string>();
             AvailableCities.AddRange(DataStore.GetAvailableCities().ToList().Select(city => city.Name));
 

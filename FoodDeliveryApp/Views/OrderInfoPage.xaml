@@ -42,13 +42,13 @@
                                 VerticalOptions="CenterAndExpand">
                                 <Label
                                     FontAttributes="Bold"
-                                    FontSize="Small"
+                                    FontSize="{OnIdiom Tablet=Large,
+                                                       Phone=Medium}"
                                     HorizontalOptions="CenterAndExpand"
                                     HorizontalTextAlignment="Center"
                                     LineBreakMode="NoWrap"
                                     Text="Detalii Comanda "
-                                    TextColor="Black"
-                                    WidthRequest="120" />
+                                    TextColor="Black" />
                             </StackLayout>
                             <StackLayout
                                 Margin="5"
@@ -61,13 +61,15 @@
                                     VerticalOptions="CenterAndExpand">
                                     <Label
                                         FontAttributes="Bold"
-                                        FontSize="Small"
+                                        FontSize="{OnIdiom Tablet=Medium,
+                                                           Phone=Small}"
                                         HorizontalTextAlignment="Center"
                                         LineBreakMode="WordWrap"
                                         Text="Status"
                                         TextColor="Black" />
                                     <Label
-                                        FontSize="Small"
+                                        FontSize="{OnIdiom Tablet=Medium,
+                                                           Phone=Small}"
                                         HorizontalOptions="CenterAndExpand"
                                         HorizontalTextAlignment="Center"
                                         LineBreakMode="WordWrap"
@@ -80,13 +82,15 @@
                                     VerticalOptions="CenterAndExpand">
                                     <Label
                                         FontAttributes="Bold"
-                                        FontSize="Small"
+                                        FontSize="{OnIdiom Tablet=Medium,
+                                                           Phone=Small}"
                                         HorizontalTextAlignment="Center"
                                         LineBreakMode="WordWrap"
                                         Text="Total produse"
                                         TextColor="Black" />
                                     <Label
-                                        FontSize="Small"
+                                        FontSize="{OnIdiom Tablet=Medium,
+                                                           Phone=Small}"
                                         HorizontalTextAlignment="Center"
                                         LineBreakMode="WordWrap"
                                         Text="{Binding CurrOrder.TotalOrderedInterfata}"
@@ -99,13 +103,15 @@
                                     VerticalOptions="CenterAndExpand">
                                     <Label
                                         FontAttributes="Bold"
-                                        FontSize="Small"
+                                        FontSize="{OnIdiom Tablet=Medium,
+                                                           Phone=Small}"
                                         HorizontalTextAlignment="Center"
                                         LineBreakMode="WordWrap"
                                         Text="Cost Transport"
                                         TextColor="Black" />
                                     <Label
-                                        FontSize="Small"
+                                        FontSize="{OnIdiom Tablet=Medium,
+                                                           Phone=Small}"
                                         HorizontalTextAlignment="Center"
                                         LineBreakMode="WordWrap"
                                         Text="{Binding CurrOrder.TransportFee}"
@@ -125,6 +131,8 @@
                             <Picker
                                 x:Name="Selector"
                                 Title="Selecteaza un status nou."
+                                FontSize="{OnIdiom Tablet=Medium,
+                                                   Phone=Small}"
                                 HorizontalOptions="CenterAndExpand"
                                 HorizontalTextAlignment="Center"
                                 IsEnabled="{Binding CanChangeNextStatus}"
@@ -145,6 +153,8 @@
                             <Picker
                                 x:Name="Selector2"
                                 Title="Trimite un timp estimat de pregatire."
+                                FontSize="{OnIdiom Tablet=Medium,
+                                                   Phone=Small}"
                                 HorizontalOptions="CenterAndExpand"
                                 HorizontalTextAlignment="Center"
                                 IsEnabled="{Binding HasEstimatedTime, Converter={StaticResource invertBoolConverter}}"
@@ -169,7 +179,8 @@
                                 Orientation="Horizontal">
                                 <Label
                                     FontAttributes="Bold"
-                                    FontSize="Small"
+                                    FontSize="{OnIdiom Tablet=Medium,
+                                                       Phone=Small}"
                                     HorizontalOptions="CenterAndExpand"
                                     HorizontalTextAlignment="Center"
                                     LineBreakMode="WordWrap"
@@ -179,7 +190,8 @@
 
                                 <Label
                                     FontAttributes="Bold"
-                                    FontSize="Small"
+                                    FontSize="{OnIdiom Tablet=Medium,
+                                                       Phone=Small}"
                                     HorizontalOptions="CenterAndExpand"
                                     HorizontalTextAlignment="Center"
                                     LineBreakMode="WordWrap"
@@ -188,7 +200,8 @@
                                     VerticalTextAlignment="Center" />
                                 <controls:AwesomeHyperLinkLabel
                                     FontAttributes="Bold"
-                                    FontSize="Small"
+                                    FontSize="{OnIdiom Tablet=Medium,
+                                                       Phone=Small}"
                                     HorizontalOptions="CenterAndExpand"
                                     HorizontalTextAlignment="Center"
                                     LineBreakMode="WordWrap"
@@ -210,10 +223,14 @@
                             <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
                                 <Label
                                     FontAttributes="Bold"
+                                    FontSize="{OnIdiom Tablet=Medium,
+                                                       Phone=Small}"
                                     Text="Comanda confirmata : "
                                     TextColor="Black" />
                                 <Label
                                     FontAttributes="Bold"
+                                    FontSize="{OnIdiom Tablet=Medium,
+                                                       Phone=Small}"
                                     Text="{Binding StatusConfirmare}"
                                     TextColor="Black" />
                             </StackLayout>
@@ -224,7 +241,8 @@
                                 Orientation="Horizontal">
                                 <Label
                                     FontAttributes="Bold"
-                                    FontSize="Small"
+                                    FontSize="{OnIdiom Tablet=Medium,
+                                                       Phone=Small}"
                                     HorizontalOptions="CenterAndExpand"
                                     HorizontalTextAlignment="Center"
                                     LineBreakMode="WordWrap"
@@ -234,7 +252,8 @@
 
                                 <Label
                                     FontAttributes="Bold"
-                                    FontSize="Small"
+                                    FontSize="{OnIdiom Tablet=Medium,
+                                                       Phone=Small}"
                                     HorizontalOptions="CenterAndExpand"
                                     HorizontalTextAlignment="Center"
                                     LineBreakMode="WordWrap"
@@ -263,7 +282,8 @@
                                     Orientation="Horizontal">
                                     <Label
                                         FontAttributes="Bold"
-                                        FontSize="Small"
+                                        FontSize="{OnIdiom Tablet=Medium,
+                                                           Phone=Small}"
                                         HorizontalOptions="CenterAndExpand"
                                         HorizontalTextAlignment="Center"
                                         LineBreakMode="WordWrap"
@@ -273,7 +293,8 @@
 
                                     <Label
                                         FontAttributes="Bold"
-                                        FontSize="Small"
+                                        FontSize="{OnIdiom Tablet=Medium,
+                                                           Phone=Small}"
                                         HorizontalOptions="CenterAndExpand"
                                         HorizontalTextAlignment="Center"
                                         LineBreakMode="WordWrap"
@@ -282,7 +303,8 @@
                                         VerticalTextAlignment="Center" />
                                     <controls:AwesomeHyperLinkLabel
                                         FontAttributes="Bold"
-                                        FontSize="Small"
+                                        FontSize="{OnIdiom Tablet=Medium,
+                                                           Phone=Small}"
                                         HorizontalOptions="CenterAndExpand"
                                         HorizontalTextAlignment="Center"
                                         LineBreakMode="WordWrap"
@@ -299,7 +321,8 @@
                                                               Dark=LightCyan}">
                             <Label
                                 FontAttributes="Bold"
-                                FontSize="Small"
+                                FontSize="{OnIdiom Tablet=Large,
+                                                   Phone=Medium}"
                                 HorizontalOptions="FillAndExpand"
                                 HorizontalTextAlignment="Center"
                                 LineBreakMode="WordWrap"
@@ -318,14 +341,16 @@
                                     VerticalOptions="CenterAndExpand">
                                     <Label
                                         FontAttributes="Bold"
-                                        FontSize="Small"
+                                        FontSize="{OnIdiom Tablet=Medium,
+                                                           Phone=Small}"
                                         HorizontalTextAlignment="Center"
                                         LineBreakMode="WordWrap"
                                         Text="Nume complet"
                                         TextColor="Black"
                                         VerticalTextAlignment="Center" />
                                     <Label
-                                        FontSize="Small"
+                                        FontSize="{OnIdiom Tablet=Medium,
+                                                           Phone=Small}"
                                         HorizontalTextAlignment="Center"
                                         LineBreakMode="WordWrap"
                                         Text="{Binding CurrOrderInfo.FullName}"
@@ -338,14 +363,16 @@
                                     WidthRequest="100">
                                     <Label
                                         FontAttributes="Bold"
-                                        FontSize="Small"
+                                        FontSize="{OnIdiom Tablet=Medium,
+                                                           Phone=Small}"
                                         HorizontalTextAlignment="Center"
                                         LineBreakMode="WordWrap"
                                         Text="Nr. Telefon"
                                         TextColor="Black"
                                         VerticalTextAlignment="Center" />
                                     <controls:AwesomeHyperLinkLabel
-                                        FontSize="Small"
+                                        FontSize="{OnIdiom Tablet=Medium,
+                                                           Phone=Small}"
                                         HorizontalTextAlignment="Center"
                                         LineBreakMode="WordWrap"
                                         Text="{Binding CurrOrderInfo.PhoneNo}"
@@ -358,14 +385,16 @@
                                     VerticalOptions="CenterAndExpand">
                                     <Label
                                         FontAttributes="Bold"
-                                        FontSize="Small"
+                                        FontSize="{OnIdiom Tablet=Medium,
+                                                           Phone=Small}"
                                         HorizontalTextAlignment="Center"
                                         LineBreakMode="WordWrap"
                                         Text="Adresa"
                                         TextColor="Black"
                                         VerticalTextAlignment="Center" />
                                     <Label
-                                        FontSize="Small"
+                                        FontSize="{OnIdiom Tablet=Medium,
+                                                           Phone=Small}"
                                         HorizontalTextAlignment="Center"
                                         LineBreakMode="WordWrap"
                                         Text="{Binding CurrOrderInfo.Address}"
@@ -396,7 +425,8 @@
                             xct:CornerRadiusEffect.CornerRadius="30"
                             BackgroundColor="LimeGreen"
                             Clicked="Button_Clicked"
-                            FontSize="Medium"
+                            FontSize="{OnIdiom Tablet=Large,
+                                               Phone=Medium}"
                             IsVisible="{Binding HasDriver, Converter={StaticResource invertBoolConverter}}"
                             Text="Blockeaza comanda pentru tine"
                             TextColor="Black"
@@ -411,7 +441,8 @@
                         IsVisible="{Binding CanGiveRating}">
                         <Label
                             FontAttributes="Bold"
-                            FontSize="Medium"
+                            FontSize="{OnIdiom Tablet=Large,
+                                               Phone=Medium}"
                             HorizontalOptions="FillAndExpand"
                             HorizontalTextAlignment="Center"
                             LineBreakMode="WordWrap"
@@ -458,7 +489,8 @@
                         IsVisible="{Binding HasComments}">
                         <Label
                             FontAttributes="Bold"
-                            FontSize="Medium"
+                            FontSize="{OnIdiom Tablet=Large,
+                                               Phone=Medium}"
                             HorizontalOptions="FillAndExpand"
                             HorizontalTextAlignment="Center"
                             LineBreakMode="WordWrap"
@@ -466,7 +498,8 @@
                             TextColor="Black"
                             VerticalTextAlignment="Center" />
                         <Label
-                            FontSize="Default"
+                            FontSize="{OnIdiom Tablet=Medium,
+                                               Phone=Small}"
                             HorizontalOptions="FillAndExpand"
                             HorizontalTextAlignment="Center"
                             LineBreakMode="WordWrap"
@@ -483,7 +516,8 @@
                         HorizontalOptions="FillAndExpand">
                         <Label
                             FontAttributes="Bold"
-                            FontSize="Medium"
+                            FontSize="{OnIdiom Tablet=Large,
+                                               Phone=Medium}"
                             HorizontalOptions="FillAndExpand"
                             HorizontalTextAlignment="Center"
                             LineBreakMode="WordWrap"
@@ -491,40 +525,47 @@
                             TextColor="Black"
                             VerticalTextAlignment="Center"
                             WidthRequest="95" />
-                        <StackLayout
-                            Margin="5,0,5,0"
-                            HorizontalOptions="FillAndExpand"
-                            Orientation="Horizontal">
+                        <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
                             <Label
                                 FontAttributes="Bold"
-                                FontSize="Small"
+                                FontSize="{OnIdiom Tablet=Medium,
+                                                   Phone=Small}"
                                 HorizontalTextAlignment="Start"
                                 LineBreakMode="WordWrap"
                                 Text="Produs"
                                 TextColor="Black"
                                 VerticalTextAlignment="Center"
-                                WidthRequest="110" />
+                                WidthRequest="{OnIdiom Tablet={OnPlatform iOS=340,
+                                                                          Android=200},
+                                                       Phone=120}" />
                             <Label
                                 FontAttributes="Bold"
-                                FontSize="Small"
+                                FontSize="{OnIdiom Tablet=Medium,
+                                                   Phone=Small}"
                                 HorizontalTextAlignment="Center"
                                 LineBreakMode="WordWrap"
                                 Text="Gramaj"
                                 TextColor="Black"
                                 VerticalTextAlignment="Center"
-                                WidthRequest="70" />
+                                WidthRequest="{OnIdiom Tablet={OnPlatform iOS=160,
+                                                                          Android=120},
+                                                       Phone=80}" />
                             <Label
                                 FontAttributes="Bold"
-                                FontSize="Small"
+                                FontSize="{OnIdiom Tablet=Medium,
+                                                   Phone=Small}"
                                 HorizontalTextAlignment="Center"
                                 LineBreakMode="WordWrap"
                                 Text="Pret"
                                 TextColor="Black"
                                 VerticalTextAlignment="Center"
-                                WidthRequest="70" />
+                                WidthRequest="{OnIdiom Tablet={OnPlatform iOS=160,
+                                                                          Android=120},
+                                                       Phone=80}" />
                             <Label
                                 FontAttributes="Bold"
-                                FontSize="Small"
+                                FontSize="{OnIdiom Tablet=Medium,
+                                                   Phone=Small}"
                                 HorizontalOptions="CenterAndExpand"
                                 HorizontalTextAlignment="Center"
                                 LineBreakMode="WordWrap"
@@ -532,18 +573,6 @@
                                 TextColor="Black"
                                 VerticalOptions="CenterAndExpand" />
                         </StackLayout>
-                        <!--<CollectionView
-                    x:Name="ItemsListView"
-                    BackgroundColor="{AppThemeBinding Light=LightGray,
-                                                      Dark=Gray}"
-                    scro
-                    HorizontalOptions="FillAndExpand"
-                    ItemsSource="{Binding Items}"
-                    SelectionMode="None"
-                    VerticalOptions="FillAndExpand">
-
-                    <CollectionView.ItemTemplate>-->
-
                         <StackLayout BindableLayout.ItemsSource="{Binding Items}" HorizontalOptions="FillAndExpand">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate>
@@ -558,32 +587,42 @@
                                             HorizontalOptions="FillAndExpand"
                                             Orientation="Horizontal">
                                             <Label
-                                                FontSize="Small"
+                                                FontSize="{OnIdiom Tablet=Medium,
+                                                                   Phone=Small}"
                                                 HorizontalTextAlignment="Start"
                                                 LineBreakMode="WordWrap"
                                                 Text="{Binding Name}"
                                                 TextColor="Black"
                                                 VerticalTextAlignment="Center"
-                                                WidthRequest="115" />
+                                                WidthRequest="{OnIdiom Tablet={OnPlatform iOS=340,
+                                                                                          Android=200},
+                                                                       Phone=120}" />
                                             <Label
-                                                FontSize="Small"
+                                                FontSize="{OnIdiom Tablet=Medium,
+                                                                   Phone=Small}"
                                                 HorizontalTextAlignment="Center"
                                                 LineBreakMode="WordWrap"
                                                 Text="{Binding GramajInterfata}"
                                                 TextColor="Black"
                                                 VerticalTextAlignment="Center"
-                                                WidthRequest="70" />
+                                                WidthRequest="{OnIdiom Tablet={OnPlatform iOS=160,
+                                                                                          Android=120},
+                                                                       Phone=80}" />
                                             <Label
-                                                FontSize="Small"
+                                                FontSize="{OnIdiom Tablet=Medium,
+                                                                   Phone=Small}"
                                                 HorizontalTextAlignment="Center"
                                                 LineBreakMode="WordWrap"
                                                 Text="{Binding PretInterfata}"
                                                 TextColor="Black"
                                                 VerticalTextAlignment="Center"
-                                                WidthRequest="70" />
+                                                WidthRequest="{OnIdiom Tablet={OnPlatform iOS=160,
+                                                                                          Android=120},
+                                                                       Phone=80}" />
                                             <Label
                                                 FontAttributes="Bold"
-                                                FontSize="Small"
+                                                FontSize="{OnIdiom Tablet=Medium,
+                                                                   Phone=Small}"
                                                 HorizontalOptions="CenterAndExpand"
                                                 HorizontalTextAlignment="Center"
                                                 LineBreakMode="WordWrap"
@@ -598,7 +637,8 @@
                                             IsVisible="{Binding HasComments}"
                                             Orientation="Horizontal">
                                             <Label
-                                                FontSize="Small"
+                                                FontSize="{OnIdiom Tablet=Medium,
+                                                                   Phone=Small}"
                                                 HorizontalOptions="Start"
                                                 LineBreakMode="WordWrap"
                                                 Text="Comentarii client produs: "
@@ -606,7 +646,8 @@
                                                 VerticalOptions="CenterAndExpand"
                                                 WidthRequest="100" />
                                             <Label
-                                                FontSize="Small"
+                                                FontSize="{OnIdiom Tablet=Medium,
+                                                                   Phone=Small}"
                                                 HorizontalOptions="StartAndExpand"
                                                 LineBreakMode="WordWrap"
                                                 Text="{Binding ClientComments}"
@@ -635,15 +676,14 @@
                                     xct:CornerRadiusEffect.CornerRadius="30"
                                     BackgroundColor="LimeGreen"
                                     Clicked="printTextButton_Clicked"
-                                    FontSize="Medium"
+                                    FontSize="{OnIdiom Tablet=Large,
+                                                       Phone=Medium}"
                                     Text="Printeaza comanda"
                                     TextColor="Black"
                                     TextTransform="None" />
                             </StackLayout>
                         </StackLayout>
                     </StackLayout>
-                    <!--</CollectionView.ItemTemplate>
-                </CollectionView>-->
                 </StackLayout>
             </StackLayout>
         </ScrollView>

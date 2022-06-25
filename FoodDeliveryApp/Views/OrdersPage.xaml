@@ -33,41 +33,48 @@
 
                             <Label
                                 FontAttributes="Bold"
-                                FontSize="Small"
+                               FontSize="{OnIdiom Tablet=Medium,
+                                                                               Phone=Small}"
                                 HorizontalTextAlignment="Center"
                                 LineBreakMode="WordWrap"
                                 Text="Nr"
                                 TextColor="Black"
                                 VerticalOptions="CenterAndExpand"
-                                WidthRequest="70" />
+                                WidthRequest="{OnIdiom Tablet=140,
+                                                       Phone=70}" />
 
                             <Picker
                                 x:Name="StatusPick"
                                 Title="Status"
-                                FontSize="Small"
+                                FontSize="{OnIdiom Tablet=Medium,
+                                                                               Phone=Small}"
                                 HorizontalTextAlignment="Center"
                                 ItemsSource="{Binding OrderStatus}"
                                 SelectedIndexChanged="Selector_SelectedIndexChanged"
                                 TextColor="Black"
                                 TextTransform="None"
                                 TitleColor="Black"
-                                WidthRequest="80" />
+                                WidthRequest="{OnIdiom Tablet=160,
+                                                       Phone=80}" />
                             <Label
                                 FontAttributes="Bold"
-                                FontSize="Small"
+                                FontSize="{OnIdiom Tablet=Medium,
+                                                                               Phone=Small}"
                                 HorizontalTextAlignment="Center"
                                 LineBreakMode="WordWrap"
                                 Text="Total"
                                 TextColor="Black"
                                 VerticalOptions="CenterAndExpand"
-                                WidthRequest="70" />
+                                WidthRequest="{OnIdiom Tablet=140,
+                                                       Phone=70}" />
 
                             <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
 
                                 <DatePicker
                                     x:Name="Datapick"
                                     DateSelected="DatePicker_DateSelected"
-                                    FontSize="Small"
+                                    FontSize="{OnIdiom Tablet=Medium,
+                                                                               Phone=Small}"
                                     HorizontalOptions="Center"
                                     TextColor="Black"
                                     TextTransform="None" />
@@ -96,7 +103,8 @@
                                                     VerticalOptions="FillAndExpand">
                                                     <Label
                                                         FontAttributes="Bold"
-                                                        FontSize="Small"
+                                                        FontSize="{OnIdiom Tablet=Medium,
+                                                                               Phone=Small}"
                                                         HorizontalTextAlignment="Center"
                                                         LineBreakMode="WordWrap"
                                                         Text="{Binding CompanieName}"
@@ -107,9 +115,10 @@
                                                     Orientation="Horizontal"
                                                     VerticalOptions="FillAndExpand">
 
-                                                    <StackLayout VerticalOptions="CenterAndExpand" WidthRequest="70">
+                                                    <StackLayout VerticalOptions="CenterAndExpand" WidthRequest="{OnIdiom Tablet=140, Phone=70}">
                                                         <Label
-                                                            FontSize="Small"
+                                                            FontSize="{OnIdiom Tablet=Medium,
+                                                                               Phone=Small}"
                                                             HorizontalOptions="CenterAndExpand"
                                                             HorizontalTextAlignment="Center"
                                                             LineBreakMode="WordWrap"
@@ -117,18 +126,20 @@
                                                             TextColor="Black" />
 
                                                     </StackLayout>
-                                                    <StackLayout VerticalOptions="CenterAndExpand" WidthRequest="80">
+                                                    <StackLayout VerticalOptions="CenterAndExpand" WidthRequest="{OnIdiom Tablet=160, Phone=80}">
                                                         <Label
-                                                            FontSize="Small"
+                                                            FontSize="{OnIdiom Tablet=Medium,
+                                                                               Phone=Small}"
                                                             HorizontalTextAlignment="Center"
                                                             LineBreakMode="WordWrap"
                                                             Text="{Binding Status}"
                                                             TextColor="Black" />
 
                                                     </StackLayout>
-                                                    <StackLayout VerticalOptions="CenterAndExpand" WidthRequest="70">
+                                                    <StackLayout VerticalOptions="CenterAndExpand" WidthRequest="{OnIdiom Tablet=140, Phone=70}">
                                                         <Label
-                                                            FontSize="Small"
+                                                            FontSize="{OnIdiom Tablet=Medium,
+                                                                               Phone=Small}"
                                                             HorizontalTextAlignment="Center"
                                                             LineBreakMode="NoWrap"
                                                             Text="{Binding TotalOrdered}"
@@ -137,7 +148,8 @@
                                                     </StackLayout>
                                                     <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
                                                         <Label
-                                                            FontSize="Small"
+                                                            FontSize="{OnIdiom Tablet=Medium,
+                                                                               Phone=Small}"
                                                             HorizontalTextAlignment="Center"
                                                             LineBreakMode="WordWrap"
                                                             Text="{Binding PaymentMethod}"
@@ -171,7 +183,8 @@
                         <Label
                             BackgroundColor="Cyan"
                             FontAttributes="Bold"
-                            FontSize="Large"
+                            FontSize="{OnIdiom Tablet=Large,
+                                           Phone=Medium}"
                             Text="Nu esti autentificat."
                             TextColor="Black" />
                     </Frame>
@@ -182,21 +195,7 @@
             HorizontalOptions="FillAndExpand"
             IsVisible="{Binding IsBusy, Mode=TwoWay}"
             VerticalOptions="FillAndExpand">
-            <!--<Frame
-                Padding="20"
-                Background="Cyan"
-                BackgroundColor="Cyan"
-                CornerRadius="10"
-                HorizontalOptions="CenterAndExpand"
-                VerticalOptions="CenterAndExpand">
-                <Label
-                    Background="Cyan"
-                    BackgroundColor="Cyan"
-                    FontAttributes="Bold"
-                    FontSize="Large"
-                    Text="Loading..."
-                    TextColor="Black" />
-            </Frame>-->
+
             <Image
                 Aspect="AspectFit"
                 BackgroundColor="Transparent"

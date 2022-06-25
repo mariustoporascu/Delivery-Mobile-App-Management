@@ -98,33 +98,38 @@ namespace FoodDeliveryApp.Views
             var webMail = await SecureStorage.GetAsync(App.WEBEMAIL);
             var webPass = await SecureStorage.GetAsync(App.WEBPASS);
             var lWith = await SecureStorage.GetAsync(App.LOGIN_WITH);
-            if (!string.IsNullOrEmpty(lWith))
+            try
             {
-                if (lWith.Equals("WebLogin"))
+                if (!string.IsNullOrEmpty(lWith))
                 {
-                    vm.UserName = webMail;
-                    vm.Password = webPass;
-                    loginResult = await authService.Execute(new UserModel { Email = webMail, Password = webPass, FireBaseToken = App.FirebaseUserToken }, Constants.AuthOperations.Login);
-                    finalEmail = webMail;
+                    if (lWith.Equals("WebLogin"))
+                    {
+                        vm.UserName = webMail;
+                        vm.Password = webPass;
+                        loginResult = await authService.Execute(new UserModel { Email = webMail, Password = webPass, FireBaseToken = App.FirebaseUserToken }, Constants.AuthOperations.Login);
+                        finalEmail = webMail;
+                    }
                 }
-            }
 
-            if (loginResult != string.Empty && !loginResult.Contains("Password is wrong.")
-                && !loginResult.Contains("Email is wrong or user not existing.") && !loginResult.Contains("Login data invalid."))
-            {
-                App.isLoggedIn = true;
-                var settings = new JsonSerializerSettings
+                if (loginResult != string.Empty && !loginResult.Contains("Password is wrong.")
+                    && !loginResult.Contains("Email is wrong or user not existing.") && !loginResult.Contains("Login data invalid."))
                 {
-                    NullValueHandling = NullValueHandling.Ignore,
-                    MissingMemberHandling = MissingMemberHandling.Ignore
-                };
-                App.UserInfo = JsonConvert.DeserializeObject<UserModel>(loginResult.Trim(), settings);
-                App.UserInfo.Email = finalEmail;
-                if (string.IsNullOrEmpty(finalId))
-                {
-                    App.UserInfo.Password = webPass;
+                    App.isLoggedIn = true;
+                    var settings = new JsonSerializerSettings
+                    {
+                        NullValueHandling = NullValueHandling.Ignore,
+                        MissingMemberHandling = MissingMemberHandling.Ignore
+                    };
+                    App.UserInfo = JsonConvert.DeserializeObject<UserModel>(loginResult.Trim(), settings);
+                    App.UserInfo.Email = finalEmail;
+                    if (string.IsNullOrEmpty(finalId))
+                    {
+                        App.UserInfo.Password = webPass;
+                    }
                 }
             }
+            catch (Exception) { }
+
         }
 
         private async void OnSignInApple(object sender, EventArgs e)
@@ -137,13 +142,7 @@ namespace FoodDeliveryApp.Views
             {
                 Debug.WriteLine(ex.Message);
             }
-            vm.IsBusy = true;
-            await DependencyService.Get<IDataStore>().Init();
-            vm.IsBusy = false;
-            if (App.UserInfo.IsOwner)
-                App.Current.MainPage = new AppShellOwner();
-            else
-                App.Current.MainPage = new AppShellDriver();
+
 
         }
         private async void OnSignIn(object sender, EventArgs e)
@@ -156,13 +155,7 @@ namespace FoodDeliveryApp.Views
             {
                 Debug.WriteLine(ex.Message);
             }
-            vm.IsBusy = true;
-            await DependencyService.Get<IDataStore>().Init();
-            if (App.UserInfo.IsOwner)
-                App.Current.MainPage = new AppShellOwner();
-            else
-                App.Current.MainPage = new AppShellDriver();
-            vm.IsBusy = false;
+            await Navigation.PushModalAsync(new LoadingPage());
         }
 
         private async void OnSignInFailed(object sender, EventArgs e)

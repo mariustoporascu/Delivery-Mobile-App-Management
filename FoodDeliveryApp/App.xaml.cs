@@ -27,9 +27,9 @@ namespace FoodDeliveryApp
             {
                 bool promptToConfirmExit = false;
                 if (Shell.Current.Navigation.NavigationStack.Count == 1)
-                {
                     promptToConfirmExit = true;
-                }
+                if (Shell.Current.Navigation.ModalStack.Count > 0)
+                    promptToConfirmExit = false;
                 return promptToConfirmExit;
             }
         }

@@ -87,88 +87,120 @@ namespace FoodDeliveryApp.ViewModels
         }
         public async Task<bool> GiveClientRating(int rating)
         {
-            if (await OrderService.RateClient(App.UserInfo.IsOwner, OrderId, rating))
+            try
             {
-                if (App.UserInfo.IsOwner)
+                if (await OrderService.RateClient(App.UserInfo.IsOwner, OrderId, rating))
                 {
-                    CurrOrder.CompanieGaveRating = true;
-                    CurrOrder.RatingClientDeLaCompanie = rating;
+                    if (App.UserInfo.IsOwner)
+                    {
+                        CurrOrder.CompanieGaveRating = true;
+                        CurrOrder.RatingClientDeLaCompanie = rating;
+                    }
+                    else
+                    {
+                        CurrOrder.DriverGaveRating = true;
+                        CurrOrder.RatingClientDeLaSofer = rating;
+                    }
+                    return true;
                 }
-                else
-                {
-                    CurrOrder.DriverGaveRating = true;
-                    CurrOrder.RatingClientDeLaSofer = rating;
-                }
-                return true;
+                return false;
             }
-            return false;
+            catch (Exception)
+            {
+                return false;
+            }
+
         }
         public async Task<bool> ChangeOrderStatus(int status)
         {
-            var changedStatus = OrderStatus[status];
-            if (await OrderService.UpdateOrder(OrderId, changedStatus, App.UserInfo.IsOwner))
+            try
             {
-                CurrOrder.Status = changedStatus;
+                var changedStatus = OrderStatus[status];
+                if (await OrderService.UpdateOrder(OrderId, changedStatus, App.UserInfo.IsOwner))
+                {
+                    CurrOrder.Status = changedStatus;
 
-                OrderStatus.Clear();
-                if (App.UserInfo.IsOwner)
-                {
-                    var statusesToAdd = new List<string>();
-                    if (CurrOrder.Status == "Plasata")
-                        statusesToAdd.Add(ServerConstants.OrderStatusOwner[0]);
-                    else
-                        statusesToAdd.Add(ServerConstants.OrderStatusOwner[ServerConstants.OrderStatusOwner.IndexOf(CurrOrder.Status) + 1]);
-                    statusesToAdd.Add(ServerConstants.OrderStatusOwner[ServerConstants.OrderStatusOwner.Count - 1]);
-                    OrderStatus.AddRange(statusesToAdd);
-                }
-                else
-                {
-                    var statusesToAdd = new List<string>();
-                    if (CurrOrder.Status == "In curs de livrare")
+                    OrderStatus.Clear();
+                    if (App.UserInfo.IsOwner)
                     {
-                        statusesToAdd.Add(ServerConstants.OrderStatusDriver[1]);
-                        statusesToAdd.Add(ServerConstants.OrderStatusDriver[2]);
+                        var statusesToAdd = new List<string>();
+                        if (CurrOrder.Status == "Plasata")
+                            statusesToAdd.Add(ServerConstants.OrderStatusOwner[0]);
+                        else
+                            statusesToAdd.Add(ServerConstants.OrderStatusOwner[ServerConstants.OrderStatusOwner.IndexOf(CurrOrder.Status) + 1]);
+                        statusesToAdd.Add(ServerConstants.OrderStatusOwner[ServerConstants.OrderStatusOwner.Count - 1]);
+                        OrderStatus.AddRange(statusesToAdd);
                     }
                     else
-                        statusesToAdd.Add(ServerConstants.OrderStatusDriver[0]);
-                    OrderStatus.AddRange(statusesToAdd);
+                    {
+                        var statusesToAdd = new List<string>();
+                        if (CurrOrder.Status == "In curs de livrare")
+                        {
+                            statusesToAdd.Add(ServerConstants.OrderStatusDriver[1]);
+                            statusesToAdd.Add(ServerConstants.OrderStatusDriver[2]);
+                        }
+                        else
+                            statusesToAdd.Add(ServerConstants.OrderStatusDriver[0]);
+                        OrderStatus.AddRange(statusesToAdd);
+                    }
+
+                    if (CurrOrder.Status == "Preluata")
+                        IsPickerVisible2 = true;
+                    else
+                        IsPickerVisible2 = false;
+                    if (CurrOrder.Status == "Preluata" && !OrderConfirmed)
+                        CanChangeNextStatus = false;
+                    else
+                        CanChangeNextStatus = true;
+                    if (CurrOrder.Status.Contains("Predata Soferului") || CurrOrder.Status.Contains("Livrata") || CurrOrder.Status.Contains("Refuzata"))
+                        IsPickerVisible = false;
+                    return true;
+
                 }
-
-                if (CurrOrder.Status == "Preluata")
-                    IsPickerVisible2 = true;
-                else
-                    IsPickerVisible2 = false;
-                if (CurrOrder.Status == "Preluata" && !OrderConfirmed)
-                    CanChangeNextStatus = false;
-                else
-                    CanChangeNextStatus = true;
-                if (CurrOrder.Status.Contains("Predata Soferului") || CurrOrder.Status.Contains("Livrata") || CurrOrder.Status.Contains("Refuzata"))
-                    IsPickerVisible = false;
-                return true;
-
+                return false;
             }
-            return false;
+            catch (Exception)
+            {
+                return false;
+            }
+
         }
         public async Task<bool> EstimateOrder(int status)
         {
-            var changedStatus = TimpEstimat[status];
-            if (await OrderService.EstimateOrder(OrderId, changedStatus))
+            try
             {
-                HasEstimatedTime = true;
-                CanChangeNextStatus = false;
-                return true;
+                var changedStatus = TimpEstimat[status];
+                if (await OrderService.EstimateOrder(OrderId, changedStatus))
+                {
+                    HasEstimatedTime = true;
+                    CanChangeNextStatus = false;
+                    return true;
 
+                }
+                return false;
             }
-            return false;
+            catch (Exception)
+            {
+                return false;
+            }
+
         }
         public async Task<bool> LockDriverOrder()
         {
-            if (await OrderService.LockDriverOrder(App.UserInfo.Email, OrderId))
+            try
             {
-                HasDriver = true;
-                return true;
+                if (await OrderService.LockDriverOrder(App.UserInfo.Email, OrderId))
+                {
+                    HasDriver = true;
+                    return true;
+                }
+                return false;
             }
-            return false;
+            catch (Exception)
+            {
+                return false;
+            }
+
         }
         public async void RefreshView()
         {
