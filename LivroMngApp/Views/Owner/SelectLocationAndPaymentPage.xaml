@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="LivroMngApp.Views.SelectLocationAndPaymentPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:LivroMngApp.ViewModels"
+    xmlns:model="clr-namespace:LivroMngApp.Models.ShopModels"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    Title="{Binding Title}"
+    x:DataType="local:SelectLocationAndPaymentViewModel"
+    Shell.PresentationMode="ModalAnimated">
+    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <Image
+            Grid.Row="0"
+            Aspect="Fill"
+            HorizontalOptions="FillAndExpand"
+            Source="splash_auth.png"
+            VerticalOptions="FillAndExpand" />
+        <StackLayout Grid.Row="0" Margin="35,80,35,5">
+            <StackLayout Margin="0,0,0,0" Padding="0">
+                <Label
+                    FontSize="28"
+                    LineBreakMode="WordWrap"
+                    Text="Detalii comanda"
+                    TextColor="Black" />
+            </StackLayout>
+
+            <StackLayout
+                Padding="5"
+                xct:CornerRadiusEffect.CornerRadius="10"
+                BackgroundColor="LightCyan"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="CenterAndExpand">
+                <Button
+                    Margin="0"
+                    Padding="0"
+                    xct:CornerRadiusEffect.CornerRadius="30"
+                    BackgroundColor="Transparent"
+                    Clicked="FillClientDetailsClicked"
+                    FontSize="Small"
+                    ImageSource="edit.png"
+                    Text="Adauga detaliile clientului"
+                    TextColor="Black"
+                    TextTransform="None" />
+            </StackLayout>
+            <StackLayout
+                Padding="5"
+                xct:CornerRadiusEffect.CornerRadius="10"
+                BackgroundColor="{AppThemeBinding Light=LightCyan,
+                                                  Dark=LightCyan}"
+                HorizontalOptions="FillAndExpand"
+                Orientation="Vertical"
+                VerticalOptions="CenterAndExpand">
+                <Picker
+                    x:Name="Selector2"
+                    Title="Timp informativ de pregatire."
+                    HorizontalOptions="CenterAndExpand"
+                    HorizontalTextAlignment="Center"
+                    ItemsSource="{Binding TimpEstimat}"
+                    SelectedIndexChanged="Picker2_SelectedIndexChanged"
+                    TextColor="Black"
+                    TitleColor="Black" />
+            </StackLayout>
+            <StackLayout
+                Padding="10"
+                xct:CornerRadiusEffect.CornerRadius="10"
+                BackgroundColor="LightCyan"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="CenterAndExpand">
+                <Picker
+                    x:Name="SelectorPaymentMethods"
+                    Title="Selecteaza o modalitate de plata."
+                    HorizontalOptions="FillAndExpand"
+                    HorizontalTextAlignment="Center"
+                    ItemsSource="{Binding PaymentMethods}"
+                    SelectedIndexChanged="PaymentMethods_SelectedIndexChanged"
+                    TextColor="Black"
+                    TitleColor="Black" />
+            </StackLayout>
+
+            <StackLayout Margin="0,10,0,0" VerticalOptions="EndAndExpand">
+                <Button
+                    Margin="{OnIdiom Tablet='0,0,0,70',
+                                     Phone='0,0,0,20'}"
+                    Padding="0"
+                    xct:CornerRadiusEffect.CornerRadius="30"
+                    BackgroundColor="LightCoral"
+                    Clicked="ClickedGoToFinalize"
+                    FontSize="{OnIdiom Tablet=Large,
+                                       Phone=Medium}"
+                    Text="Vizualizeaza detalii finale"
+                    TextColor="White"
+                    TextTransform="None" />
+                <Button
+                    Margin="0,0,0,30"
+                    BackgroundColor="Transparent"
+                    Clicked="OnDismissButtonClicked"
+                    FontAttributes="None"
+                    FontSize="{OnIdiom Tablet=Large,
+                                       Phone=Medium}"
+                    Text="Anuleaza"
+                    TextColor="Black"
+                    TextTransform="None" />
+            </StackLayout>
+        </StackLayout>
+
+    </Grid>
+</ContentPage>

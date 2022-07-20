@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="LivroMngApp.Views.MapsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:LivroMngApp.Controls"
+    xmlns:local="clr-namespace:LivroMngApp.ViewModels"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    Title="Harta"
+    x:DataType="local:MapsViewModel"
+    Shell.PresentationMode="Animated">
+
+    <StackLayout BackgroundColor="PaleGoldenrod">
+        <Label
+            FontSize="Large"
+            HorizontalOptions="CenterAndExpand"
+            Text="Locatii comenzi active"
+            TextColor="Black" />
+        <controls:CustomMap
+            x:Name="AppMap"
+            HasScrollEnabled="True"
+            HasZoomEnabled="True"
+            IsVisible="True"
+            MapType="Street" />
+    </StackLayout>
+</ContentPage>
